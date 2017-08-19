@@ -70,13 +70,6 @@ class SalesController extends Controller
                 ['code' => Config::get('constants.codes.MissingInputCode'), 
                 'msg'   => Config::get('constants.msgs.MisingInputMsg')]], 500);
         }
-
-        if($request->file('image')){
-            $file = $request -> file('image');
-            $name = $request -> name . '- sale - ' . '.' . $file->getClientOriginalExtension();
-            $path = public_path() . '/images/sales/';
-            $fle -> move($path,$name);
-        }
         
         $rules = [
             'name' => 'required|min:2|max:80',
@@ -104,7 +97,14 @@ class SalesController extends Controller
                     'msg' => Config::get('constants.msgs.ExistingSaleMsg')]], 500);
             }
 
-            $sale -> image = $name;
+            if($request->file('image')){
+                $file = $request -> file('image');
+                $name = $request -> name . '- sale' . '.' . $file->getClientOriginalExtension();
+                $path = public_path() . '/images/sales/';
+                $fle -> move($path,$name);
+                $sale -> image = $name;
+            }
+
             $sale -> save();
             return \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.OkCode'), 

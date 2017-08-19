@@ -72,13 +72,6 @@ class ShowsController extends Controller
                 ['code' => Config::get('constants.codes.MissingInputCode'), 
                 'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
         }
-
-        if($request->file('image')){
-            $file = $request -> file('image');
-            $name = $request -> name . '- show - ' . '.' . $file->getClientOriginalExtension();
-            $path = public_path() . '/images/shows/';
-            $fle -> move($path,$name);
-        }
         
         $rules = [
             'name'     => 'required|min:2|max:80',
@@ -106,7 +99,14 @@ class ShowsController extends Controller
                     'msg' => Config::get('constants.msgs.ExistingEventMsg')]], 500);
             }
 
-            $show -> image = $name;
+            if($request->file('image')){
+                $file = $request -> file('image');
+                $name = $request -> name . '- show' . '.' . $file->getClientOriginalExtension();
+                $path = public_path() . '/images/shows/';
+                $file -> move($path,$name);
+                $show -> image = $name;
+            }
+
             $show -> save();
             return \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.OkCode'), 
