@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
@@ -35,7 +36,7 @@ class ShowsController extends Controller
      */
     public function index()
     {
-        $shows = Show::orderBy('show_id','ASC')->paginate(5);
+        $shows = Show::orderBy(Config::get('constants.fields.ShowsIdField'),'ASC')->paginate(5);
         
         if(empty($shows)){
             return \Response::json(['response' => '','error' => 
@@ -74,7 +75,7 @@ class ShowsController extends Controller
         }
         
         $rules = [
-            'name'     => 'required|min:2|max:80',
+            'name'     => 'required|min:2|max:80|unique:shows',
             'schedule' => 'required'
         ];
 
@@ -101,7 +102,7 @@ class ShowsController extends Controller
 
             if($request->file('image')){
                 $file = $request -> file('image');
-                $name = $request -> name . '- show' . '.' . $file->getClientOriginalExtension();
+                $name = $request -> name . '.' . $file->getClientOriginalExtension();
                 $path = public_path() . '/images/shows/';
                 $file -> move($path,$name);
                 $show -> image = $name;
@@ -162,21 +163,23 @@ class ShowsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ((!$request -> name) && (!$request -> schedule) 
-            && (!$request -> description) && (!$request -> image)) {
-                return \Response::json(['response' => '','error' => 
-                    ['code' => Config::get('constants.codes.MissingInputCode'), 
-                    'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
+        if(!$request -> name && !$request -> schedule && !$request -> description && !$request->file('image')){
+            return \Response::json(['response' => '','error' => 
+                ['code' => Config::get('constants.codes.MissingInputCode'), 
+                'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
         }
-
+            
         else{
+            $show = DB::table(Config::get('constants.tables.ShowsTable'))
+            ->where(Config::get('constants.fields.ShowsIdField'), $id)->first();
+
             $update = array();
             try{
                 if(!empty($request -> name)){
                     $update['name'] = $request -> name;
                 }
                 
-                if(!empty($request -> price)){
+                if(!empty($request -> schedule)){
                     $update['schedule'] =  $request -> schedule;
                 }
                 
@@ -184,12 +187,18 @@ class ShowsController extends Controller
                     $update['description'] =  $request -> description;
                 }
 
-                if(!empty($request -> image)){
-                    //TODO: PROCESS IMAGE
-                    $update['image'] =  $request -> image;
+                if(!empty($request->file('image'))){
+                    $file = $request -> file('image');
+                    $name = $request -> name . '.' . $file->getClientOriginalExtension();
+                    if(file_exists(public_path() . '/images/shows/' . $show -> image)){
+                        Storage::delete(public_path() . '/images/shows/' . $show -> image);
+                    }
+                    $path = public_path() . '/images/shows/';
+                    $file -> move($path,$name);
+                    $update['image'] = $name;
                 }
 
-                $sale  = DB::table(Config::get('constants.tables.ShowsTable'))
+                $show = DB::table(Config::get('constants.tables.ShowsTable'))
                 ->where(Config::get('constants.fields.ShowsIdField'), $id)
                 ->update($update);
             }
@@ -214,6 +223,12 @@ class ShowsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table(Config::get('constants.tables.ShowsTable'))
+        ->where(Config::get('constants.fields.ShowsIdField'), $id)
+        ->delete();
+
+        return \Response::json(['response' => '','error' => 
+            ['code' => Config::get('constants.codes.OkCode'), 
+            'msg' => Config::get('constants.msgs.OkMsg')]], 200);
     }
 }

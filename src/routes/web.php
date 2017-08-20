@@ -29,7 +29,11 @@ Route::group(['prefix' => 'admin'],function(){
 **/
 Route::group(['prefix' => 'api'],function(){
     
-    Route::resource('sales','SalesController');
+    Route::resource('sales','SalesController', [
+        'only' => ['index', 'store', 'create', 'destroy', 'show','edit']]);
+    Route::post('sales/{id}', [
+        'uses' => 'SalesController@update',
+        'as'   => 'sales.update']);
 });
 
 
@@ -38,7 +42,11 @@ Route::group(['prefix' => 'api'],function(){
 **/
 Route::group(['prefix' => 'api'],function(){
     
-    Route::resource('shows','ShowsController');
+    Route::resource('shows','ShowsController',[
+        'only' => ['index', 'store', 'create', 'destroy', 'show','edit']]);
+    Route::post('shows/{id}', [
+        'uses' => 'ShowsController@update',
+        'as'   => 'shows.update']);
 });
 
 
@@ -47,7 +55,11 @@ Route::group(['prefix' => 'api'],function(){
 **/
 Route::group(['prefix' => 'api'],function(){
     
-    Route::resource('events','EventsController');
+    Route::resource('events','EventsController',[
+        'only' => ['index', 'store', 'create', 'destroy', 'show','edit']]);
+    Route::post('events/{id}', [
+        'uses' => 'EventsController@update',
+        'as'   => 'events.update']);
 });
 
 
@@ -56,7 +68,11 @@ Route::group(['prefix' => 'api'],function(){
 **/
 Route::group(['prefix' => 'api'],function(){
 
-    Route::resource('sponsors','SponsorsController');
+    Route::resource('sponsors','SponsorsController',[
+        'only' => ['index', 'store', 'create', 'destroy', 'show','edit']]);
+    Route::post('sponsors/{id}', [
+        'uses' => 'SponsorsController@update',
+        'as'   => 'sponsors.update']);
 });
 
 
@@ -65,7 +81,11 @@ Route::group(['prefix' => 'api'],function(){
 **/
 Route::group(['prefix' => 'api'],function(){
     
-    Route::resource('volunteers','VolunteersController');
+    Route::resource('volunteers','VolunteersController', [
+        'only' => ['index', 'store', 'create', 'destroy', 'show','edit']]);
+    Route::post('volunteers/{id}', [
+        'uses' => 'VolunteersController@update',
+        'as'   => 'volunteers.update']);
 });
 
 

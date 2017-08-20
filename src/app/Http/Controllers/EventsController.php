@@ -35,7 +35,7 @@ class EventsController extends Controller
      */
     public function index()
     {
-        $events = Event::orderBy('event_id','ASC')->paginate(5);
+        $events = Event::orderBy(Config::get('constants.fields.EventsIdField'),'ASC')->paginate(5);
         
         if(empty($events)){
             return \Response::json(['response' => '','error' => 
@@ -74,6 +74,7 @@ class EventsController extends Controller
         
         $rules = [
             'name' => 'required|min:2|max:80',
+            'date' => 'date_format:Y-m-d|after: ' . date('Y-m-d'),
         ];
 
         try {
@@ -118,7 +119,18 @@ class EventsController extends Controller
      */
     public function show($id)
     {
-        //
+        $event = DB::table(Config::get('constants.tables.EventsTable'))
+        ->where(Config::get('constants.fields.EventsIdField'), $id)->first();
+    
+        if(empty($show)){
+        return \Response::json(['response' => $event,'error' => 
+            ['code' => Config::get('constants.codes.NonExistingEventCode'), 
+            'msg' => Config::get('constants.msgs.NonExistingEventMsg')]], 500);
+    }
+
+        return \Response::json(['response' => $event,'error' => 
+            ['code' => Config::get('constants.codes.OkCode'), 
+            'msg' => Config::get('constants.msgs.OkMsg')]], 200);
     }
 
     /**
@@ -141,7 +153,84 @@ class EventsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ((!$request -> name) && (!$request -> date) && (!$request -> description)) {
+            return \Response::json(['response' => '','error' => 
+                ['code' => Config::get('constants.codes.MissingInputCode'), 
+                'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 401);
+        }
+
+        else{
+            $event = DB::table(Config::get('constants.tables.EventsTable'))
+            ->where(Config::get('constants.fields.EventsIdField'), $id) -> first();
+
+            $update = array();
+            try{
+
+                if(!empty($request -> name)){
+                    $update['name'] = $request -> name;
+                    $rules = [
+                        'name' => 'min:2|max:80|unique:events',
+                    ];
+            
+                        
+                    $validator = \Validator::make($request -> name, $rules);
+                    if ($validator->fails()) {
+                        return \Response::json(['response' => '','error' => 
+                            ['code' => Config::get('constants.codes.InvalidInputCode'), 
+                            'msg' => Config::get('constants.msgs.InvalidInputMsg') . ': ' .
+                            $validator->errors()]], 500);
+                    }
+    
+                }
+                
+                if(!empty($request -> date)){
+                    $update['date'] =  $request -> date;
+
+                    $rules = [
+                        'date' => 'date_format:Y-m-d|after: ' . date('Y-m-d'),
+                    ];
+            
+                        
+                    $validator = \Validator::make($request->all(), $rules);
+                    if ($validator->fails()) {
+                        return \Response::json(['response' => '','error' => 
+                            ['code' => Config::get('constants.codes.InvalidInputCode'), 
+                            'msg' => Config::get('constants.msgs.InvalidInputMsg') . ': ' .
+                            $validator->errors()]], 500);
+                    }
+    
+                }
+                
+                if(!empty($request -> description)){
+                    $update['description'] =  $request -> description;
+                }
+
+                if(!empty($request -> file('image'))){
+                    $file = $request -> file('image');
+                    $name = $request -> name . '.' . $file->getClientOriginalExtension();
+                    if(file_exists(public_path() . '/images/events/' . $event -> image)){
+                        Storage::delete(public_path() . '/images/events/' . $event -> image);
+                    }
+                    $path = public_path() . '/images/events/';
+                    $file -> move($path,$name);
+                    $update['image'] = $name;
+                }
+
+                DB::table(Config::get('constants.tables.EventsTable'))
+                ->where(Config::get('constants.fields.EventsIdField'), $id)
+                ->update($update);
+            }
+            catch(QueryException $e){
+                \Log::error('Error creating sale: '.$e);
+                return \Response::json(['response' => '','error' => 
+                    ['code' => Config::get('constants.codes.InternalErrorCode'), 
+                    'msg' => Config::get('constants.msgs.InternalErrorMsg')]], 500);
+            }
+        
+            return \Response::json(['response' => '','error' => 
+                ['code' => Config::get('constants.codes.OkCode'), 
+                'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+        }
     }
 
     /**
@@ -152,6 +241,12 @@ class EventsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table(Config::get('constants.tables.EventsTable'))
+        ->where(Config::get('constants.fields.EventsIdField'), $id)
+        ->delete();
+
+        return \Response::json(['response' => '','error' => 
+            ['code' => Config::get('constants.codes.OkCode'), 
+            'msg' => Config::get('constants.msgs.OkMsg')]], 200);
     }
 }

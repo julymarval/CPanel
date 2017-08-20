@@ -19,6 +19,7 @@ class SponsorsMigration extends Migration
             $table->text('description')->nullable();
             $table->string('level',80);
             $table->string('status',80);
+            $table->string('image',80)->nullable();
             $table->timestamps();
             $table->integer('volunteer_id')->unsigned()->nullable();
 

@@ -34,7 +34,7 @@ class SalesController extends Controller
      */
     public function index()
     {
-        $sales = Sale::orderBy('sale_id','ASC')->paginate(5);
+        $sales = Sale::orderBy(Config::get('constants.fields.SalesIdField'),'ASC')->paginate(5);
 
         if(empty($sales)){
             return \Response::json(['response' => '','error' => 
@@ -68,7 +68,7 @@ class SalesController extends Controller
         if (empty($request -> name) || (empty($request -> price))) {
             return \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.MissingInputCode'), 
-                'msg'   => Config::get('constants.msgs.MisingInputMsg')]], 500);
+                'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
         }
         
         $rules = [
@@ -99,9 +99,9 @@ class SalesController extends Controller
 
             if($request->file('image')){
                 $file = $request -> file('image');
-                $name = $request -> name . '- sale' . '.' . $file->getClientOriginalExtension();
+                $name = $request -> name . '.' . $file->getClientOriginalExtension();
                 $path = public_path() . '/images/sales/';
-                $fle -> move($path,$name);
+                $file -> move($path,$name);
                 $sale -> image = $name;
             }
 
@@ -160,13 +160,16 @@ class SalesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ((!$request -> name) && (!$request -> price) && (!$request -> description)) {
+        if(!$request -> name && !$request -> price && !$request -> description && !$request->file('image')){
             return \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.MissingInputCode'), 
-                'msg'   => Config::get('constants.msgs.MisingInputMsg')]], 500);
+                'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
         }
 
         else{
+            $sale = DB::table(Config::get('constants.tables.SalesTable'))
+            ->where(Config::get('constants.fields.SalesIdField'), $id) -> first();
+            
             $update = array();
             try{
                 if(!empty($request -> name)){
@@ -179,6 +182,16 @@ class SalesController extends Controller
                 
                 if(!empty($request -> description)){
                     $update['description'] =  $request -> description;
+                }
+                if(!empty($request -> file('image'))){
+                    $file = $request -> file('image');
+                    $name = $request -> name . '.' . $file->getClientOriginalExtension();
+                    if(file_exists(public_path() . '/images/sales/' . $sale -> image)){
+                        Storage::delete(public_path() . '/images/sales/' . $sale -> image);
+                    }
+                    $path = public_path() . '/images/sales/';
+                    $file -> move($path,$name);
+                    $update['image'] = $name;
                 }
 
                 $sale  = DB::table(Config::get('constants.tables.SalesTable'))
@@ -206,7 +219,7 @@ class SalesController extends Controller
      */
     public function destroy($id)
     {
-        $sale  = DB::table(Config::get('constants.tables.SalesTable'))
+        DB::table(Config::get('constants.tables.SalesTable'))
         ->where(Config::get('constants.fields.SalesIdField'), $id)
         ->delete();
 
