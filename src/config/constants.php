@@ -12,6 +12,7 @@ return [
         'ExistingSaleCode'         => 106,
         'NonExistingShowsCode'     => 107,
         'ExistingEventCode'        => 108,
+        'InvalidPasswordCode'       => 109,
         'InvalidTokenCode'         => 202,
         'InternalErrorCode'        => 999
     ],
@@ -26,6 +27,7 @@ return [
         'ExistingSaleMsg'          => 'ExistingSale',
         'NonExistingShowsMgs'      => 'NonExistingShows',
         'ExistingEventMsg'         => 'ExistingEvent',
+        'InvalidPasswordMsg'       => 'InvalidPassword',
         'InvalidTokenMsg'          => 'InvalidToken',
         'InternalErrorMsg'         => 'InternalError'
     ],
@@ -45,6 +47,7 @@ return [
         'SponsorsIdField'         => 'sponsor_id',
         'EventsIdField'           => 'event_id',
         'NameField'               => 'name',
+        'EmailField'              => 'email'
     ]
 ];
 

@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
+use App\User;
+use Config;
 
 class AuthenticateController extends Controller {
 
@@ -24,8 +28,20 @@ class AuthenticateController extends Controller {
 
         $credentials = $request->only('email', 'password');
 
-        //TODO: get user and verify password
-        //Hash::check('plain-text', $hashedPassword);
+        $user = DB::table(Config::get('constants.tables.UsersTable'))
+        ->where(Config::get('constants.fields.EmailField'), $request -> email)->first();
+        
+        if(empty($user)){
+            return response()->json(['response' => '','error' => 
+                ['code' => Config::get('constants.codes.NonExistingAdminCode'), 
+                'msg' => Config::get('constants.msgs.NonExistingAdminMsg')]], 401);
+        }
+
+        if(!Hash::check($request -> password, $user -> password)){
+            return response()->json(['response' => '','error' => 
+                ['code' => Config::get('constants.codes.InvalidPasswordCode'), 
+                'msg' => Config::get('constants.msgs.InvalidPasswordMsg')]], 401);
+        }
 
         try {
             // verify the credentials and create a token for the user
