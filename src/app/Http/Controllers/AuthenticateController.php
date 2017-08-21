@@ -34,19 +34,21 @@ class AuthenticateController extends Controller {
         if(empty($user)){
             return response()->json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.NonExistingAdminCode'), 
-                'msg' => Config::get('constants.msgs.NonExistingAdminMsg')]], 401);
+                'msg'   => Config::get('constants.msgs.NonExistingAdminMsg')]], 401);
         }
 
         if(!Hash::check($request -> password, $user -> password)){
             return response()->json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.InvalidPasswordCode'), 
-                'msg' => Config::get('constants.msgs.InvalidPasswordMsg')]], 401);
+                'msg'   => Config::get('constants.msgs.InvalidPasswordMsg')]], 401);
         }
 
         try {
             // verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['response' => '','error' => ['code' => 100, 'msg' => 'InvalidCredentials']], 401);
+                return response()->json(['response' => '','error' => 
+                    ['code' => Config::get('constants.codes.InvalidCredentialsCode'), 
+                    'msg'   => Config::get('constants.msgs.InvalidCredentialsMsg')]], 401);
             }
         } catch (JWTException $e) {
             // something went wrong
@@ -54,6 +56,8 @@ class AuthenticateController extends Controller {
         }
 
         // if no errors are encountered we can return a JWT
-        return \Response::json(['response' => compact('token'),'error' => ['code' => 0, 'msg' => 'ok']], 200);
+        return \Response::json(['response' => compact('token'),'error' => 
+            ['code' => Config::get('constants.codes.OkCode'),
+             'msg'  => Config::get('constants.msgs.OkMsg')]], 200);
     }
 }

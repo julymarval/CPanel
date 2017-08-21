@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\Show;
+use App\Volunteer;
 use Config;
 
 class ShowsController extends Controller
@@ -36,14 +37,14 @@ class ShowsController extends Controller
      */
     public function index()
     {
-        $shows = Show::orderBy(Config::get('constants.fields.ShowsIdField'),'ASC')->paginate(5);
+        $shows = Show::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
         
         if(empty($shows)){
             return \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.NonExistingShowsCode'), 
                 'msg' => Config::get('constants.msgs.NonExistingShowsMsg')]], 500);
         }
-        
+
         return \Response::json(['response' => $shows,'error' => 
             ['code' => Config::get('constants.codes.OkCode'), 
             'msg' => Config::get('constants.msgs.OkMsg')]], 200);
@@ -96,8 +97,8 @@ class ShowsController extends Controller
 
             if(!empty($data)){
                 return \Response::json(['response' => '', 'error' => 
-                    [ 'code' => Config::get('constants.codes.ExistingEventCode'), 
-                    'msg' => Config::get('constants.msgs.ExistingEventMsg')]], 500);
+                    ['code' => Config::get('constants.codes.ExistingShowCode'), 
+                    'msg'   => Config::get('constants.msgs.ExistingShowMsg')]], 500);
             }
 
             if($request->file('image')){
@@ -108,7 +109,22 @@ class ShowsController extends Controller
                 $show -> image = $name;
             }
 
+
             $show -> save();
+
+            if($request -> volunteer_id){
+                
+                $volunteer = Volunteer::find($request -> volunteer_id);
+                
+                if(empty($volunteer)){
+                    return \Response::json(['response' => '', 'error' => 
+                    ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
+                    'msg'   => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
+                }
+
+                $show -> volunteers() -> attach($request -> volunteer_id);
+            }
+
             return \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.OkCode'), 
                 'msg' => Config::get('constants.msgs.OkMsg')]], 200);
@@ -129,14 +145,13 @@ class ShowsController extends Controller
      */
     public function show($id)
     {
-        $show = DB::table(Config::get('constants.tables.ShowsTable'))
-        ->where(Config::get('constants.fields.ShowsIdField'), $id)->first();
+        $show = Show::find($id);
     
         if(empty($show)){
-        return \Response::json(['response' => $show,'error' => 
+            return \Response::json(['response' => $show,'error' => 
             ['code' => Config::get('constants.codes.NonExistingSalesCode'), 
             'msg' => Config::get('constants.msgs.NonExistingSalesMsg')]], 500);
-    }
+        }
 
         return \Response::json(['response' => $show,'error' => 
             ['code' => Config::get('constants.codes.OkCode'), 
@@ -151,7 +166,23 @@ class ShowsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $show = Show::find($id);
+        
+        if(empty($show)){
+        return \Response::json(['response' => $show,'error' => 
+            ['code' => Config::get('constants.codes.NonExistingEventCode'), 
+            'msg' => Config::get('constants.msgs.NonExistingEventMsg')]], 500);
+        }
+
+        $my_volunteers = $show -> volunteers -> lists('id') -> toArray();
+
+        $volunteers = Volunteer::orderBy('name','DESC') -> lists('name','id');
+        
+        /*return view('')
+        -> with('show', $show)
+        -> with('my_volunteers', $my_volunteers)
+        -> with('volunteers',$volunteers);*/
+        
     }
 
     /**
@@ -163,18 +194,29 @@ class ShowsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(!$request -> name && !$request -> schedule && !$request -> description && !$request->file('image')){
-            return \Response::json(['response' => '','error' => 
-                ['code' => Config::get('constants.codes.MissingInputCode'), 
-                'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
+        if(!$request -> name && !$request -> schedule && !$request -> description && !$request->file('image')
+            && !$request -> volunteer_id){
+                return \Response::json(['response' => '','error' => 
+                    ['code' => Config::get('constants.codes.MissingInputCode'), 
+                    'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
         }
             
         else{
-            $show = DB::table(Config::get('constants.tables.ShowsTable'))
-            ->where(Config::get('constants.fields.ShowsIdField'), $id)->first();
+            $show = Show::find($id);
 
             $update = array();
             try{
+                if(!empty($request -> volunteer_id)){
+                    $volunteer = Volunteer::find($request -> volunteer_id);
+                    
+                    if(empty($volunteer)){
+                        return \Response::json(['response' => '', 'error' => 
+                            ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
+                            'msg'   => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
+                    }
+                    $show -> volunteers() -> attach($request -> volunteer_id);
+                }
+                
                 if(!empty($request -> name)){
                     $update['name'] = $request -> name;
                 }
@@ -198,9 +240,7 @@ class ShowsController extends Controller
                     $update['image'] = $name;
                 }
 
-                $show = DB::table(Config::get('constants.tables.ShowsTable'))
-                ->where(Config::get('constants.fields.ShowsIdField'), $id)
-                ->update($update);
+                $show -> update($update);
             }
             catch(QueryException $e){
                 \Log::error('Error updating show: '.$e);
@@ -223,9 +263,8 @@ class ShowsController extends Controller
      */
     public function destroy($id)
     {
-        DB::table(Config::get('constants.tables.ShowsTable'))
-        ->where(Config::get('constants.fields.ShowsIdField'), $id)
-        ->delete();
+        $show = Show::find($id);
+        $show -> delete();
 
         return \Response::json(['response' => '','error' => 
             ['code' => Config::get('constants.codes.OkCode'), 

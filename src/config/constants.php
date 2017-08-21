@@ -13,8 +13,13 @@ return [
         'NonExistingShowsCode'     => 107,
         'ExistingEventCode'        => 108,
         'InvalidPasswordCode'      => 109,
-        'NonExistingEventCode'     => 110, 
+        'NonExistingEventCode'     => 110,
+        'ExistingShowCode'         => 111, 
+        'ExistingAdminCode'        => 112,
+        'NonExistingSponsorsCode'  => 113,
+        'ExistingSponsorCode'      => 114,
         'InvalidTokenCode'         => 202,
+        'InvalidCredentialsCode'   => 203,
         'InternalErrorCode'        => 999
     ],
     'msgs' => [
@@ -26,11 +31,16 @@ return [
         'NonExistingVolunteerMsg'  => 'NonExistingVolunteer',
         'NonExistingSalesMsg'      => 'NonExistingSales',
         'ExistingSaleMsg'          => 'ExistingSale',
-        'NonExistingShowsMgs'      => 'NonExistingShows',
+        'NonExistingShowsMsg'      => 'NonExistingShows',
         'ExistingEventMsg'         => 'ExistingEvent',
         'InvalidPasswordMsg'       => 'InvalidPassword',
         'NonExistingEventMsg'      => 'NonExistingEvent',
+        'ExistingAdminMsg'         => 'ExistingAdmin',
+        'ExistingShowMsg'          => 'ExistingShow',
+        'NonExistingSponsorsMsg'   => 'NonExistingSponsors',
+        'ExistingSponsorMsg'       => 'ExistingSponsor',
         'InvalidTokenMsg'          => 'InvalidToken',
+        'InvalidCredentialsMsg'    => 'InvalidCredentials',
         'InternalErrorMsg'         => 'InternalError'
     ],
     'tables' => [
@@ -42,12 +52,7 @@ return [
         'EventsTable'             => 'events'
     ],
     'fields' => [
-        'UserIdField'             => 'user_id',
-        'SalesIdField'            => 'sale_id',
-        'VolunteersIdField'       => 'volunteer_id',
-        'ShowsIdField'            => 'show_id',
-        'SponsorsIdField'         => 'sponsor_id',
-        'EventsIdField'           => 'event_id',
+        'IdField'                 => 'id',
         'NameField'               => 'name',
         'EmailField'              => 'email'
     ]

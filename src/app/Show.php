@@ -10,7 +10,7 @@ class Show extends Model {
 
     protected $fillable = ['name','description','schedule','image'];
 
-    public function Volunteers(){
+    public function volunteers(){
         return $this -> belongsToMany('App\Volunteer')->withTimestamps();
     }
 }

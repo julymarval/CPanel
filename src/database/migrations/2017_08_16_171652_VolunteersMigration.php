@@ -14,14 +14,14 @@ class VolunteersMigration extends Migration
     public function up()
     {
         Schema::create('volunteers', function (Blueprint $table) {
-            $table->increments('volunteer_id',10);
+            $table->increments('id',10);
             $table->string('name',80);
             $table->text('description')->nullable();
             $table->string('status',80)->nullable();
             $table->string('image',80)->nullable();
             $table->timestamps();
 
-            $table->index(['volunteer_id', 'name']);
+            $table->index(['id', 'name']);
         });
 
         Schema::create('show_volunteer',function(Blueprint $table){
@@ -29,8 +29,8 @@ class VolunteersMigration extends Migration
             $table->integer('volunteer_id')->unsigned();
 
             $table->primary(['show_id', 'volunteer_id']);
-            $table->foreign('show_id')->references('show_id')->on('shows')->onDelete('cascade');
-            $table->foreign('volunteer_id')->references('volunteer_id')->on('volunteers')->onDelete('cascade');
+            $table->foreign('show_id')->references('id')->on('shows')->onDelete('cascade');
+            $table->foreign('volunteer_id')->references('id')->on('volunteers')->onDelete('cascade');
             
             $table->timestamps();
         });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
@@ -34,7 +35,7 @@ class SalesController extends Controller
      */
     public function index()
     {
-        $sales = Sale::orderBy(Config::get('constants.fields.SalesIdField'),'ASC')->paginate(5);
+        $sales = Sale::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
 
         if(empty($sales)){
             return \Response::json(['response' => '','error' => 
@@ -126,8 +127,7 @@ class SalesController extends Controller
      */
     public function show($id)
     {
-        $sale = DB::table(Config::get('constants.tables.SalesTable'))
-            ->where(Config::get('constants.fields.SalesIdField'), $id)->first();
+        $sale = Sale::find($id);
         
         if(empty($sale)){
             return \Response::json(['response' => $sale,'error' => 
@@ -148,7 +148,7 @@ class SalesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sale = Sale::find($id);
     }
 
     /**
@@ -167,8 +167,7 @@ class SalesController extends Controller
         }
 
         else{
-            $sale = DB::table(Config::get('constants.tables.SalesTable'))
-            ->where(Config::get('constants.fields.SalesIdField'), $id) -> first();
+            $sale = Sale::find($id);
             
             $update = array();
             try{
@@ -194,9 +193,7 @@ class SalesController extends Controller
                     $update['image'] = $name;
                 }
 
-                $sale  = DB::table(Config::get('constants.tables.SalesTable'))
-                ->where(Config::get('constants.fields.SalesIdField'), $id)
-                ->update($update);
+                $sale -> update($update);
             }
             catch(QueryException $e){
                 \Log::error('Error creating sale: '.$e);
@@ -219,9 +216,8 @@ class SalesController extends Controller
      */
     public function destroy($id)
     {
-        DB::table(Config::get('constants.tables.SalesTable'))
-        ->where(Config::get('constants.fields.SalesIdField'), $id)
-        ->delete();
+        $sale = Sale::find($id);
+        $sale -> delete();
 
         return \Response::json(['response' => '','error' => 
             ['code' => Config::get('constants.codes.OkCode'), 

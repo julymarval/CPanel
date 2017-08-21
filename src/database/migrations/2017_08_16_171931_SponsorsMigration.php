@@ -14,7 +14,7 @@ class SponsorsMigration extends Migration
     public function up()
     {
         Schema::create('sponsors', function (Blueprint $table) {
-            $table->increments('sponsor_id');
+            $table->increments('id');
             $table->string('name',80);
             $table->text('description')->nullable();
             $table->string('level',80);
@@ -23,8 +23,8 @@ class SponsorsMigration extends Migration
             $table->timestamps();
             $table->integer('volunteer_id')->unsigned()->nullable();
 
-            $table->index(['sponsor_id', 'name']);
-            $table->foreign('volunteer_id')->references('volunteer_id')->on('volunteers')->onDelete('cascade');
+            $table->index(['id', 'name']);
+            $table->foreign('volunteer_id')->references('id')->on('volunteers')->onDelete('cascade');
         });
 
         Schema::create('event_sponsor',function(Blueprint $table){
@@ -33,8 +33,8 @@ class SponsorsMigration extends Migration
 
             $table->index(['event_id','sponsor_id']);
             $table->primary(['event_id', 'sponsor_id']);
-            $table->foreign('event_id')->references('event_id')->on('events')->onDelete('cascade');
-            $table->foreign('sponsor_id')->references('sponsor_id')->on('sponsors')->onDelete('cascade');
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->foreign('sponsor_id')->references('id')->on('sponsors')->onDelete('cascade');
             
             $table->timestamps();
         });

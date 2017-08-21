@@ -10,15 +10,15 @@ class Volunteer extends Model {
 
     protected $fillable = ['name','status','description','image'];
 
-    public function Events(){
+    public function events(){
         return $this -> belongsToMany('App\Event')->withTimestamps();
     }
 
-    public function Sponsors(){
-        return $this -> hasOne('App\Sponsor');
+    public function sponsor(){
+        return $this -> hasMany('App\Sponsor');
     }
 
-    public function Shows(){
-        return $this -> belongsToMany('App\Shows')->withTimestamps();
+    public function shows(){
+        return $this -> belongsToMany('App\Show')->withTimestamps();
     }
 }

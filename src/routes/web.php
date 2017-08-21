@@ -20,7 +20,11 @@ Route::get('/', function () {
 **/
 Route::group(['prefix' => 'admin'],function(){
     
-    Route::resource('users','UserController');
+    Route::resource('users','UserController', [
+        'only' => ['index', 'store', 'create', 'destroy', 'show','edit']]);
+    Route::post('users/{id}', [
+        'uses' => 'UserController@update',
+        'as'   => 'users.update']);
 });
 
 

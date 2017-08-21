@@ -10,11 +10,11 @@ class Event extends Model {
 
     protected $fillable = ['name','description','date'];
 
-    public function Sponsors(){
+    public function sponsors(){
         return $this -> belongsToMany('App\Sponsor')->withTimestamps();
     }
 
-    public function Volunteers(){
+    public function volunteers(){
         return $this -> belongsToMany('App\Volunteer')->withTimestamps();
     }
 }

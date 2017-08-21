@@ -14,13 +14,14 @@ class EventsMigration extends Migration
     public function up()
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->increments('event_id',10);
+            $table->increments('id',10);
             $table->string('name',80);
+            $table->string('date',80);
             $table->text('description')->nullable();
             $table->string('image',80)->nullable();
             $table->timestamps();
 
-            $table->index(['event_id', 'name']);
+            $table->index(['id', 'name']);
         });
 
         Schema::create('event_volunteer',function(Blueprint $table){
@@ -28,8 +29,8 @@ class EventsMigration extends Migration
             $table->integer('volunteer_id')->unsigned();
 
             $table->primary(['event_id', 'volunteer_id']);
-            $table->foreign('event_id')->references('event_id')->on('events')->onDelete('cascade');
-            $table->foreign('volunteer_id')->references('volunteer_id')->on('volunteers')->onDelete('cascade');
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->foreign('volunteer_id')->references('id')->on('volunteers')->onDelete('cascade');
             
             $table->timestamps();
         });

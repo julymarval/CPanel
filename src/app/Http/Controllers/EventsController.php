@@ -8,6 +8,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use Config;
 use App\Event;
+use App\Sponsor;
+use App\Volunteer;
 
 class EventsController extends Controller
 {
@@ -35,12 +37,12 @@ class EventsController extends Controller
      */
     public function index()
     {
-        $events = Event::orderBy(Config::get('constants.fields.EventsIdField'),'ASC')->paginate(5);
+        $events = Event::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
         
         if(empty($events)){
             return \Response::json(['response' => '','error' => 
-                ['code' => Config::get('constants.codes.NonExistingShowsCode'), 
-                'msg' => Config::get('constants.msgs.NonExistingShowsMsg')]], 500);
+                ['code' => Config::get('constants.codes.NonExistingEventCode'), 
+                'msg' => Config::get('constants.msgs.NonExistingEventMsg')]], 500);
         }
         
         return \Response::json(['response' => $events,'error' => 
@@ -55,7 +57,8 @@ class EventsController extends Controller
      */
     public function create()
     {
-        //
+        $sponsors   = Sponsor::orderBy('name','DESC')-> lists('name','id');
+        $volunteers = Volunteer::orderBy('name','DESC')-> lists('name','id');
     }
 
     /**
@@ -66,7 +69,7 @@ class EventsController extends Controller
      */
     public function store(Request $request)
     {
-        if (!empty($request -> name)) {
+        if (!$request -> name) {
             return \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.MissingInputCode'), 
                 'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
@@ -90,7 +93,7 @@ class EventsController extends Controller
             $event = new Event($request->all());
 
             $data = DB::table(Config::get('constants.tables.EventsTable'))
-                ->where(Config::get('constants.fields.NameField'), $event->name)->first();
+                ->where(Config::get('constants.fields.NameField'), $event -> name)->first();
 
             if(!empty($data)){
                 return \Response::json(['response' => '', 'error' => 
@@ -98,7 +101,38 @@ class EventsController extends Controller
                     'msg' => Config::get('constants.msgs.ExistingEventMsg')]], 500);
             }
 
-            $sale -> save();
+            if($request->file('image')){
+                $file = $request -> file('image');
+                $name = $request -> name . '.' . $file->getClientOriginalExtension();
+                $path = public_path() . '/images/events/';
+                $file -> move($path,$name);
+                $event -> image = $name;
+            }
+
+            $event -> save();
+
+            if(!empty($request -> volunteer_id)){
+                $volunteer = Volunteer::find($request -> volunteer_id);
+                
+                if(empty($volunteer)){
+                    return \Response::json(['response' => '', 'error' => 
+                        ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
+                        'msg'   => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
+                }
+                $event -> volunteers() -> attach($request -> volunteer_id);
+            }
+
+            if(!empty($request -> sponsor_id)){
+                $sponsor = Sponsor::find($request -> sponsor_id);
+                
+                if(empty($sponsor)){
+                    return \Response::json(['response' => '', 'error' => 
+                        ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
+                        'msg'   => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
+                }
+                $event -> sponsors() -> attach($request -> sponsor_id);
+            }
+
             return \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.OkCode'), 
                 'msg' => Config::get('constants.msgs.OkMsg')]], 200);
@@ -119,14 +153,26 @@ class EventsController extends Controller
      */
     public function show($id)
     {
-        $event = DB::table(Config::get('constants.tables.EventsTable'))
-        ->where(Config::get('constants.fields.EventsIdField'), $id)->first();
-    
-        if(empty($show)){
+        $event = Event::find($id);
+
+        if(empty($event)){
         return \Response::json(['response' => $event,'error' => 
             ['code' => Config::get('constants.codes.NonExistingEventCode'), 
             'msg' => Config::get('constants.msgs.NonExistingEventMsg')]], 500);
-    }
+        }
+
+        $my_sponsors   = $event -> sponsors   -> pluck('id')->all();
+        $my_volunteers = $event -> volunteers -> pluck('id')->all();
+
+        $sponsors   = Sponsor::orderBy('name','DESC') -> pluck('name','id');
+        $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name','id');
+        
+        /*return view('')
+        -> with('event', $event)
+        -> with('my_sponsors', $my_sponsors)
+        -> with('my_volunteers', $my_volunteers)
+        -> with('sponsors',$sponsors)
+        -> with('volunteers',$volunteers);*/
 
         return \Response::json(['response' => $event,'error' => 
             ['code' => Config::get('constants.codes.OkCode'), 
@@ -141,7 +187,7 @@ class EventsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $event = Event::find($id);
     }
 
     /**
@@ -153,18 +199,39 @@ class EventsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ((!$request -> name) && (!$request -> date) && (!$request -> description)) {
+        if ((!$request -> name) && (!$request -> date) && (!$request -> description) 
+            && !$request -> volunteer_id && !$request -> sponsor_id) {
             return \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.MissingInputCode'), 
                 'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 401);
         }
 
         else{
-            $event = DB::table(Config::get('constants.tables.EventsTable'))
-            ->where(Config::get('constants.fields.EventsIdField'), $id) -> first();
+            $event = Event::find($id);
 
             $update = array();
             try{
+                if(!empty($request -> volunteer_id)){
+                    $volunteer = Volunteer::find($request -> volunteer_id);
+                    
+                    if(empty($volunteer)){
+                        return \Response::json(['response' => '', 'error' => 
+                            ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
+                            'msg'   => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
+                    }
+                    $event -> volunteers() -> attach($request -> volunteer_id);
+                }
+
+                if(!empty($request -> sponsor_id)){
+                    $sponsor = Sponsor::find($request -> sponsor_id);
+                    
+                    if(empty($sponsor)){
+                        return \Response::json(['response' => '', 'error' => 
+                            ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
+                            'msg'   => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
+                    }
+                    $event -> sponsors() -> attach($request -> sponsor_id);
+                }
 
                 if(!empty($request -> name)){
                     $update['name'] = $request -> name;
@@ -216,9 +283,7 @@ class EventsController extends Controller
                     $update['image'] = $name;
                 }
 
-                DB::table(Config::get('constants.tables.EventsTable'))
-                ->where(Config::get('constants.fields.EventsIdField'), $id)
-                ->update($update);
+                $event -> update($update);
             }
             catch(QueryException $e){
                 \Log::error('Error creating sale: '.$e);
@@ -241,9 +306,8 @@ class EventsController extends Controller
      */
     public function destroy($id)
     {
-        DB::table(Config::get('constants.tables.EventsTable'))
-        ->where(Config::get('constants.fields.EventsIdField'), $id)
-        ->delete();
+        $event = Event::find($id);
+        $event -> delete();
 
         return \Response::json(['response' => '','error' => 
             ['code' => Config::get('constants.codes.OkCode'), 

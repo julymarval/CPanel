@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\User;
+use Config;
 
 class UserController extends Controller
 {
@@ -15,7 +16,7 @@ class UserController extends Controller
         // Apply the jwt.auth middleware to all methods in this controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
-        $this->middleware('jwt.auth', ['except' => ['store']]);
+        $this->middleware('jwt.auth');
     }
     
     /**
@@ -25,7 +26,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
+        
+        if(empty($users)){
+            return \Response::json(['response' => '','error' => 
+                ['code' => Config::get('constants.codes.NonExistingAdminCode'), 
+                'msg' => Config::get('constants.msgs.NonExistingAdminMsg')]], 500);
+        }
+        
+        return \Response::json(['response' => $users,'error' => 
+            ['code' => Config::get('constants.codes.OkCode'), 
+            'msg' => Config::get('constants.msgs.OkMsg')]], 200);
     }
 
     /**
@@ -47,7 +58,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         if (!is_array($request->all())) {
-            return \Response::json(['response' => '','error' => ['code' => 100, 'msg' => 'MisingInput']], 500);
+            return \Response::json(['response' => '','error' => 
+                ['code' => Config::get('constants.codes.MissingInputCode'), 
+                'msg'   => Config::get('constants.msgs.MisingInputMsg')]], 500);
         }
         
         $rules = [
@@ -60,8 +73,10 @@ class UserController extends Controller
             
             $validator = \Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                return \Response::json(['response' => '','error' => ['code' => 101, 'msg' => 'InvalidInput: ' . 
-                 $validator->errors()]], 500);
+                return \Response::json(['response' => '','error' => 
+                    ['code' => Config::get('constants.codes.InvalidInputCode'), 
+                    'msg'   => Config::get('constants.msgs.InvalidInputMsg') . ": " .  
+                    $validator->errors()]], 500);
             }
 
             $user = new User($request->all());
@@ -69,16 +84,22 @@ class UserController extends Controller
             $data = User::find($user->email);
 
             if(!empty($data)){
-                return \Response::json(['response' => '', 'error' => [ 'code' => 102, 'msg' => "ExistingUser"]], 500);
+                return \Response::json(['response' => '', 'error' => 
+                    [ 'code' => Config::get('constants.codes.ExistingAdminCode'), 
+                    'msg'    => Config::get('constants.msgs.ExistingAdminMsg')]], 500);
             }
 
             $user->password = bcrypt($request->password);
             $user -> save();
-            return \Response::json(['response' => '','error' => ['code' => 0, 'msg' => 'ok']], 200);
+            return \Response::json(['response' => '','error' => 
+                ['code' => Config::get('constants.codes.OkCode'), 
+                'msg'   => Config::get('constants.msgs.OkMsg')]], 200);
             
         } catch (Exception $e) {
             \Log::info('Error creating user: '.$e);
-            return \Response::json(['response' => '','error' => ['code' => 999, 'msg' => 'InternalError']], 500);
+            return \Response::json(['response' => '','error' => 
+                ['code' => Config::get('constants.codes.InternalErrorCode'), 
+                'msg'   => Config::get('constants.msgs.InternalErrorMsg')]], 500);
         }
     }
 
@@ -90,7 +111,17 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        
+        if(empty($user)){
+        return \Response::json(['response' => $show,'error' => 
+            ['code' => Config::get('constants.codes.NonExistingSalesCode'), 
+            'msg' => Config::get('constants.msgs.NonExistingSalesMsg')]], 500);
+        }
+
+        return \Response::json(['response' => $user,'error' => 
+            ['code' => Config::get('constants.codes.OkCode'), 
+            'msg' => Config::get('constants.msgs.OkMsg')]], 200);
     }
 
     /**
@@ -101,7 +132,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $admin = User::find($id);
     }
 
     /**
@@ -113,7 +144,38 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(!$request -> name){
+            return \Response::json(['response' => '','error' => 
+                ['code' => Config::get('constants.codes.MissingInputCode'), 
+                'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
+        }
+        
+        else{
+            $user = User::find($id);
+
+            $update = array();
+            try{
+                if(!empty($request -> name)){
+                    $update['name'] = $request -> name;
+                }
+
+                if(!empty($request -> password)){
+                    $update['password'] = bcrypt($request -> password);
+                }
+
+                $user -> update($update);
+            }
+            catch(QueryException $e){
+                \Log::error('Error updating show: '.$e);
+                return \Response::json(['response' => '','error' => 
+                    ['code' => Config::get('constants.codes.InternalErrorCode'), 
+                    'msg' => Config::get('constants.msgs.InternalErrorMsg')]], 500);
+            }
+        
+            return \Response::json(['response' => '','error' => 
+                ['code' => Config::get('constants.codes.OkCode'), 
+                'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+        }
     }
 
     /**
@@ -124,6 +186,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user -> delete();
+
+        return \Response::json(['response' => '','error' => 
+            ['code' => Config::get('constants.codes.OkCode'), 
+            'msg' => Config::get('constants.msgs.OkMsg')]], 200);
     }
 }

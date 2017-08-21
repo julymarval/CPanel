@@ -14,14 +14,14 @@ class SalesMigration extends Migration
     public function up()
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->increments('sale_id',10);
+            $table->increments('id',10);
             $table->string('name',80);
             $table->text('description')->nullable();
             $table->decimal('price',5,2);
             $table->string('image',80)->nullable();
             $table->timestamps();
 
-            $table->index(['sale_id', 'name']);
+            $table->index(['id', 'name']);
         });
     }
 

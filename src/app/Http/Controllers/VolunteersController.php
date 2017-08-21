@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\Volunteer;
+use App\Show;
+use App\Event;
 use Config;
 
 class VolunteersController extends Controller
@@ -36,12 +38,12 @@ class VolunteersController extends Controller
      */
     public function index()
     {
-        $volunteers = Volunteer::orderBy(Config::get('constants.fields.VolunteersIdField'),'ASC')->paginate(5);
+        $volunteers = Volunteer::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
         
         if(empty($volunteers)){
             return \Response::json(['response' => '','error' => 
-                ['code' => Config::get('constants.codes.NonExistingShowsCode'), 
-                'msg' => Config::get('constants.msgs.NonExistingShowsMsg')]], 500);
+                ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
+                'msg' => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
         }
         
         return \Response::json(['response' => $volunteers,'error' => 
@@ -67,7 +69,7 @@ class VolunteersController extends Controller
      */
     public function store(Request $request)
     {
-        if (empty($request -> name)) {
+        if (!$request -> name) {
             return \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.MissingInputCode'), 
                 'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
@@ -107,6 +109,17 @@ class VolunteersController extends Controller
             }
 
             $volunteer -> save();
+
+            if(!empty($request -> show_id)){
+                $show = Show::find($request -> show_id);
+                if(empty($show)){
+                    return \Response::json(['response' => '', 'error' => 
+                    ['code' => Config::get('constants.codes.NonExistingShowsCode'), 
+                    'msg'   => Config::get('constants.msgs.NonExistingShowsMsg')]], 500);
+                }
+                $volunteer -> shows() -> attach($request -> show_id);
+            }
+            
             return \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.OkCode'), 
                 'msg' => Config::get('constants.msgs.OkMsg')]], 200);
@@ -127,14 +140,20 @@ class VolunteersController extends Controller
      */
     public function show($id)
     {
-        $volunteer = DB::table(Config::get('constants.tables.VolunteersTable'))
-        ->where(Config::get('constants.fields.VolunteersIdField'), $id)->first();
+        $volunteer = Volunteer::find($id);
     
         if(empty($volunteer)){
             return \Response::json(['response' => $volunteer,'error' => 
                 ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
                 'msg' => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
         }
+
+        $my_shows  = $volunteer -> shows -> pluck('id')->all();
+        $my_events = $volunteer -> events -> pluck('id')->all();
+        $volunteer -> sponsor;
+
+        $events = Event::orderBy('name','DESC') -> pluck('name','id');
+        $shows  = Show::orderBy('name','DESC') -> pluck('name','id');
 
         return \Response::json(['response' => $volunteer,'error' => 
             ['code' => Config::get('constants.codes.OkCode'), 
@@ -149,6 +168,27 @@ class VolunteersController extends Controller
      */
     public function edit($id)
     {
+        $volunteer = Volunteer::find($id);
+        
+        if(empty($volunteer)){
+        return \Response::json(['response' => '','error' => 
+            ['code' => Config::get('constants.codes.NonExistingEventCode'), 
+            'msg'   => Config::get('constants.msgs.NonExistingEventMsg')]], 500);
+        }
+
+        $my_shows  = $volunteer -> shows -> pluck('id')->all();
+        $my_events = $volunteer -> events -> pluck('id')->all();
+        $volunteer -> sponsor;
+
+        $events = Event::orderBy('name','DESC') -> pluck('name','id');
+        $shows  = Show::orderBy('name','DESC') -> pluck('name','id');
+        
+        /*return view('')
+        -> with('volunteer', $volunteer)
+        -> with('my_shows', $my_shows)
+        -> with('my_events', $my_events)
+        -> with('events',$events)
+        -> with('shows',$shows);*/
         
     }
 
@@ -168,11 +208,20 @@ class VolunteersController extends Controller
         }
 
         else{
-            $volunteer = DB::table(Config::get('constants.tables.VolunteersTable'))
-            ->where(Config::get('constants.fields.VolunteersIdField'), $id) -> first();
+            $volunteer = Volunteer::find($id);
 
             $update = array();
             try{
+                if(!empty($request -> show_id)){
+                    $show = Show::find($request -> show_id);
+                    if(empty($show)){
+                        return \Response::json(['response' => '', 'error' => 
+                        ['code' => Config::get('constants.codes.NonExistingShowsCode'), 
+                        'msg'   => Config::get('constants.msgs.NonExistingShowsMsg')]], 500);
+                    }
+                    $volunteer -> shows() -> attach($request -> show_id);
+                }
+                
                 if(!empty($request -> name)){
                     $update['name'] = $request -> name;
                 }
@@ -197,9 +246,7 @@ class VolunteersController extends Controller
 
                 }
 
-                DB::table(Config::get('constants.tables.VolunteersTable'))
-                ->where(Config::get('constants.fields.VolunteersIdField'), $id)
-                ->update($update);
+                $volunteer -> update($update);
             }
             catch(QueryException $e){
                 \Log::error('Error updating show: '.$e);
@@ -222,9 +269,8 @@ class VolunteersController extends Controller
      */
     public function destroy($id)
     {
-        DB::table(Config::get('constants.tables.VolunteersTable'))
-        ->where(Config::get('constants.fields.VolunteersIdField'), $id)
-        ->delete();
+        $volunteer = Volunteer::find($id);
+        $volunteer -> delete();
 
         return \Response::json(['response' => '','error' => 
             ['code' => Config::get('constants.codes.OkCode'), 

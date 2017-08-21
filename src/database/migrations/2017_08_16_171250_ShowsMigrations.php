@@ -14,14 +14,14 @@ class ShowsMigrations extends Migration
     public function up()
     {
         Schema::create('shows', function (Blueprint $table) {
-            $table->increments('show_id',10);
+            $table->increments('id',10);
             $table->string('name',80);
             $table->text('description')->nullable();
             $table->string('image',80)->nullable();
             $table->string('schedule',100);
             $table->timestamps();
 
-            $table->index(['show_id', 'name']);
+            $table->index(['id', 'name']);
         });
 
     }
