@@ -38,14 +38,20 @@ class SalesController extends Controller
         $sales = Sale::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
 
         if(empty($sales)){
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.NonExistingSalesCode'), 
                 'msg' => Config::get('constants.msgs.NonExistingSalesMsg')]], 500);
+            
+            return view('') -> with('response', $response);
         }
         
-        return \Response::json(['response' => $sales,'error' => 
+        $response = \Response::json(['response' => $sales,'error' => 
             ['code' => Config::get('constants.codes.OkCode'), 
             'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+
+        return view('') 
+        -> with('response', $response)
+        -> with('sales', $sales);
     }
 
     /**
@@ -55,7 +61,7 @@ class SalesController extends Controller
      */
     public function create()
     {
-        
+        return view('');
     }
 
     /**
@@ -67,9 +73,11 @@ class SalesController extends Controller
     public function store(Request $request)
     {
         if (empty($request -> name) || (empty($request -> price))) {
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.MissingInputCode'), 
                 'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
+
+            return view('') -> with('response', $response);
         }
         
         $rules = [
@@ -81,10 +89,12 @@ class SalesController extends Controller
             
             $validator = \Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                return \Response::json(['response' => '','error' => 
+                $response = \Response::json(['response' => '','error' => 
                     ['code' => Config::get('constants.codes.InvalidInputCode'), 
                     'msg' => Config::get('constants.msgs.InvalidInputMsg') . ': ' .
                     $validator->errors()]], 500);
+
+                return view('') -> with('response', $response);
             }
 
             $sale = new Sale($request->all());
@@ -93,9 +103,11 @@ class SalesController extends Controller
                 ->where(Config::get('constants.fields.NameField'), $sale->name)->first();
 
             if(!empty($data)){
-                return \Response::json(['response' => '', 'error' => 
+                $response = \Response::json(['response' => '', 'error' => 
                     [ 'code' => Config::get('constants.codes.ExistingSaleCode'), 
                     'msg' => Config::get('constants.msgs.ExistingSaleMsg')]], 500);
+                
+                return view('') -> with('response', $response);
             }
 
             if($request->file('image')){
@@ -107,15 +119,19 @@ class SalesController extends Controller
             }
 
             $sale -> save();
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.OkCode'), 
                 'msg' => Config::get('constants.msgs.OkMsg')]], 200);
             
+            return view('') -> with('response', $response);
+            
         } catch (Exception $e) {
             \Log::info('Error creating sale: '.$e);
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.InternalErrorCode'), 
                 'msg' => Config::get('constants.msgs.InternalErrorMsg')]], 500);
+
+            return view('') -> with('response', $response);
         }
     }
 
@@ -130,14 +146,20 @@ class SalesController extends Controller
         $sale = Sale::find($id);
         
         if(empty($sale)){
-            return \Response::json(['response' => $sale,'error' => 
+            $response = \Response::json(['response' => $sale,'error' => 
                 ['code' => Config::get('constants.codes.NonExistingSalesCode'), 
                 'msg' => Config::get('constants.msgs.NonExistingSalesMsg')]], 500);
+
+            return view('') -> with('response', $response);
         }
 
-        return \Response::json(['response' => $sale,'error' => 
+        $response = \Response::json(['response' => $sale,'error' => 
             ['code' => Config::get('constants.codes.OkCode'), 
             'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+        
+        return view('') 
+        -> with('response', $response)
+        -> with('sale', $sale);
     }
 
     /**
@@ -149,6 +171,17 @@ class SalesController extends Controller
     public function edit($id)
     {
         $sale = Sale::find($id);
+
+        if(empty($sale)){
+            $response = \Response::json(['response' => '','error' => 
+            ['code' => Config::get('constants.codes.NonExistingEventCode'), 
+            'msg' => Config::get('constants.msgs.NonExistingEventMsg')]], 500);
+
+            return view('') -> with('response', $response);
+        }
+
+        return view('')
+        -> with('sale', $sale);
     }
 
     /**
@@ -161,9 +194,11 @@ class SalesController extends Controller
     public function update(Request $request, $id)
     {
         if(!$request -> name && !$request -> price && !$request -> description && !$request->file('image')){
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.MissingInputCode'), 
                 'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
+
+            return view('') -> with('response', $response);
         }
 
         else{
@@ -197,14 +232,18 @@ class SalesController extends Controller
             }
             catch(QueryException $e){
                 \Log::error('Error creating sale: '.$e);
-                return \Response::json(['response' => '','error' => 
+                $response = \Response::json(['response' => '','error' => 
                     ['code' => Config::get('constants.codes.InternalErrorCode'), 
                     'msg' => Config::get('constants.msgs.InternalErrorMsg')]], 500);
+
+                return view('') -> with('response', $response);
             }
         
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.OkCode'), 
                 'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+            
+            return view('') -> with('response', $response);
         }
     }
 
@@ -219,8 +258,10 @@ class SalesController extends Controller
         $sale = Sale::find($id);
         $sale -> delete();
 
-        return \Response::json(['response' => '','error' => 
+        $response = \Response::json(['response' => '','error' => 
             ['code' => Config::get('constants.codes.OkCode'), 
             'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+
+        return view('') -> with('response', $response);
     }
 }

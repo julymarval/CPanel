@@ -40,14 +40,20 @@ class EventsController extends Controller
         $events = Event::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
         
         if(empty($events)){
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.NonExistingEventCode'), 
                 'msg' => Config::get('constants.msgs.NonExistingEventMsg')]], 500);
+
+            return view('') -> with('response', $response);
         }
         
-        return \Response::json(['response' => $events,'error' => 
+        $response = \Response::json(['response' => $events,'error' => 
             ['code' => Config::get('constants.codes.OkCode'), 
             'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+
+        return view('')
+        -> with('events', $events)
+        -> with('response', $response);
     }
 
     /**
@@ -59,6 +65,10 @@ class EventsController extends Controller
     {
         $sponsors   = Sponsor::orderBy('name','DESC')-> lists('name','id');
         $volunteers = Volunteer::orderBy('name','DESC')-> lists('name','id');
+
+        return view('')
+        -> with ('sponsors', $sponsors)
+        -> with('volunteers', $volunteers);
     }
 
     /**
@@ -70,9 +80,11 @@ class EventsController extends Controller
     public function store(Request $request)
     {
         if (!$request -> name) {
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.MissingInputCode'), 
                 'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
+            
+            return view('') -> with('response', $response);
         }
         
         $rules = [
@@ -84,10 +96,12 @@ class EventsController extends Controller
             
             $validator = \Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                return \Response::json(['response' => '','error' => 
+                $response = \Response::json(['response' => '','error' => 
                     ['code' => Config::get('constants.codes.InvalidInputCode'), 
                     'msg' => Config::get('constants.msgs.InvalidInputMsg') . ': ' .
                     $validator->errors()]], 500);
+
+                return view('') -> with('response', $response);
             }
 
             $event = new Event($request->all());
@@ -96,9 +110,11 @@ class EventsController extends Controller
                 ->where(Config::get('constants.fields.NameField'), $event -> name)->first();
 
             if(!empty($data)){
-                return \Response::json(['response' => '', 'error' => 
+                $response = \Response::json(['response' => '', 'error' => 
                     [ 'code' => Config::get('constants.codes.ExistingEventCode'), 
                     'msg' => Config::get('constants.msgs.ExistingEventMsg')]], 500);
+
+                return view('') -> with('response', $response);
             }
 
             if($request->file('image')){
@@ -115,9 +131,11 @@ class EventsController extends Controller
                 $volunteer = Volunteer::find($request -> volunteer_id);
                 
                 if(empty($volunteer)){
-                    return \Response::json(['response' => '', 'error' => 
+                    $response = \Response::json(['response' => '', 'error' => 
                         ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
                         'msg'   => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
+                    
+                    return view('') -> with('response', $response);
                 }
                 $event -> volunteers() -> attach($request -> volunteer_id);
             }
@@ -126,22 +144,27 @@ class EventsController extends Controller
                 $sponsor = Sponsor::find($request -> sponsor_id);
                 
                 if(empty($sponsor)){
-                    return \Response::json(['response' => '', 'error' => 
+                    $response = \Response::json(['response' => '', 'error' => 
                         ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
                         'msg'   => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
+
+                    return view('') -> with('response', $response);
                 }
                 $event -> sponsors() -> attach($request -> sponsor_id);
             }
 
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.OkCode'), 
                 'msg' => Config::get('constants.msgs.OkMsg')]], 200);
             
+            return view('') -> with('response', $response);
         } catch (Exception $e) {
             \Log::info('Error creating sale: '.$e);
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.InternalErrorCode'), 
                 'msg' => Config::get('constants.msgs.InternalErrorMsg')]], 500);
+            
+            return view('') -> with('response', $response);
         }
     }
 
@@ -156,27 +179,32 @@ class EventsController extends Controller
         $event = Event::find($id);
 
         if(empty($event)){
-        return \Response::json(['response' => $event,'error' => 
-            ['code' => Config::get('constants.codes.NonExistingEventCode'), 
-            'msg' => Config::get('constants.msgs.NonExistingEventMsg')]], 500);
+            $response = \Response::json(['response' => '','error' => 
+                ['code' => Config::get('constants.codes.NonExistingEventCode'), 
+                'msg' => Config::get('constants.msgs.NonExistingEventMsg')]], 500);
+                
+            return view('')-> with('response', $response);
         }
 
-        $my_sponsors   = $event -> sponsors   -> pluck('id')->all();
-        $my_volunteers = $event -> volunteers -> pluck('id')->all();
+        $my_sponsors   = $event -> sponsors   -> pluck('id', 'name')->all();
+        $my_volunteers = $event -> volunteers -> pluck('id', 'name')->all();
 
         $sponsors   = Sponsor::orderBy('name','DESC') -> pluck('name','id');
         $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name','id');
+
+        $response = \Response::json(['response' => $event,'error' => 
+            ['code' => Config::get('constants.codes.OkCode'), 
+            'msg' => Config::get('constants.msgs.OkMsg')]], 200);
         
-        /*return view('')
+        return view('')
+        -> with('response', $response)
         -> with('event', $event)
         -> with('my_sponsors', $my_sponsors)
         -> with('my_volunteers', $my_volunteers)
         -> with('sponsors',$sponsors)
-        -> with('volunteers',$volunteers);*/
+        -> with('volunteers',$volunteers);
 
-        return \Response::json(['response' => $event,'error' => 
-            ['code' => Config::get('constants.codes.OkCode'), 
-            'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+        
     }
 
     /**
@@ -188,6 +216,29 @@ class EventsController extends Controller
     public function edit($id)
     {
         $event = Event::find($id);
+
+        if(empty($event)){
+            $response = \Response::json(['response' => '','error' => 
+            ['code' => Config::get('constants.codes.NonExistingEventCode'), 
+            'msg' => Config::get('constants.msgs.NonExistingEventMsg')]], 500);
+
+            return view('') -> with('response', $response);
+        }
+
+        $my_volunteers = $event -> volunteers -> pluck('id', 'name')->all();        
+        $my_sponsors   = $event -> sponsors   -> pluck('id', 'name')->all();
+
+        $response = \Response::json(['response' => $event,'error' => 
+        ['code' => Config::get('constants.codes.OkCode'), 
+        'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+
+        return view('')
+        -> with('response', $response)
+        -> with('event', $event)
+        -> with('volunteers', $my_volunteers)
+        -> with('sponsors', $my_sponsors);
+
+        
     }
 
     /**
@@ -201,9 +252,11 @@ class EventsController extends Controller
     {
         if ((!$request -> name) && (!$request -> date) && (!$request -> description) 
             && !$request -> volunteer_id && !$request -> sponsor_id) {
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.MissingInputCode'), 
                 'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 401);
+
+            return view('') -> with('response', $response);
         }
 
         else{
@@ -215,9 +268,11 @@ class EventsController extends Controller
                     $volunteer = Volunteer::find($request -> volunteer_id);
                     
                     if(empty($volunteer)){
-                        return \Response::json(['response' => '', 'error' => 
+                        $response = \Response::json(['response' => '', 'error' => 
                             ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
                             'msg'   => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
+                        
+                        return view('') -> with('response', $response);
                     }
                     $event -> volunteers() -> attach($request -> volunteer_id);
                 }
@@ -226,9 +281,11 @@ class EventsController extends Controller
                     $sponsor = Sponsor::find($request -> sponsor_id);
                     
                     if(empty($sponsor)){
-                        return \Response::json(['response' => '', 'error' => 
+                        $response = \Response::json(['response' => '', 'error' => 
                             ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
                             'msg'   => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
+                        
+                        return view('') -> with('response', $response);
                     }
                     $event -> sponsors() -> attach($request -> sponsor_id);
                 }
@@ -238,14 +295,15 @@ class EventsController extends Controller
                     $rules = [
                         'name' => 'min:2|max:80|unique:events',
                     ];
-            
-                        
+                               
                     $validator = \Validator::make($request -> name, $rules);
                     if ($validator->fails()) {
-                        return \Response::json(['response' => '','error' => 
+                        $response = \Response::json(['response' => '','error' => 
                             ['code' => Config::get('constants.codes.InvalidInputCode'), 
                             'msg' => Config::get('constants.msgs.InvalidInputMsg') . ': ' .
                             $validator->errors()]], 500);
+                        
+                        return view('') -> with('response', $response);
                     }
     
                 }
@@ -260,10 +318,12 @@ class EventsController extends Controller
                         
                     $validator = \Validator::make($request->all(), $rules);
                     if ($validator->fails()) {
-                        return \Response::json(['response' => '','error' => 
+                        $response = \Response::json(['response' => '','error' => 
                             ['code' => Config::get('constants.codes.InvalidInputCode'), 
                             'msg' => Config::get('constants.msgs.InvalidInputMsg') . ': ' .
                             $validator->errors()]], 500);
+
+                        return view('') -> with('response', $response);
                     }
     
                 }
@@ -287,14 +347,18 @@ class EventsController extends Controller
             }
             catch(QueryException $e){
                 \Log::error('Error creating sale: '.$e);
-                return \Response::json(['response' => '','error' => 
+                $response = \Response::json(['response' => '','error' => 
                     ['code' => Config::get('constants.codes.InternalErrorCode'), 
                     'msg' => Config::get('constants.msgs.InternalErrorMsg')]], 500);
+                
+                return view('') -> with('response', $response);
             }
         
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.OkCode'), 
                 'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+
+            return view('') -> with('response', $response);
         }
     }
 
@@ -309,8 +373,10 @@ class EventsController extends Controller
         $event = Event::find($id);
         $event -> delete();
 
-        return \Response::json(['response' => '','error' => 
+        $response = \Response::json(['response' => '','error' => 
             ['code' => Config::get('constants.codes.OkCode'), 
             'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+
+        return view('') -> with('response', $response);
     }
 }

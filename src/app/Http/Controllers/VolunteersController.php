@@ -41,14 +41,20 @@ class VolunteersController extends Controller
         $volunteers = Volunteer::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
         
         if(empty($volunteers)){
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
                 'msg' => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
+
+            return view('') -> with('response', $response);
         }
         
-        return \Response::json(['response' => $volunteers,'error' => 
+        $response = \Response::json(['response' => $volunteers,'error' => 
             ['code' => Config::get('constants.codes.OkCode'), 
             'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+
+        return view('') 
+        -> with('response', $response)
+        -> with('volunteers', $volunteers);
     }
 
     /**
@@ -58,7 +64,12 @@ class VolunteersController extends Controller
      */
     public function create()
     {
-        //
+        $sponsors = Sponsor::orderBy('name','DESC')-> lists('name','id');
+        $shows = Show::orderBy('name','DESC')-> lists('name','id');
+
+        return view('')
+        -> with('sponsors', $sponsors)
+        -> with('shows', $shows);
     }
 
     /**
@@ -70,9 +81,11 @@ class VolunteersController extends Controller
     public function store(Request $request)
     {
         if (!$request -> name) {
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.MissingInputCode'), 
                 'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
+
+            return view('') -> with('response', $response);
         }
         
         $rules = [
@@ -83,10 +96,12 @@ class VolunteersController extends Controller
             
             $validator = \Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                return \Response::json(['response' => '','error' => 
+                $response = \Response::json(['response' => '','error' => 
                     ['code' => Config::get('constants.codes.InvalidInputCode'), 
                     'msg' => Config::get('constants.msgs.InvalidInputMsg') . ': ' .
                     $validator->errors()]], 500);
+                
+                return view('') -> with('response', $response);
             }
 
             $volunteer = new Volunteer($request->all());
@@ -113,22 +128,28 @@ class VolunteersController extends Controller
             if(!empty($request -> show_id)){
                 $show = Show::find($request -> show_id);
                 if(empty($show)){
-                    return \Response::json(['response' => '', 'error' => 
+                    $response = \Response::json(['response' => '', 'error' => 
                     ['code' => Config::get('constants.codes.NonExistingShowsCode'), 
                     'msg'   => Config::get('constants.msgs.NonExistingShowsMsg')]], 500);
+
+                    return view('') -> with('response', $response);
                 }
                 $volunteer -> shows() -> attach($request -> show_id);
             }
             
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.OkCode'), 
                 'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+
+            return view('') -> with('response', $response);
             
         } catch (Exception $e) {
             \Log::info('Error creating sale: '.$e);
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.InternalErrorCode'), 
                 'msg' => Config::get('constants.msgs.InternalErrorMsg')]], 500);
+
+            return view('') -> with('response', $response);
         }
     }
 
@@ -143,22 +164,25 @@ class VolunteersController extends Controller
         $volunteer = Volunteer::find($id);
     
         if(empty($volunteer)){
-            return \Response::json(['response' => $volunteer,'error' => 
+            $response = \Response::json(['response' => $volunteer,'error' => 
                 ['code' => Config::get('constants.codes.NonExistingVolunteerCode'), 
                 'msg' => Config::get('constants.msgs.NonExistingVolunteerMsg')]], 500);
         }
 
-        $my_shows  = $volunteer -> shows -> pluck('id')->all();
-        $my_events = $volunteer -> events -> pluck('id')->all();
+        $my_shows  = $volunteer -> shows -> pluck('id', 'name')->all();
+        $my_events = $volunteer -> events -> pluck('id', 'name')->all();
         $volunteer -> sponsor;
 
-        $events = Event::orderBy('name','DESC') -> pluck('name','id');
-        $shows  = Show::orderBy('name','DESC') -> pluck('name','id');
-
-        return \Response::json(['response' => $volunteer,'error' => 
+        $response = \Response::json(['response' => $volunteer,'error' => 
             ['code' => Config::get('constants.codes.OkCode'), 
             'msg' => Config::get('constants.msgs.OkMsg')]], 200);
-        }
+        
+        return view('')    
+        -> with('response', $response)
+        -> with('volunteer', $volunteer)
+        -> with('my_shows', $my_shows)
+        -> with('my_events', $my_events);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -171,9 +195,11 @@ class VolunteersController extends Controller
         $volunteer = Volunteer::find($id);
         
         if(empty($volunteer)){
-        return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
             ['code' => Config::get('constants.codes.NonExistingEventCode'), 
             'msg'   => Config::get('constants.msgs.NonExistingEventMsg')]], 500);
+
+            return view('') -> with('response', $response);
         }
 
         $my_shows  = $volunteer -> shows -> pluck('id')->all();
@@ -183,12 +209,12 @@ class VolunteersController extends Controller
         $events = Event::orderBy('name','DESC') -> pluck('name','id');
         $shows  = Show::orderBy('name','DESC') -> pluck('name','id');
         
-        /*return view('')
+        return view('')
         -> with('volunteer', $volunteer)
         -> with('my_shows', $my_shows)
         -> with('my_events', $my_events)
         -> with('events',$events)
-        -> with('shows',$shows);*/
+        -> with('shows',$shows);
         
     }
 
@@ -202,9 +228,11 @@ class VolunteersController extends Controller
     public function update(Request $request, $id)
     {
         if(!$request -> name && !$request -> status && !$request -> description && !$request->file('image')){
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.MissingInputCode'), 
                 'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
+
+            return view('') -> with('response', $response);
         }
 
         else{
@@ -215,9 +243,11 @@ class VolunteersController extends Controller
                 if(!empty($request -> show_id)){
                     $show = Show::find($request -> show_id);
                     if(empty($show)){
-                        return \Response::json(['response' => '', 'error' => 
+                        $response = \Response::json(['response' => '', 'error' => 
                         ['code' => Config::get('constants.codes.NonExistingShowsCode'), 
                         'msg'   => Config::get('constants.msgs.NonExistingShowsMsg')]], 500);
+
+                        return view('') -> with('response', $response);
                     }
                     $volunteer -> shows() -> attach($request -> show_id);
                 }
@@ -250,14 +280,18 @@ class VolunteersController extends Controller
             }
             catch(QueryException $e){
                 \Log::error('Error updating show: '.$e);
-                return \Response::json(['response' => '','error' => 
+                $response = \Response::json(['response' => '','error' => 
                     ['code' => Config::get('constants.codes.InternalErrorCode'), 
                     'msg' => Config::get('constants.msgs.InternalErrorMsg')]], 500);
+
+                return view('') -> with('response', $response);
             }
         
-            return \Response::json(['response' => '','error' => 
+            $response = \Response::json(['response' => '','error' => 
                 ['code' => Config::get('constants.codes.OkCode'), 
                 'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+
+            return view('') -> with('response', $response);
         }
     }
 
@@ -272,8 +306,10 @@ class VolunteersController extends Controller
         $volunteer = Volunteer::find($id);
         $volunteer -> delete();
 
-        return \Response::json(['response' => '','error' => 
+        $response = \Response::json(['response' => '','error' => 
             ['code' => Config::get('constants.codes.OkCode'), 
             'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+
+        return view('') -> with('response', $response);
     }
 }
