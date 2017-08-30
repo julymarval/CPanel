@@ -102,3 +102,20 @@ Route::group(['prefix' => 'admin'],function(){
         Route::post('authenticate', 'AuthenticateController@authenticate');
     
 });
+
+/**
+* Donate Route
+**/
+Route::group(['prefix' => 'api'],function(){
+    
+    Route::resource('donate','DonateController',[
+        'only' => ['index', 'store', 'create', 'destroy', 'show']]);
+});
+
+/**
+* UpdateDB Route
+**/
+Route::group(['prefix' => 'admin'],function(){
+    
+    Route::resource('updatedb','UpdateDBController',['only' => ['index']]);
+});

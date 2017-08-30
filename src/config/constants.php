@@ -20,6 +20,7 @@ return [
         'ExistingSponsorCode'      => 114,
         'InvalidTokenCode'         => 202,
         'InvalidCredentialsCode'   => 203,
+        'TokenExpiredCode'         => 204,
         'InternalErrorCode'        => 999
     ],
     'msgs' => [
@@ -41,6 +42,7 @@ return [
         'ExistingSponsorMsg'       => 'ExistingSponsor',
         'InvalidTokenMsg'          => 'InvalidToken',
         'InvalidCredentialsMsg'    => 'InvalidCredentials',
+        'TokenExpiredMsg'          => 'TokenExpired',
         'InternalErrorMsg'         => 'InternalError'
     ],
     'tables' => [
