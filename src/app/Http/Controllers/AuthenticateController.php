@@ -32,32 +32,55 @@ class AuthenticateController extends Controller {
         ->where(Config::get('constants.fields.EmailField'), $request -> email)->first();
         
         if(empty($user)){
-            return response()->json(['response' => '','error' => 
-                ['code' => Config::get('constants.codes.NonExistingAdminCode'), 
-                'msg'   => Config::get('constants.msgs.NonExistingAdminMsg')]], 401);
+            
+            $code = Config::get('constants.codes.NonExistingAdminCode');
+            $msg = Config::get('constants.msgs.NonExistingAdminMsg');
+           
+            return view('login')
+            -> with('code', $code, 401)
+            -> with ('msg', $msg)
+            -> with('token','');
         }
 
         if(!Hash::check($request -> password, $user -> password)){
-            return response()->json(['response' => '','error' => 
-                ['code' => Config::get('constants.codes.InvalidPasswordCode'), 
-                'msg'   => Config::get('constants.msgs.InvalidPasswordMsg')]], 401);
+            
+            $code = Config::get('constants.codes.InvalidPasswordCode');
+            $msg = Config::get('constants.msgs.InvalidPasswordMsg');
+           
+            return view('login')
+            -> with('code', $code, 401)
+            -> with ('msg', $msg)
+            -> with('token','');
         }
 
         try {
             // verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['response' => '','error' => 
-                    ['code' => Config::get('constants.codes.InvalidCredentialsCode'), 
-                    'msg'   => Config::get('constants.msgs.InvalidCredentialsMsg')]], 401);
+                
+                $code = Config::get('constants.codes.InvalidCredentialsCode');
+                $msg = Config::get('constants.msgs.InvalidCredentialsMsg');
+               
+                return view('login')
+                -> with('code', $code, 401)
+                -> with ('msg', $msg)
+                -> with('token','');
             }
         } catch (JWTException $e) {
-            // something went wrong
-            return response()->json(['response' => '','error' => ['code' => 999, 'msg' => 'InternalError']], 500);
+            
+            $code = Config::get('constants.codes.InternalErrorCode');
+            $msg = Config::get('constants.msgs.InternalErrorMsg');
+           
+            return view('login')
+            -> with('code', $code, 500)
+            -> with ('msg', $msg)
+            -> with('token','');
         }
+        $code = Config::get('constants.codes.OkCode');
+        $msg = Config::get('constants.msgs.OkMsg');
 
-        // if no errors are encountered we can return a JWT
-        return \Response::json(['response' => compact('token'),'error' => 
-            ['code' => Config::get('constants.codes.OkCode'),
-             'msg'  => Config::get('constants.msgs.OkMsg')]], 200);
+        return view('login')
+        -> with('code', $code)
+        -> with ('msg', $msg)
+        -> with('token',$token, 200);
     }
 }
