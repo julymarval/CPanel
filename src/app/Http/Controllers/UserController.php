@@ -29,20 +29,21 @@ class UserController extends Controller
         $users = User::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
         
         if(empty($users)){
-            $response = \Response::json(['response' => '','error' => 
-                ['code' => Config::get('constants.codes.NonExistingAdminCode'), 
-                'msg' => Config::get('constants.msgs.NonExistingAdminMsg')]], 500);
+            $code = Config::get('constants.codes.NonExistingAdminCode'); 
+            $msg = Config::get('constants.msgs.NonExistingAdminMsg');
 
-            return view('') -> with('response', $response);
+            return view('')
+            -> with('code', $code)
+            -> with('msg', $msg);
         }
         
-        $response = \Response::json(['response' => $users,'error' => 
-            ['code' => Config::get('constants.codes.OkCode'), 
-            'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+        $code = Config::get('constants.codes.OkCode');
+        $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('') 
-        -> with('response', $response)
-        -> with('users', $users);
+            return view('')
+            -> with('code', $code)
+            -> with('msg', $msg)
+            -> with('users', $users);
     }
 
     /**
@@ -64,11 +65,12 @@ class UserController extends Controller
     public function store(Request $request)
     {
         if (!is_array($request->all())) {
-            $response = \Response::json(['response' => '','error' => 
-                ['code' => Config::get('constants.codes.MissingInputCode'), 
-                'msg'   => Config::get('constants.msgs.MisingInputMsg')]], 500);
+            $code = Config::get('constants.codes.MissingInputCode'); 
+            $msg = Config::get('constants.msgs.MisingInputMsg');
 
-            return view('') -> with('response', $response);
+            return view('')
+            -> with('code', $code)
+            -> with('msg', $msg);
         }
         
         $rules = [
@@ -81,12 +83,12 @@ class UserController extends Controller
             
             $validator = \Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                $response = \Response::json(['response' => '','error' => 
-                    ['code' => Config::get('constants.codes.InvalidInputCode'), 
-                    'msg'   => Config::get('constants.msgs.InvalidInputMsg') . ": " .  
-                    $validator->errors()]], 500);
+                $code = Config::get('constants.codes.InvalidInputCode'); 
+                $msg = Config::get('constants.msgs.InvalidInputMsg') . ": " .  $validator->errors();
 
-                return view('') -> with('response', $response);
+                return view('')
+                -> with('code', $code)
+                -> with('msg', $msg);
             }
 
             $user = new User($request->all());
@@ -94,28 +96,31 @@ class UserController extends Controller
             $data = User::find($user->email);
 
             if(!empty($data)){
-                $response = \Response::json(['response' => '', 'error' => 
-                    [ 'code' => Config::get('constants.codes.ExistingAdminCode'), 
-                    'msg'    => Config::get('constants.msgs.ExistingAdminMsg')]], 500);
+                $code = Config::get('constants.codes.ExistingAdminCode'); 
+                $msg = Config::get('constants.msgs.ExistingAdminMsg');
 
-                return view('') -> with('response', $response);
+                return view('')
+                -> with('code', $code)
+                -> with('msg', $msg);
             }
 
             $user->password = bcrypt($request->password);
             $user -> save();
-            $response = \Response::json(['response' => '','error' => 
-                ['code' => Config::get('constants.codes.OkCode'), 
-                'msg'   => Config::get('constants.msgs.OkMsg')]], 200);
+            $code = Config::get('constants.codes.OkCode');
+            $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('') -> with('response', $response);
+            return view('')
+            -> with('code', $code)
+            -> with('msg', $msg);
             
         } catch (Exception $e) {
             \Log::info('Error creating user: '.$e);
-            $response = \Response::json(['response' => '','error' => 
-                ['code' => Config::get('constants.codes.InternalErrorCode'), 
-                'msg'   => Config::get('constants.msgs.InternalErrorMsg')]], 500);
+            $code = Config::get('constants.codes.InternalErrorCode'); 
+            $msg = Config::get('constants.msgs.InternalErrorMsg');
 
-            return view('') -> with('response', $response);
+            return view('')
+            -> with('code', $code)
+            -> with('msg', $msg);
         }
     }
 
@@ -130,19 +135,20 @@ class UserController extends Controller
         $user = User::find($id);
         
         if(empty($user)){
-        $response = \Response::json(['response' => $show,'error' => 
-            ['code' => Config::get('constants.codes.NonExistingSalesCode'), 
-            'msg' => Config::get('constants.msgs.NonExistingSalesMsg')]], 500);
+            $code = Config::get('constants.codes.NonExistingSalesCode'); 
+            $msg = Config::get('constants.msgs.NonExistingSalesMsg');
 
-            return view('') -> with('response', $response);
+            return view('')
+            -> with('code', $code)
+            -> with('msg', $msg);
         }
 
-        $response = \Response::json(['response' => $user,'error' => 
-            ['code' => Config::get('constants.codes.OkCode'), 
-            'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+        $code = Config::get('constants.codes.OkCode'); 
+        $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('') 
-        -> with('response', $response)
+        return view('')
+        -> with('code', $code)
+        -> with('msg', $msg)
         -> with('user', $user);
     }
 
@@ -157,14 +163,21 @@ class UserController extends Controller
         $user = User::find($id);
 
         if(empty($user)){
-            $response = \Response::json(['response' => '','error' => 
-            ['code' => Config::get('constants.codes.NonExistingEventCode'), 
-            'msg' => Config::get('constants.msgs.NonExistingEventMsg')]], 500);
+            $code = Config::get('constants.codes.NonExistingEventCode'); 
+            $msg = Config::get('constants.msgs.NonExistingEventMsg');
 
-            return view('') -> with('response', $response);
+            return view('')
+            -> with('code', $code)
+            -> with('msg', $msg);
         }
 
-        return view('') -> with('user', $user);
+        $code = Config::get('constants.codes.OkCode'); 
+        $msg = Config::get('constants.msgs.OkMsg');
+
+        return view('')
+        -> with('code', $code)
+        -> with('msg', $msg)
+        -> with('user', $user);
     }
 
     /**
@@ -177,11 +190,12 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         if(!$request -> name){
-            $response = \Response::json(['response' => '','error' => 
-                ['code' => Config::get('constants.codes.MissingInputCode'), 
-                'msg'   => Config::get('constants.msgs.MissingInputMsg')]], 500);
+            $code = Config::get('constants.codes.MissingInputCode'); 
+            $msg = Config::get('constants.msgs.MissingInputMsg');
 
-            return view('') -> with('response', $response);
+            return view('')
+            -> with('code', $code)
+            -> with('msg', $msg);
         }
         
         else{
@@ -201,18 +215,20 @@ class UserController extends Controller
             }
             catch(QueryException $e){
                 \Log::error('Error updating show: '.$e);
-                $response = \Response::json(['response' => '','error' => 
-                    ['code' => Config::get('constants.codes.InternalErrorCode'), 
-                    'msg' => Config::get('constants.msgs.InternalErrorMsg')]], 500);
+                $code = Config::get('constants.codes.InternalErrorCode'); 
+                $msg = Config::get('constants.msgs.InternalErrorMsg');
 
-                return view('') -> with('response', $response);
+                return view('')
+                -> with('code', $code)
+                -> with('msg', $msg);
             }
         
-            $response = \Response::json(['response' => '','error' => 
-                ['code' => Config::get('constants.codes.OkCode'), 
-                'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+            $code = Config::get('constants.codes.OkCode'); 
+            $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('') -> with('response', $response);
+            return view('')
+            -> with('code', $code)
+            -> with('msg', $msg);
         }
     }
 
@@ -227,10 +243,11 @@ class UserController extends Controller
         $user = User::find($id);
         $user -> delete();
 
-        $response = \Response::json(['response' => '','error' => 
-            ['code' => Config::get('constants.codes.OkCode'), 
-            'msg' => Config::get('constants.msgs.OkMsg')]], 200);
+        $code = Config::get('constants.codes.OkCode'); 
+        $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('') -> with('response', $response);
+        return view('')
+        -> with('code', $code)
+        -> with('msg', $msg);
     }
 }
