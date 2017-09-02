@@ -249,6 +249,7 @@ class VolunteersController extends Controller
 
                         return view('') -> with('response', $response);
                     }
+                    
                     $volunteer -> shows() -> attach($request -> show_id);
                 }
                 

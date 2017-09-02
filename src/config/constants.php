@@ -51,7 +51,9 @@ return [
         'VolunteersTable'         => 'volunteers',
         'ShowsTable'              => 'shows',
         'SponsorsTable'           => 'sponsors',
-        'EventsTable'             => 'events'
+        'EventsTable'             => 'events',
+        'Show_Volunteer'          => 'show_volunteer',
+        'Event_Volunteer'         => 'event_volunteer'
     ],
     'fields' => [
         'IdField'                 => 'id',

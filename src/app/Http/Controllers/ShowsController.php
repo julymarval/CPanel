@@ -253,6 +253,7 @@ class ShowsController extends Controller
                         
                         return view('') -> with('response', $response);
                     }
+                    
                     $show -> volunteers() -> attach($request -> volunteer_id);
                 }
                 
