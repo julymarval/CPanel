@@ -44,7 +44,7 @@ class EventsController extends Controller
             $code = Config::get('constants.codes.NonExistingEventCode'); 
             $msg = Config::get('constants.msgs.NonExistingEventMsg');
 
-            return view('') 
+            return view('event.index_event') 
             -> with('code', $code)
             -> with('msg',$msg);
         }
@@ -52,7 +52,7 @@ class EventsController extends Controller
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('')
+        return view('event.index_event')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('events', $events);
@@ -71,7 +71,7 @@ class EventsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('')
+        return view('event.create_event')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with ('sponsors', $sponsors)
@@ -203,7 +203,7 @@ class EventsController extends Controller
             $code = Config::get('constants.codes.NonExistingEventCode'); 
             $msg = Config::get('constants.msgs.NonExistingEventMsg');
                 
-            return view('')
+            return view('event.show_event')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -217,7 +217,7 @@ class EventsController extends Controller
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
         
-        return view('')
+        return view('event.show_event')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('event', $event)
@@ -244,7 +244,7 @@ class EventsController extends Controller
             $code = Config::get('constants.codes.NonExistingEventCode');
             $msg = Config::get('constants.msgs.NonExistingEventMsg');
 
-            return view('') 
+            return view('event.edit_event') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -255,7 +255,7 @@ class EventsController extends Controller
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('')
+        return view('event.edit_event')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('event', $event)
@@ -410,7 +410,7 @@ class EventsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('') 
+        return view('event.delete_event') 
         -> with('code', $code)
         -> with('msg', $msg);
     }

@@ -43,7 +43,7 @@ class SponsorsController extends Controller
             $code = Config::get('constants.codes.NonExistingSponsorsCode'); 
             $msg = Config::get('constants.msgs.NonExistingSponsorsMsg');
 
-            return view('') 
+            return view('sponsors.index_sponsor') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -51,7 +51,7 @@ class SponsorsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('') 
+        return view('sponsors.index_sponsor') 
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('sponsors', $sponsors);
@@ -183,7 +183,7 @@ class SponsorsController extends Controller
             $code = Config::get('constants.codes.NonExistingSponsorsCode'); 
             $msg = Config::get('constants.msgs.NonExistingSponsorsMsg');
 
-            return view('') 
+            return view('sponsors.show_sponsor') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -194,7 +194,7 @@ class SponsorsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('') 
+        return view('sponsors.show_sponsor') 
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('sponsor', $sponsor)
@@ -216,7 +216,7 @@ class SponsorsController extends Controller
             $code = Config::get('constants.codes.NonExistingSponsorsCode'); 
             $msg = Config::get('constants.msgs.NonExistingSponsorsMsg');
 
-            return view('') 
+            return view('sponsors.edit_sponsor') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -230,7 +230,7 @@ class SponsorsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
         
-        return view('')
+        return view('sponsors.edit_sponsor')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('sponsor', $sponsor)
@@ -354,7 +354,7 @@ class SponsorsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('')
+        return view('sponsors.delete_sponsor')
         -> with('code', $code)
         -> with('msg', $msg);
     }

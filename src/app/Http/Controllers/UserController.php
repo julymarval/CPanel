@@ -32,7 +32,7 @@ class UserController extends Controller
             $code = Config::get('constants.codes.NonExistingAdminCode'); 
             $msg = Config::get('constants.msgs.NonExistingAdminMsg');
 
-            return view('')
+            return view('users.index_user')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -40,7 +40,7 @@ class UserController extends Controller
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('')
+            return view('users.index_user')
             -> with('code', $code)
             -> with('msg', $msg)
             -> with('users', $users);
@@ -53,7 +53,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('');
+        return view('users.create_user');
     }
 
     /**
@@ -138,7 +138,7 @@ class UserController extends Controller
             $code = Config::get('constants.codes.NonExistingSalesCode'); 
             $msg = Config::get('constants.msgs.NonExistingSalesMsg');
 
-            return view('')
+            return view('users.show_user')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -146,7 +146,7 @@ class UserController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('')
+        return view('users.show_user')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('user', $user);
@@ -166,7 +166,7 @@ class UserController extends Controller
             $code = Config::get('constants.codes.NonExistingEventCode'); 
             $msg = Config::get('constants.msgs.NonExistingEventMsg');
 
-            return view('')
+            return view('users.edit_user')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -174,7 +174,7 @@ class UserController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('')
+        return view('users.edit_user')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('user', $user);
@@ -246,7 +246,7 @@ class UserController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('')
+        return view('users.delete_user')
         -> with('code', $code)
         -> with('msg', $msg);
     }

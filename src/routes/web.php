@@ -99,7 +99,9 @@ Route::group(['prefix' => 'api'],function(){
 Route::group(['prefix' => 'admin'],function(){
     
         Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
-        Route::post('authenticate', 'AuthenticateController@authenticate');
+        Route::post('authenticate', [
+            'uses' => 'AuthenticateController@authenticate',
+            'as'   => 'authenticate.auth']);
     
 });
 

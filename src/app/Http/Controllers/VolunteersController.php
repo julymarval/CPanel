@@ -44,7 +44,7 @@ class VolunteersController extends Controller
             $code = Config::get('constants.codes.NonExistingVolunteerCode'); 
             $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
-            return view('')
+            return view('volunteers.index_volunteer')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -52,7 +52,7 @@ class VolunteersController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('')
+        return view('volunteers.index_volunteer')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('volunteers', $volunteers);
@@ -71,7 +71,7 @@ class VolunteersController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('')
+        return view('volunteers.create_volunteer')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('sponsors', $sponsors)
@@ -180,7 +180,7 @@ class VolunteersController extends Controller
             $code = Config::get('constants.codes.NonExistingVolunteerCode'); 
             $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
-            return view('')
+            return view('volunteers.show_volunteer')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -192,7 +192,7 @@ class VolunteersController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
         
-        return view('')
+        return view('volunteers.show_volunteer')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('volunteer', $volunteer)
@@ -214,7 +214,7 @@ class VolunteersController extends Controller
             $code = Config::get('constants.codes.NonExistingEventCode');
             $msg = Config::get('constants.msgs.NonExistingEventMsg');
 
-            return view('')
+            return view('volunteers.edit_volunteer')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -229,7 +229,7 @@ class VolunteersController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('')
+        return view('volunteers.edit_volunteer')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('volunteer', $volunteer)
@@ -336,7 +336,7 @@ class VolunteersController extends Controller
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('')
+        return view('volunteers.delete_volunteer')
         -> with('code', $code)
         -> with('msg', $msg);
     }

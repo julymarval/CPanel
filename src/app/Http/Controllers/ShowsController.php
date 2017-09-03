@@ -43,7 +43,7 @@ class ShowsController extends Controller
             $code = Config::get('constants.codes.NonExistingShowsCode'); 
             $msg = Config::get('constants.msgs.NonExistingShowsMsg');
             
-            return view('') 
+            return view('show.index_show') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -51,7 +51,7 @@ class ShowsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
         
-        return view('')
+        return view('show.index_show')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('shows', $shows);
@@ -69,7 +69,7 @@ class ShowsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
                 
-        return view('')
+        return view('shows.create_show')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('volunteers', $volunteers);
@@ -90,7 +90,7 @@ class ShowsController extends Controller
 
             return view('') 
             -> with('code', $code)
-            -> with('msg', $msg)
+            -> with('msg', $msg);
         }
         
         $rules = [
@@ -107,7 +107,7 @@ class ShowsController extends Controller
                 
                 return view('') 
                 -> with('code', $code)
-                -> with('msg', $msg)
+                -> with('msg', $msg);
             }
 
             $show = new Show($request->all());
@@ -183,7 +183,7 @@ class ShowsController extends Controller
             $code = Config::get('constants.codes.NonExistingShowsCode');
             $msg = Config::get('constants.msgs.NonExistingShowsMsg');
             
-            return view('') 
+            return view('show.show_show') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -193,7 +193,7 @@ class ShowsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('') 
+        return view('show.show_show') 
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('show', $show)
@@ -214,7 +214,7 @@ class ShowsController extends Controller
             $code = Config::get('constants.codes.NonExistingEventCode'); 
             $msg = Config::get('constants.msgs.NonExistingEventMsg');
 
-            return view('') 
+            return view('show.edit_show') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -226,7 +226,7 @@ class ShowsController extends Controller
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
         
-        return view('') 
+        return view('show.edit_show') 
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('show', $show)
@@ -332,7 +332,7 @@ class ShowsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
         
-        return view('') 
+        return view('show.delete_show') 
         -> with('code', $code)
         -> with('msg', $msg);
     }

@@ -41,7 +41,7 @@ class SalesController extends Controller
             $code = Config::get('constants.codes.NonExistingSalesCode');
             $msg = Config::get('constants.msgs.NonExistingSalesMsg');
             
-            return view('') 
+            return view('sale.index_sale') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -49,7 +49,7 @@ class SalesController extends Controller
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('') 
+        return view('sale.index_sale') 
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('sales', $sales);
@@ -62,7 +62,7 @@ class SalesController extends Controller
      */
     public function create()
     {
-        return view('');
+        return view('sale.create_sale');
     }
 
     /**
@@ -108,7 +108,7 @@ class SalesController extends Controller
                 $code = Config::get('constants.codes.ExistingSaleCode'); 
                 $msg = Config::get('constants.msgs.ExistingSaleMsg');
                 
-                return view('') 
+                return view('sale.delete_sale') 
                 -> with('code', $code)
                 -> with('msg', $msg);;
             }
@@ -154,7 +154,7 @@ class SalesController extends Controller
             $code = Config::get('constants.codes.NonExistingSalesCode');
             $msg = Config::get('constants.msgs.NonExistingSalesMsg');
 
-            return view('') 
+            return view('sale.show_sale') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -162,7 +162,7 @@ class SalesController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
         
-        return view('') 
+        return view('sale.show_sale') 
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('sale', $sale);
@@ -182,7 +182,7 @@ class SalesController extends Controller
             $code = Config::get('constants.codes.NonExistingEventCode'); 
             $msg = Config::get('constants.msgs.NonExistingEventMsg');
 
-            return view('') 
+            return view('sale.edit_sale') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -190,7 +190,7 @@ class SalesController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('')
+        return view('sale.edit_sale')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('sale', $sale);
@@ -276,7 +276,7 @@ class SalesController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('') 
+        return view('sale.delete_sale') 
         -> with('code', $code)
         -> with('msg', $msg);
     }
