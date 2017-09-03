@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Theme Made By www.w3schools.com - No Copyright -->
   <title>RADIO SABOR LATINO 93.5 FM</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,7 +40,6 @@
 </nav>
 
 
-<!-- Container (Pricing Section) -->
 <div id="tianguis" class="container-fluid text-center bg-grey"> 
     <br><h2>TIANGUIS</h2><br>
     <h4>What we are selling</h4>

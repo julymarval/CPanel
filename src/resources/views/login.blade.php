@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Theme Made By www.w3schools.com - No Copyright -->
   <title>RADIO SABOR LATINO 93.5 FM</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,10 +25,7 @@
   </style>
 
 </head>
-        <!-- Fonts -->
-        <link href="{{route('authenticate.auth')}}" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
+        
     <body>
       <div class="container">
       <div class="row vertical-offset-100">
@@ -39,7 +35,7 @@
               <h3 class="panel-title">Please sign in</h3>
            </div>
             <div class="panel-body">
-            <form method="POST" enctype="application/x-www-form-urlencoded" action="http://localhost:8000/admin/authenticate">
+            <form method="POST" enctype="application/x-www-form-urlencoded" action="{{route('authenticate.auth')}}">
   
                       <fieldset>
                   <div class="form-group">
