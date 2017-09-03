@@ -11,8 +11,17 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return view('form');
+});
+Route::get('/', function () {
+    return view('home');
+});
+Route::get('/events', function () {
+    return view('event');
+});
+Route::get('/tianguis', function () {
+    return view('tianguis');
 });
 
 /**
