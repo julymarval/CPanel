@@ -36,7 +36,7 @@ class AuthenticateController extends Controller {
             $code = Config::get('constants.codes.NonExistingAdminCode');
             $msg = Config::get('constants.msgs.NonExistingAdminMsg');
            
-            return view('users.login')
+            return view('admin_dashboard')
             -> with('code', $code, 401)
             -> with ('msg', $msg)
             -> with('token','');
@@ -47,7 +47,7 @@ class AuthenticateController extends Controller {
             $code = Config::get('constants.codes.InvalidPasswordCode');
             $msg = Config::get('constants.msgs.InvalidPasswordMsg');
            
-            return view('users.login')
+            return view('admin_dashboard')
             -> with('code', $code, 401)
             -> with ('msg', $msg)
             -> with('token','');
@@ -60,7 +60,7 @@ class AuthenticateController extends Controller {
                 $code = Config::get('constants.codes.InvalidCredentialsCode');
                 $msg = Config::get('constants.msgs.InvalidCredentialsMsg');
                
-                return view('users.login')
+                return view('admin_dashboard')
                 -> with('code', $code, 401)
                 -> with ('msg', $msg)
                 -> with('token','');
@@ -70,7 +70,7 @@ class AuthenticateController extends Controller {
             $code = Config::get('constants.codes.InternalErrorCode');
             $msg = Config::get('constants.msgs.InternalErrorMsg');
            
-            return view('users.login')
+            return view('admin_dashboard')
             -> with('code', $code, 500)
             -> with ('msg', $msg)
             -> with('token','');
@@ -78,7 +78,7 @@ class AuthenticateController extends Controller {
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('users.login')
+        return view('admin_dashboard')
         -> with('code', $code)
         -> with ('msg', $msg)
         -> with('token',$token, 200);

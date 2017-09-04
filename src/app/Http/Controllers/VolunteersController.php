@@ -90,7 +90,7 @@ class VolunteersController extends Controller
             $code = Config::get('constants.codes.MissingInputCode'); 
             $msg = Config::get('constants.msgs.MissingInputMsg');
     
-            return view('')
+            return view('admin_dashboard')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -106,7 +106,7 @@ class VolunteersController extends Controller
                 $code = Config::get('constants.codes.InvalidInputCode');
                 $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
         
-                return view('')
+                return view('admin_dashboard')
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -120,7 +120,7 @@ class VolunteersController extends Controller
                 $code = Config::get('constants.codes.ExistingVolunteerCode'); 
                 $msg = Config::get('constants.msgs.ExistingVolunteerMsg');
 
-                return view('')
+                return view('admin_dashboard')
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -141,7 +141,7 @@ class VolunteersController extends Controller
                     $code = Config::get('constants.codes.NonExistingShowsCode');
                     $msg = Config::get('constants.msgs.NonExistingShowsMsg');
 
-                    return view('')
+                    return view('admin_dashboard')
                     -> with('code', $code)
                     -> with('msg', $msg);
                 }
@@ -151,7 +151,7 @@ class VolunteersController extends Controller
             $rcode = Config::get('constants.codes.OkCode'); 
             $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('')
+            return view('admin_dashboard')
             -> with('code', $code)
             -> with('msg', $msg);
             
@@ -160,7 +160,7 @@ class VolunteersController extends Controller
             $code = Config::get('constants.codes.InternalErrorCode'); 
             $msg = Config::get('constants.msgs.InternalErrorMsg');
 
-            return view('')
+            return view('admin_dashboard')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -253,7 +253,7 @@ class VolunteersController extends Controller
             $code = Config::get('constants.codes.MissingInputCode');
             $msg = Config::get('constants.msgs.MissingInputMsg');
 
-            return view('')
+            return view('admin_dashboard')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -269,7 +269,7 @@ class VolunteersController extends Controller
                         $code = Config::get('constants.codes.NonExistingShowsCode'); 
                         $msg = Config::get('constants.msgs.NonExistingShowsMsg');
 
-                        return view('')
+                        return view('admin_dashboard')
                         -> with('code', $code)
                         -> with('msg', $msg);
                     }
@@ -308,7 +308,7 @@ class VolunteersController extends Controller
                 $code = Config::get('constants.codes.InternalErrorCode'); 
                 $msg = Config::get('constants.msgs.InternalErrorMsg');
 
-                return view('')
+                return view('admin_dashboard')
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -316,7 +316,7 @@ class VolunteersController extends Controller
             $code = Config::get('constants.codes.OkCode'); 
             $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('')
+            return view('admin_dashboard')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -336,7 +336,7 @@ class VolunteersController extends Controller
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('volunteers.delete_volunteer')
+        return view('admin_dashboard')
         -> with('code', $code)
         -> with('msg', $msg);
     }

@@ -91,7 +91,7 @@ class EventsController extends Controller
                 $code = Config::get('constants.codes.MissingInputCode'); 
                 $msg   = Config::get('constants.msgs.MissingInputMsg');
             
-            return view('')
+            return view('admin_dashboard')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -109,7 +109,7 @@ class EventsController extends Controller
                 $code = Config::get('constants.codes.InvalidInputCode'); 
                 $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
 
-                return view('')
+                return view('admin_dashboard')
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -124,7 +124,7 @@ class EventsController extends Controller
                 $code = Config::get('constants.codes.ExistingEventCode');
                 $msg = Config::get('constants.msgs.ExistingEventMsg');
 
-                return view('')
+                return view('admin_dashboard')
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -147,7 +147,7 @@ class EventsController extends Controller
                     $code = Config::get('constants.codes.NonExistingVolunteerCode');
                     $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
                     
-                    return view('')
+                    return view('admin_dashboard')
                     -> with('code', $code)
                     -> with('msg', $msg);
                 }
@@ -162,7 +162,7 @@ class EventsController extends Controller
                     $code = Config::get('constants.codes.NonExistingVolunteerCode');
                     $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
-                    return view('')
+                    return view('admin_dashboard')
                     -> with('code', $code)
                     -> with('msg', $msg);
                 }
@@ -172,7 +172,7 @@ class EventsController extends Controller
             $code = Config::get('constants.codes.OkCode');
             $msg = Config::get('constants.msgs.OkMsg');
             
-            return view('')
+            return view('admin_dashboard')
             -> with('code', $code)
             -> with('msg', $msg);
 
@@ -182,7 +182,7 @@ class EventsController extends Controller
             $code = Config::get('constants.codes.InternalErrorCode'); 
             $msg = Config::get('constants.msgs.InternalErrorMsg');
             
-            return view('')
+            return view('admin_dashboard')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -280,7 +280,7 @@ class EventsController extends Controller
             $code = Config::get('constants.codes.MissingInputCode'); 
             $msg = Config::get('constants.msgs.MissingInputMsg');
 
-            return view('') 
+            return view('admin_dashboard') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -298,7 +298,7 @@ class EventsController extends Controller
                         $code = Config::get('constants.codes.NonExistingVolunteerCode'); 
                         $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
-                            return view('')
+                            return view('admin_dashboard')
                             -> with('code', $code)
                             -> with('msg', $msg);
                     }
@@ -313,7 +313,7 @@ class EventsController extends Controller
                         $code = Config::get('constants.codes.NonExistingVolunteerCode');
                         $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
                         
-                        return view('') 
+                        return view('admin_dashboard') 
                         -> with('code', $code)
                         -> with('msg', $msg);
                     }
@@ -352,7 +352,7 @@ class EventsController extends Controller
                         $code = Config::get('constants.codes.InvalidInputCode'); 
                         $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
 
-                        return view('') 
+                        return view('admin_dashboard') 
                         -> with('code', $code)
                         -> with('msg', $msg);
                     }
@@ -382,7 +382,7 @@ class EventsController extends Controller
                 $code = Config::get('constants.codes.InternalErrorCode'); 
                 $msg =  Config::get('constants.msgs.InternalErrorMsg');
                 
-                return view('') 
+                return view('admin_dashboard') 
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -390,7 +390,7 @@ class EventsController extends Controller
             $code = Config::get('constants.codes.OkCode');
             $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('') 
+            return view('admin_dashboard') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -410,7 +410,7 @@ class EventsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('event.delete_event') 
+        return view('admin_dashboard') 
         -> with('code', $code)
         -> with('msg', $msg);
     }

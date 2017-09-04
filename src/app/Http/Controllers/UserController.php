@@ -68,7 +68,7 @@ class UserController extends Controller
             $code = Config::get('constants.codes.MissingInputCode'); 
             $msg = Config::get('constants.msgs.MisingInputMsg');
 
-            return view('')
+            return view('admin_dashboard')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -86,7 +86,7 @@ class UserController extends Controller
                 $code = Config::get('constants.codes.InvalidInputCode'); 
                 $msg = Config::get('constants.msgs.InvalidInputMsg') . ": " .  $validator->errors();
 
-                return view('')
+                return view('admin_dashboard')
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -99,7 +99,7 @@ class UserController extends Controller
                 $code = Config::get('constants.codes.ExistingAdminCode'); 
                 $msg = Config::get('constants.msgs.ExistingAdminMsg');
 
-                return view('')
+                return view('admin_dashboard')
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -109,7 +109,7 @@ class UserController extends Controller
             $code = Config::get('constants.codes.OkCode');
             $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('')
+            return view('admin_dashboard')
             -> with('code', $code)
             -> with('msg', $msg);
             
@@ -118,7 +118,7 @@ class UserController extends Controller
             $code = Config::get('constants.codes.InternalErrorCode'); 
             $msg = Config::get('constants.msgs.InternalErrorMsg');
 
-            return view('')
+            return view('admin_dashboard')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -193,7 +193,7 @@ class UserController extends Controller
             $code = Config::get('constants.codes.MissingInputCode'); 
             $msg = Config::get('constants.msgs.MissingInputMsg');
 
-            return view('')
+            return view('admin_dashboard')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -218,7 +218,7 @@ class UserController extends Controller
                 $code = Config::get('constants.codes.InternalErrorCode'); 
                 $msg = Config::get('constants.msgs.InternalErrorMsg');
 
-                return view('')
+                return view('admin_dashboard')
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -226,7 +226,7 @@ class UserController extends Controller
             $code = Config::get('constants.codes.OkCode'); 
             $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('')
+            return view('admin_dashboard')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -246,7 +246,7 @@ class UserController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('users.delete_user')
+        return view('admin_dashboard')
         -> with('code', $code)
         -> with('msg', $msg);
     }

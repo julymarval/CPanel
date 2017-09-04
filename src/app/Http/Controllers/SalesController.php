@@ -77,7 +77,7 @@ class SalesController extends Controller
             $code = Config::get('constants.codes.MissingInputCode'); 
             $msg = Config::get('constants.msgs.MissingInputMsg');
 
-            return view('') 
+            return view('admin_dashboard') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -94,7 +94,7 @@ class SalesController extends Controller
                 $code = Config::get('constants.codes.InvalidInputCode'); 
                 $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
 
-                return view('') 
+                return view('admin_dashboard') 
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -108,7 +108,7 @@ class SalesController extends Controller
                 $code = Config::get('constants.codes.ExistingSaleCode'); 
                 $msg = Config::get('constants.msgs.ExistingSaleMsg');
                 
-                return view('sale.delete_sale') 
+                return view('admin_dashboard') 
                 -> with('code', $code)
                 -> with('msg', $msg);;
             }
@@ -125,7 +125,7 @@ class SalesController extends Controller
             $code = Config::get('constants.codes.OkCode'); 
             $msg = Config::get('constants.msgs.OkMsg');
             
-            return view('') 
+            return view('admin_dashboard') 
             -> with('code', $code)
             -> with('msg', $msg);
             
@@ -134,7 +134,7 @@ class SalesController extends Controller
             $code = Config::get('constants.codes.InternalErrorCode'); 
             $msg = Config::get('constants.msgs.InternalErrorMsg');
 
-            return view('') 
+            return view('admin_dashboard') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -209,7 +209,7 @@ class SalesController extends Controller
             $code = Config::get('constants.codes.MissingInputCode'); 
             $msg = Config::get('constants.msgs.MissingInputMsg');
 
-            return view('') 
+            return view('admin_dashboard') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -248,7 +248,7 @@ class SalesController extends Controller
                 $code = Config::get('constants.codes.InternalErrorCode');
                 $msg = Config::get('constants.msgs.InternalErrorMsg');
 
-                return view('') 
+                return view('admin_dashboard') 
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -256,7 +256,7 @@ class SalesController extends Controller
             $code = Config::get('constants.codes.OkCode'); 
             $msg = Config::get('constants.msgs.OkMsg');
             
-            return view('') 
+            return view('admin_dashboard') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -276,7 +276,7 @@ class SalesController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('sale.delete_sale') 
+        return view('admin_dashboard') 
         -> with('code', $code)
         -> with('msg', $msg);
     }
