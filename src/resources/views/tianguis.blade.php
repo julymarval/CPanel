@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Theme Made By www.w3schools.com - No Copyright -->
   <title>RADIO SABOR LATINO 93.5 FM</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,6 +31,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{{ url('/') }}">RADIO</a></li>
+        <li><a href="{{ url('/about') }}">ABOUT</a></li>
         <li><a href="{{ url('/events') }}">EVENTS</a></li>
         <li><a href="#tianguis">TIANGUIS</a></li>
         <li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGJJ7RX543MDQ"target="_blank">DONA</a></li>
@@ -41,7 +41,6 @@
 </nav>
 
 
-<!-- Container (Pricing Section) -->
 <div id="tianguis" class="container-fluid text-center bg-grey"> 
     <br><h2>TIANGUIS</h2><br>
     <h4>What we are selling</h4>

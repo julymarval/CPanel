@@ -23,7 +23,9 @@ Route::get('/events', function () {
 Route::get('/tianguis', function () {
     return view('tianguis');
 });
-
+Route::get('/about', function () {
+    return view('about');
+});
 /**
 * Users Route
 **/
