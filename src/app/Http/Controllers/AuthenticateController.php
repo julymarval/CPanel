@@ -79,6 +79,7 @@ class AuthenticateController extends Controller {
         $msg = Config::get('constants.msgs.OkMsg');
 
         return view('admin_dashboard')
+        -> with('user', $user->name)
         -> with('code', $code)
         -> with ('msg', $msg)
         -> with('token',$token, 200);

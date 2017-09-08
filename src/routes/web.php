@@ -26,6 +26,8 @@ Route::get('/tianguis', function () {
 Route::get('/about', function () {
     return view('about');
 });
+
+
 /**
 * Users Route
 **/
