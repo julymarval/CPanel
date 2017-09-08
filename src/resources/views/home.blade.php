@@ -10,8 +10,6 @@
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://raw.githubusercontent.com/kylefox/jquery-modal/master/jquery.modal.min.js"></script>
-  <link rel="stylesheet" href="https://raw.githubusercontent.com/kylefox/jquery-modal/master/jquery.modal.min.css">
   <link rel="stylesheet" type="text/css" href="{{asset('/css/style.css')}}">
 
 </head>
@@ -26,7 +24,7 @@
         <span class="icon-bar"></span>                        
       </button>
       <a class="navbar-brand" href="#home">
-        <img src="logo3.png" >
+        <img src="{{asset('/images/logo3.png')}}"  >
       </a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
@@ -50,18 +48,38 @@
   </div>
 </nav>
 
-<div class="jumbotron text-center">
-  <h1>RADIO SABOR LATINO 93.5 FM</h1>
-  <p>Siempre contigo</p>
-  <br>
-  <br>
-<div class="btn-group" role="group" aria-label="...">
-  <a  id="page-help" href="http://streamdb6web.securenetsystems.net/v5/WSBL" onclick="window.open(this.href, 'popupwindow', 'width=500,height=300'); return false;" class="btn btn-default">LIVE</a>
-  <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGJJ7RX543MDQ"target="_blank" class="btn btn-default"> <span class="glyphicon glyphicon-heart-empty"></span> DONATE</a>
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <img src="{{asset('/images/p1.JPG')}}"  width="1200" height="700">     
+      </div>
+
+      <div class="item">
+        <img src="{{asset('/images/p2.JPG')}}" width="1200" height="700">
+      
+      </div>
+    </div>
 </div>
+
+
+<div class="text-center covertext">
+  <h1>RADIO SABOR LATINO 93.5 FM</h1>
+  <h3>SIEMPRE CONTIGO</h3>
+  <br>
+  <br>
+  <p>
+    <a  id="page-help" href="http://streamdb6web.securenetsystems.net/v5/WSBL" onclick="window.open(this.href, 'popupwindow', 'width=500,height=300'); return false;" class="btn btn-primary btn-round-lg btn-lg"><span class="glyphicon glyphicon-play"></span>LIVE</a>
+    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGJJ7RX543MDQ"target="_blank" class="btn btn-default btn-round-lg btn-lg"> <span class="glyphicon glyphicon-heart-empty red"></span> DONATE</a>
+  </p>
 <br>
-<br>
-  <p>ESCUCHANOS AHORA!</p>
+
 </div>
 
 
