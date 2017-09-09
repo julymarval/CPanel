@@ -14,6 +14,7 @@ use App\Volunteer;
 class EventsController extends Controller
 {
 
+
     /**
     * Constructor
     * It starts the jwt token validator before accessing to any function
@@ -27,6 +28,7 @@ class EventsController extends Controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
         $this->middleware('jwt.auth',['except' => ['index', 'show']]);
+        
     }
 
 
@@ -86,12 +88,15 @@ class EventsController extends Controller
      */
     public function store(Request $request)
     {
-        if (!$request -> name) {
+        $user = JWTAuth::toUser($request -> input('Authorization'));
+
+        if (!$request -> name || !$request -> date) {
             
                 $code = Config::get('constants.codes.MissingInputCode'); 
                 $msg   = Config::get('constants.msgs.MissingInputMsg');
             
             return view('admin_dashboard')
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -110,6 +115,7 @@ class EventsController extends Controller
                 $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
 
                 return view('admin_dashboard')
+                -> with('user', $user -> name)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -125,6 +131,7 @@ class EventsController extends Controller
                 $msg = Config::get('constants.msgs.ExistingEventMsg');
 
                 return view('admin_dashboard')
+                -> with('user', $user -> name)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -148,6 +155,7 @@ class EventsController extends Controller
                     $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
                     
                     return view('admin_dashboard')
+                    -> with('user', $user -> name)
                     -> with('code', $code)
                     -> with('msg', $msg);
                 }
@@ -163,6 +171,7 @@ class EventsController extends Controller
                     $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
                     return view('admin_dashboard')
+                    -> with('user', $user -> name)
                     -> with('code', $code)
                     -> with('msg', $msg);
                 }
@@ -172,7 +181,8 @@ class EventsController extends Controller
             $code = Config::get('constants.codes.OkCode');
             $msg = Config::get('constants.msgs.OkMsg');
             
-            return view('admin_dashboard')
+            return view('prueba')
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
 
@@ -183,6 +193,7 @@ class EventsController extends Controller
             $msg = Config::get('constants.msgs.InternalErrorMsg');
             
             return view('admin_dashboard')
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -274,6 +285,8 @@ class EventsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = JWTAuth::toUser($request -> input('Authorization'));
+
         if ((!$request -> name) && (!$request -> date) && (!$request -> description) 
             && !$request -> volunteer_id && !$request -> sponsor_id) {
             
@@ -281,6 +294,7 @@ class EventsController extends Controller
             $msg = Config::get('constants.msgs.MissingInputMsg');
 
             return view('admin_dashboard') 
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -299,6 +313,7 @@ class EventsController extends Controller
                         $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
                             return view('admin_dashboard')
+                            -> with('user', $user -> name)
                             -> with('code', $code)
                             -> with('msg', $msg);
                     }
@@ -314,6 +329,7 @@ class EventsController extends Controller
                         $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
                         
                         return view('admin_dashboard') 
+                        -> with('user', $user -> name)
                         -> with('code', $code)
                         -> with('msg', $msg);
                     }
@@ -332,7 +348,8 @@ class EventsController extends Controller
                         $code = Config::get('constants.codes.InvalidInputCode');
                         $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
                         
-                        return view('') 
+                        return view('admin_dashboard') 
+                        -> with('user', $user -> name)
                         -> with('code', $code)
                         -> with('msg', $msg);
                     }
@@ -353,6 +370,7 @@ class EventsController extends Controller
                         $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
 
                         return view('admin_dashboard') 
+                        -> with('user', $user -> name)
                         -> with('code', $code)
                         -> with('msg', $msg);
                     }
@@ -383,6 +401,7 @@ class EventsController extends Controller
                 $msg =  Config::get('constants.msgs.InternalErrorMsg');
                 
                 return view('admin_dashboard') 
+                -> with('user', $user -> name)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -391,6 +410,7 @@ class EventsController extends Controller
             $msg = Config::get('constants.msgs.OkMsg');
 
             return view('admin_dashboard') 
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -404,13 +424,16 @@ class EventsController extends Controller
      */
     public function destroy($id)
     {
+        $user = JWTAuth::toUser($request -> input('Authorization'));
+        
         $event = Event::find($id);
         $event -> delete();
 
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('admin_dashboard') 
+        return view('admin_dashboard')
+        -> with('user', $user -> name)
         -> with('code', $code)
         -> with('msg', $msg);
     }

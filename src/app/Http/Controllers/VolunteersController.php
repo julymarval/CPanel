@@ -86,11 +86,14 @@ class VolunteersController extends Controller
      */
     public function store(Request $request)
     {
+        $user = JWTAuth::toUser($request -> input('Authorization'));
+
         if (!$request -> name) {
             $code = Config::get('constants.codes.MissingInputCode'); 
             $msg = Config::get('constants.msgs.MissingInputMsg');
     
             return view('admin_dashboard')
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -107,6 +110,7 @@ class VolunteersController extends Controller
                 $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
         
                 return view('admin_dashboard')
+                -> with('user', $user -> name)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -121,6 +125,7 @@ class VolunteersController extends Controller
                 $msg = Config::get('constants.msgs.ExistingVolunteerMsg');
 
                 return view('admin_dashboard')
+                -> with('user', $user -> name)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -142,6 +147,7 @@ class VolunteersController extends Controller
                     $msg = Config::get('constants.msgs.NonExistingShowsMsg');
 
                     return view('admin_dashboard')
+                    -> with('user', $user -> name)
                     -> with('code', $code)
                     -> with('msg', $msg);
                 }
@@ -152,6 +158,7 @@ class VolunteersController extends Controller
             $msg = Config::get('constants.msgs.OkMsg');
 
             return view('admin_dashboard')
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
             
@@ -161,6 +168,7 @@ class VolunteersController extends Controller
             $msg = Config::get('constants.msgs.InternalErrorMsg');
 
             return view('admin_dashboard')
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -249,11 +257,14 @@ class VolunteersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = JWTAuth::toUser($request -> input('Authorization'));
+
         if(!$request -> name && !$request -> status && !$request -> description && !$request->file('image')){
             $code = Config::get('constants.codes.MissingInputCode');
             $msg = Config::get('constants.msgs.MissingInputMsg');
 
             return view('admin_dashboard')
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -270,6 +281,7 @@ class VolunteersController extends Controller
                         $msg = Config::get('constants.msgs.NonExistingShowsMsg');
 
                         return view('admin_dashboard')
+                        -> with('user', $user -> name)
                         -> with('code', $code)
                         -> with('msg', $msg);
                     }
@@ -309,6 +321,7 @@ class VolunteersController extends Controller
                 $msg = Config::get('constants.msgs.InternalErrorMsg');
 
                 return view('admin_dashboard')
+                -> with('user', $user -> name)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -317,6 +330,7 @@ class VolunteersController extends Controller
             $msg = Config::get('constants.msgs.OkMsg');
 
             return view('admin_dashboard')
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -330,6 +344,8 @@ class VolunteersController extends Controller
      */
     public function destroy($id)
     {
+        $user = JWTAuth::toUser($request -> input('Authorization'));
+
         $volunteer = Volunteer::find($id);
         $volunteer -> delete();
 
@@ -337,6 +353,7 @@ class VolunteersController extends Controller
         $msg = Config::get('constants.msgs.OkMsg');
 
         return view('admin_dashboard')
+        -> with('user', $user -> name)
         -> with('code', $code)
         -> with('msg', $msg);
     }

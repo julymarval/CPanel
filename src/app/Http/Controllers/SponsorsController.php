@@ -85,11 +85,14 @@ class SponsorsController extends Controller
      */
     public function store(Request $request)
     {
+        $user = JWTAuth::toUser($request -> input('Authorization'));
+
         if (!$request -> name && !$request -> status && !$request -> level) {
             $code = Config::get('constants.codes.MissingInputCode');
             $msg  = Config::get('constants.msgs.MissingInputMsg');
 
             return view('admin_dashboard') 
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -107,7 +110,8 @@ class SponsorsController extends Controller
                 $code = Config::get('constants.codes.InvalidInputCode'); 
                 $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
 
-                return view('admin_dashboard') 
+                return view('admin_dashboard')
+                -> with('user', $user -> name) 
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -121,7 +125,8 @@ class SponsorsController extends Controller
                 $code = Config::get('constants.codes.ExistingSponsorCode');
                 $msg = Config::get('constants.msgs.ExistingSponsorMsg');
 
-                return view('') 
+                return view('admin_dashboard') 
+                -> with('user', $user -> name)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -144,6 +149,7 @@ class SponsorsController extends Controller
                     $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
                     return view('admin_dashboard') 
+                    -> with('user', $user -> name)
                     -> with('code', $code)
                     -> with('msg', $msg);
                 }
@@ -154,6 +160,7 @@ class SponsorsController extends Controller
             $msg = Config::get('constants.msgs.OkMsg');
 
             return view('admin_dashboard') 
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
             
@@ -163,6 +170,7 @@ class SponsorsController extends Controller
             $msg = Config::get('constants.msgs.InternalErrorMsg');
 
             return view('admin_dashboard') 
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -249,12 +257,15 @@ class SponsorsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = JWTAuth::toUser($request -> input('Authorization'));
+
         if(!$request -> name && !$request -> status && !$request -> description && !$request -> event_id 
             && !$request->file('image') && !$request -> volunteer_id && !$request -> level ){
                 $code = Config::get('constants.codes.MissingInputCode'); 
                 $msg = Config::get('constants.msgs.MissingInputMsg');
 
                 return view('admin_dashboard')
+                -> with('user', $user -> name)
                 -> with('code', $code)
                 -> with('msg', $msg);
         }
@@ -272,6 +283,7 @@ class SponsorsController extends Controller
                         $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
                             return view('admin_dashboard')
+                            -> with('user', $user -> name)
                             -> with('code', $code)
                             -> with('msg', $msg);
                     }
@@ -286,6 +298,7 @@ class SponsorsController extends Controller
                         $msg = Config::get('constants.msgs.NonExistingEventMsg');
                             
                         return view('admin_dashboard')
+                        -> with('user', $user -> name)
                         -> with('code', $code)
                         -> with('msg', $msg);
                     }
@@ -327,6 +340,7 @@ class SponsorsController extends Controller
                 $msg = Config::get('constants.msgs.InternalErrorMsg');
 
                 return view('admin_dashboard')
+                -> with('user', $user -> name)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -335,6 +349,7 @@ class SponsorsController extends Controller
             $msg = Config::get('constants.msgs.OkMsg');
 
             return view('admin_dashboard')
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -348,6 +363,8 @@ class SponsorsController extends Controller
      */
     public function destroy($id)
     {
+        $user = JWTAuth::toUser($request -> input('Authorization'));
+
         $sponsor = Sponsor::find($id);
         $sponsor -> delete();
 
@@ -355,6 +372,7 @@ class SponsorsController extends Controller
         $msg = Config::get('constants.msgs.OkMsg');
 
         return view('admin_dashboard')
+        -> with('user', $user -> name)
         -> with('code', $code)
         -> with('msg', $msg);
     }

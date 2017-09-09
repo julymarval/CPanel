@@ -83,12 +83,14 @@ class ShowsController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $user = JWTAuth::toUser($request -> input('Authorization'));
+
         if (empty($request -> name)) {
             $code = Config::get('constants.codes.MissingInputCode'); 
             $msg = Config::get('constants.msgs.MissingInputMsg');
 
             return view('admin_dashboard') 
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -106,6 +108,7 @@ class ShowsController extends Controller
                 $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
                 
                 return view('admin_dashboard') 
+                -> with('user', $user -> name)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -120,6 +123,7 @@ class ShowsController extends Controller
                 $msg = Config::get('constants.msgs.ExistingShowMsg');
                 
                 return view('admin_dashboard') 
+                -> with('user', $user -> name)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -144,6 +148,7 @@ class ShowsController extends Controller
                     $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
                     return view('admin_dashboard') 
+                    -> with('user', $user -> name)
                     -> with('code', $code)
                     -> with('msg', $msg);
                 }
@@ -155,6 +160,7 @@ class ShowsController extends Controller
             $msg = Config::get('constants.msgs.OkMsg');
 
             return view('admin_dashboard') 
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
             
@@ -164,6 +170,7 @@ class ShowsController extends Controller
             $msg = Config::get('constants.msgs.InternalErrorMsg');
             
             return view('admin_dashboard') 
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -244,12 +251,15 @@ class ShowsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = JWTAuth::toUser($request -> input('Authorization'));
+
         if(!$request -> name && !$request -> schedule && !$request -> description && !$request->file('image')
             && !$request -> volunteer_id){
                 $code = Config::get('constants.codes.MissingInputCode');
                 $msg = Config::get('constants.msgs.MissingInputMsg');
                 
                 return view('admin_dashboard') 
+                -> with('user', $user -> name)
                 -> with('code', $code)
                 -> with('msg', $msg);
         }
@@ -305,6 +315,7 @@ class ShowsController extends Controller
                 $msg = Config::get('constants.msgs.InternalErrorMsg');
 
                 return view('admin_dashboard') 
+                -> with('user', $user -> name)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -313,6 +324,7 @@ class ShowsController extends Controller
             $msg = Config::get('constants.msgs.OkMsg');
 
             return view('admin_dashboard') 
+            -> with('user', $user -> name)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -326,6 +338,8 @@ class ShowsController extends Controller
      */
     public function destroy($id)
     {
+        $user = JWTAuth::toUser($request -> input('Authorization'));
+
         $show = Show::find($id);
         $show -> delete();
 
@@ -333,6 +347,7 @@ class ShowsController extends Controller
         $msg = Config::get('constants.msgs.OkMsg');
         
         return view('admin_dashboard') 
+        -> with('user', $user -> name)
         -> with('code', $code)
         -> with('msg', $msg);
     }
