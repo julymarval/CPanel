@@ -37,7 +37,7 @@ class ShowsController extends Controller
      */
     public function index()
     {
-        $shows = Show::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
+        $shows = Show::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         
         if(empty($shows)){
             $code = Config::get('constants.codes.NonExistingShowsCode'); 

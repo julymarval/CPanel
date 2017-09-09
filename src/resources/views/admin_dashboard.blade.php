@@ -76,7 +76,7 @@
                         </header>
                     </div>
                     <div class="user-dashboard">
-                        <h1>Hello, JS</h1>
+                        <h1>Hello, {{$user}}</h1>
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-12 gutter">
     
@@ -96,16 +96,13 @@
             
             <tbody id="list-itens">
                 
-                
-                <tr>
-                   
-                    <td>Fiesta</td>
-                    <td>12/12/2017</td>
-                    <td>Tests...</td>
-                </tr>
-                
-              
-                
+                @foreach ($events as $event)
+                    <tr>
+                        <td> {{ $event["name"] }} </td>
+                        <td> {{ $event["date"] }} </td>
+                        <td> {{$event["description"]}} </td>
+                    </tr>
+                @endforeach      
                 
             </tbody>    
             
@@ -126,24 +123,20 @@
             <thead >
                 <tr class="bg-info ">
                     <th>Name</th>
-                    <th>Date</th>
+                    <th>Price</th>
                     <th>Description</th>
                 </tr>
             </thead>
             
             <tbody id="list-itens">
                 
-                
-                <tr>
-                   
-                    <td>Iphone7s</td>
-                    <td>23/09/2017</td>
-                    <td>Here is putted the main comments...</td>
-                </tr>
-                
-                
-                
-                
+                @foreach ($sales as $sale)
+                    <tr>
+                        <td> {{ $sale["name"] }} </td>
+                        <td> {{ $sale["price"] }} </td>
+                        <td> {{$sale["description"]}} </td>
+                    </tr>
+                @endforeach               
                 
             </tbody>    
             

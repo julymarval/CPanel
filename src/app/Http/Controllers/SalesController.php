@@ -35,7 +35,7 @@ class SalesController extends Controller
      */
     public function index()
     {
-        $sales = Sale::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
+        $sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
 
         if(empty($sales)){
             $code = Config::get('constants.codes.NonExistingSalesCode');

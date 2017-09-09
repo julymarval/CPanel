@@ -37,7 +37,7 @@ class EventsController extends Controller
      */
     public function index()
     {
-        $events = Event::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
+        $events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         
         if(empty($events)){
                     
@@ -98,7 +98,7 @@ class EventsController extends Controller
         
         $rules = [
             'name' => 'required|min:2|max:80',
-            'date' => 'date_format:Y-m-d|after: ' . date('Y-m-d'),
+            'date' => 'required|date_format:Y-m-d|after: ' . date('Y-m-d'),
         ];
 
         try {

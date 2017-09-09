@@ -37,7 +37,7 @@ class SponsorsController extends Controller
      */
     public function index()
     {
-        $sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'ASC') -> paginate(5);
+        $sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC') -> paginate(5);
 
         if(empty($sponsors)){
             $code = Config::get('constants.codes.NonExistingSponsorsCode'); 
