@@ -43,7 +43,7 @@ class ShowsController extends Controller
             $code = Config::get('constants.codes.NonExistingShowsCode'); 
             $msg = Config::get('constants.msgs.NonExistingShowsMsg');
             
-            return view('show.index_show') 
+            return view('shows.show') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -51,7 +51,7 @@ class ShowsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
         
-        return view('show.index_show')
+        return view('shows.show')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('shows', $shows);
@@ -190,7 +190,7 @@ class ShowsController extends Controller
             $code = Config::get('constants.codes.NonExistingShowsCode');
             $msg = Config::get('constants.msgs.NonExistingShowsMsg');
             
-            return view('show.show_show') 
+            return view('shows.show_show') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -200,7 +200,7 @@ class ShowsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('show.show_show') 
+        return view('shows.show_show') 
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('show', $show)
@@ -221,7 +221,7 @@ class ShowsController extends Controller
             $code = Config::get('constants.codes.NonExistingEventCode'); 
             $msg = Config::get('constants.msgs.NonExistingEventMsg');
 
-            return view('show.edit_show') 
+            return view('shows.edit_show') 
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -233,7 +233,7 @@ class ShowsController extends Controller
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
         
-        return view('show.edit_show') 
+        return view('shows.edit_show') 
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('show', $show)

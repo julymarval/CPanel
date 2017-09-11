@@ -44,7 +44,7 @@ class VolunteersController extends Controller
             $code = Config::get('constants.codes.NonExistingVolunteerCode'); 
             $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
-            return view('volunteers.index_volunteer')
+            return view('volunteers.volunteer')
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -52,7 +52,7 @@ class VolunteersController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('volunteers.index_volunteer')
+        return view('volunteers.volunteer')
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('volunteers', $volunteers);

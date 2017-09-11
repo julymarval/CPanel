@@ -14,7 +14,6 @@
 Route::get('/login', function () {
     return view('login');
 });
-
 Route::get('/events', function () {
     return view('event');
 });
@@ -24,6 +23,7 @@ Route::get('/tianguis', function () {
 Route::get('/about', function () {
     return view('about');
 });
+
 
 /**
 * Home Route
