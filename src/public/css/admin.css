@@ -185,7 +185,7 @@ li,ul{
 }
 
 #navigation {
-    background: #BBBBBB;
+    background: #F4511E;
 }
 
 #navigation {
@@ -369,12 +369,12 @@ header {
 }
 
 .navi .active a {
-    background: #f4511e;
+    background: #bbb;
     padding-left: 15px;
 }
 
 .navi a:hover {
-    background: #f4511e none repeat scroll 0 0;
+    background: #bbb none repeat scroll 0 0;
     display: block;
     padding-left: 15px;
 }
