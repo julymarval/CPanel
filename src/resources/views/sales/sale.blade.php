@@ -34,9 +34,7 @@
             <thead >
                 <tr class="bg-info ">
                     <th></th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Description</th>
+                    <th style="text-align: center">Name</th>
                 </tr>
             </thead>
             
@@ -45,13 +43,11 @@
                 @foreach ($sales as $sale)
                     <tr>
                         <td style="width:140px; text-align: center">
-                        <div class="btn btn-sm btn-default"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
-                        <div class="btn btn-sm btn-default" ><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
-                        <div class="btn btn-sm btn-default"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
-                    </td>
-                        <td> {{ $sale["name"] }} </td>
-                        <td> {{ $sale["date"] }} </td>
-                        <td> {{$sale["description"]}} </td>
+                            <div class="btn btn-sm btn-default"><a href="{{route('sales.show', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
+                            <div class="btn btn-sm btn-default"><a href="{{route('sales.edit', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
+                            <div class="btn btn-sm btn-default"><a href="{{route('sales.destroy', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
+                        </td>
+                        <td> {{$sale["name"] }} </td>
                     </tr>
                 @endforeach      
                 

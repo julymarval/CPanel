@@ -8,12 +8,14 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use Config;
 use App\Event;
+use App\Sale;
 use App\Sponsor;
 use App\Volunteer;
 
 class EventsController extends Controller
 {
 
+    private $sales, $events;
 
     /**
     * Constructor
@@ -28,7 +30,8 @@ class EventsController extends Controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
         $this->middleware('jwt.auth',['except' => ['index', 'show']]);
-        
+        $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
+        $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
     }
 
 
@@ -97,6 +100,8 @@ class EventsController extends Controller
             
             return view('admin_dashboard')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -116,6 +121,8 @@ class EventsController extends Controller
 
                 return view('admin_dashboard')
                 -> with('user', $user -> name)
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -132,6 +139,8 @@ class EventsController extends Controller
 
                 return view('admin_dashboard')
                 -> with('user', $user -> name)
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -156,6 +165,8 @@ class EventsController extends Controller
                     
                     return view('admin_dashboard')
                     -> with('user', $user -> name)
+                    -> with('sales', $this -> sales)
+                    -> with('events', $this -> events)
                     -> with('code', $code)
                     -> with('msg', $msg);
                 }
@@ -172,6 +183,8 @@ class EventsController extends Controller
 
                     return view('admin_dashboard')
                     -> with('user', $user -> name)
+                    -> with('sales', $this -> sales)
+                    -> with('events', $this -> events)
                     -> with('code', $code)
                     -> with('msg', $msg);
                 }
@@ -183,6 +196,8 @@ class EventsController extends Controller
             
             return view('prueba')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
 
@@ -194,6 +209,8 @@ class EventsController extends Controller
             
             return view('admin_dashboard')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -219,11 +236,8 @@ class EventsController extends Controller
             -> with('msg', $msg);
         }
 
-        $my_sponsors   = $event -> sponsors   -> pluck('id', 'name')->all();
-        $my_volunteers = $event -> volunteers -> pluck('id', 'name')->all();
-
-        $sponsors   = Sponsor::orderBy('name','DESC') -> pluck('name','id');
-        $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name','id');
+        $my_sponsors   = $event -> sponsors   -> pluck('name')->all();
+        $my_volunteers = $event -> volunteers -> pluck('name')->all();
 
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
@@ -233,9 +247,7 @@ class EventsController extends Controller
         -> with('msg', $msg)
         -> with('event', $event)
         -> with('my_sponsors', $my_sponsors)
-        -> with('my_volunteers', $my_volunteers)
-        -> with('sponsors',$sponsors)
-        -> with('volunteers',$volunteers);
+        -> with('my_volunteers', $my_volunteers);
 
         
     }
@@ -295,6 +307,8 @@ class EventsController extends Controller
 
             return view('admin_dashboard') 
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -314,6 +328,8 @@ class EventsController extends Controller
 
                             return view('admin_dashboard')
                             -> with('user', $user -> name)
+                            -> with('sales', $this -> sales)
+                            -> with('events', $this -> events)
                             -> with('code', $code)
                             -> with('msg', $msg);
                     }
@@ -330,6 +346,8 @@ class EventsController extends Controller
                         
                         return view('admin_dashboard') 
                         -> with('user', $user -> name)
+                        -> with('sales', $this -> sales)
+                        -> with('events', $this -> events)
                         -> with('code', $code)
                         -> with('msg', $msg);
                     }
@@ -350,6 +368,8 @@ class EventsController extends Controller
                         
                         return view('admin_dashboard') 
                         -> with('user', $user -> name)
+                        -> with('sales', $this -> sales)
+                        -> with('events', $this -> events)
                         -> with('code', $code)
                         -> with('msg', $msg);
                     }
@@ -371,6 +391,8 @@ class EventsController extends Controller
 
                         return view('admin_dashboard') 
                         -> with('user', $user -> name)
+                        -> with('sales', $this -> sales)
+                        -> with('events', $this -> events)
                         -> with('code', $code)
                         -> with('msg', $msg);
                     }
@@ -383,7 +405,7 @@ class EventsController extends Controller
 
                 if(!empty($request -> file('image'))){
                     $file = $request -> file('image');
-                    $name = $request -> name . '.' . $file->getClientOriginalExtension();
+                    $name = $event -> name . '.' . $file->getClientOriginalExtension();
                     if(file_exists(public_path() . '/images/events/' . $event -> image)){
                         Storage::delete(public_path() . '/images/events/' . $event -> image);
                     }
@@ -402,6 +424,8 @@ class EventsController extends Controller
                 
                 return view('admin_dashboard') 
                 -> with('user', $user -> name)
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -411,6 +435,8 @@ class EventsController extends Controller
 
             return view('admin_dashboard') 
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -434,6 +460,8 @@ class EventsController extends Controller
 
         return view('admin_dashboard')
         -> with('user', $user -> name)
+        -> with('sales', $this -> sales)
+        -> with('events', $this -> events)
         -> with('code', $code)
         -> with('msg', $msg);
     }

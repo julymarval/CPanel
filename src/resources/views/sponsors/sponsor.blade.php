@@ -25,7 +25,7 @@
                             <div class="col-md-12 col-sm-12 col-xs-12 gutter">
     
                                 <div class="sales">
-                                    <h2>Volunteers</h2>
+                                    <h2>Sponsors</h2>
     
                                     <div class="row">
         
@@ -33,24 +33,20 @@
             <thead >
                 <tr class="bg-info ">
                     <th></th>
-                    <th>Name</th>
-                    <th>Date</th>
-                    <th>Description</th>
+                    <th style="text-align: center">Name</th>
                 </tr>
             </thead>
             
             <tbody id="list-itens">
                 
-                @foreach ($volunteers as $volunteer)
+                @foreach ($sponsors as $sponsor)
                     <tr>
                         <td style="width:140px; text-align: center">
-                        <div class="btn btn-sm btn-default"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
-                        <div class="btn btn-sm btn-default" ><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
-                        <div class="btn btn-sm btn-default"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
-                    </td>
-                        <td> {{ $volunteer["name"] }} </td>
-                        <td> {{ $volunteer["date"] }} </td>
-                        <td> {{$volunteer["status"]}} </td>
+                            <div class="btn btn-sm btn-default"><a href="{{route('sponsors.show', $sponsor -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
+                            <div class="btn btn-sm btn-default"><a href="{{route('sponsors.edit', $sponsor -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
+                            <div class="btn btn-sm btn-default"><a href="{{route('sponsors.destroy', $sponsor -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
+                        </td>
+                        <td> {{$sponsor["name"] }} </td>
                     </tr>
                 @endforeach      
                 

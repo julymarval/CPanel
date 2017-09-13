@@ -28,7 +28,10 @@ Route::get('/about', function () {
 /**
 * Home Route
 **/
-Route::get('/', 'HomeController@index');
+Route::get('/', [
+        'uses' => 'HomeController@index',
+        'as'   => 'home'
+        ]);
 
 
 /**
@@ -47,7 +50,7 @@ Route::group(['prefix' => 'admin'],function(){
 /**
 * Sales Route
 **/
-Route::group(['prefix' => 'api'],function(){
+Route::group(['prefix' => '/'],function(){
     
     Route::resource('sales','SalesController', [
         'only' => ['index', 'store', 'create', 'destroy', 'show','edit']]);
@@ -60,7 +63,7 @@ Route::group(['prefix' => 'api'],function(){
 /**
 * Shows Route
 **/
-Route::group(['prefix' => 'api'],function(){
+Route::group(['prefix' => '/'],function(){
     
     Route::resource('shows','ShowsController',[
         'only' => ['index', 'store', 'create', 'destroy', 'show','edit']]);
@@ -73,7 +76,7 @@ Route::group(['prefix' => 'api'],function(){
 /**
 * Events Route
 **/
-Route::group(['prefix' => 'api'],function(){
+Route::group(['prefix' => '/'],function(){
     
     Route::resource('events','EventsController',[
         'only' => ['index', 'store', 'create', 'destroy', 'show','edit']]);
@@ -86,7 +89,7 @@ Route::group(['prefix' => 'api'],function(){
 /**
 * Sponsors Route
 **/
-Route::group(['prefix' => 'api'],function(){
+Route::group(['prefix' => '/'],function(){
 
     Route::resource('sponsors','SponsorsController',[
         'only' => ['index', 'store', 'create', 'destroy', 'show','edit']]);
@@ -99,7 +102,7 @@ Route::group(['prefix' => 'api'],function(){
 /**
 * Volunteers Route
 **/
-Route::group(['prefix' => 'api'],function(){
+Route::group(['prefix' => '/'],function(){
     
     Route::resource('volunteers','VolunteersController', [
         'only' => ['index', 'store', 'create', 'destroy', 'show','edit']]);
@@ -119,15 +122,6 @@ Route::group(['prefix' => 'admin'],function(){
             'uses' => 'AuthenticateController@authenticate',
             'as'   => 'authenticate.auth']);
     
-});
-
-/**
-* Donate Route
-**/
-Route::group(['prefix' => 'api'],function(){
-    
-    Route::resource('donate','DonateController',[
-        'only' => ['index', 'store', 'create', 'destroy', 'show']]);
 });
 
 /**

@@ -33,9 +33,7 @@
             <thead >
                 <tr class="bg-info ">
                     <th></th>
-                    <th>Name</th>
-                    <th>Date</th>
-                    <th>Description</th>
+                    <th style="text-align: center">Name</th>
                 </tr>
             </thead>
             
@@ -44,13 +42,11 @@
                 @foreach ($shows as $show)
                     <tr>
                         <td style="width:140px; text-align: center">
-                        <div class="btn btn-sm btn-default"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
-                        <div class="btn btn-sm btn-default" ><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
-                        <div class="btn btn-sm btn-default"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
-                    </td>
-                        <td> {{ $show["name"] }} </td>
-                        <td> {{ $show["date"] }} </td>
-                        <td> {{$show["description"]}} </td>
+                            <div class="btn btn-sm btn-default"><a href="{{route('shows.show', $show -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
+                            <div class="btn btn-sm btn-default"><a href="{{route('shows.edit', $show -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
+                            <div class="btn btn-sm btn-default"><a href="{{route('shows.destroy', $show -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
+                        </td>
+                        <td> {{$show["name"] }} </td>
                     </tr>
                 @endforeach      
                 

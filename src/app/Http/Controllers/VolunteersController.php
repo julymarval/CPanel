@@ -10,10 +10,13 @@ use Tymon\JWTAuthExceptions\JWTException;
 use App\Volunteer;
 use App\Show;
 use App\Event;
+use App\Sale;
 use Config;
 
 class VolunteersController extends Controller
 {
+
+    private $events, $sales;
     
     /**
     * Constructor
@@ -28,6 +31,8 @@ class VolunteersController extends Controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
         $this->middleware('jwt.auth',['except' => ['index', 'show']]);
+        $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
+        $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
     }
 
     
@@ -94,6 +99,8 @@ class VolunteersController extends Controller
     
             return view('admin_dashboard')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -111,6 +118,8 @@ class VolunteersController extends Controller
         
                 return view('admin_dashboard')
                 -> with('user', $user -> name)
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -126,6 +135,8 @@ class VolunteersController extends Controller
 
                 return view('admin_dashboard')
                 -> with('user', $user -> name)
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -148,17 +159,21 @@ class VolunteersController extends Controller
 
                     return view('admin_dashboard')
                     -> with('user', $user -> name)
+                    -> with('sales', $this -> sales)
+                    -> with('events', $this -> events)
                     -> with('code', $code)
                     -> with('msg', $msg);
                 }
                 $volunteer -> shows() -> attach($request -> show_id);
             }
             
-            $rcode = Config::get('constants.codes.OkCode'); 
+            $code = Config::get('constants.codes.OkCode'); 
             $msg = Config::get('constants.msgs.OkMsg');
 
             return view('admin_dashboard')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
             
@@ -169,6 +184,8 @@ class VolunteersController extends Controller
 
             return view('admin_dashboard')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -193,8 +210,8 @@ class VolunteersController extends Controller
             -> with('msg', $msg);
         }
 
-        $my_shows  = $volunteer -> shows -> pluck('id', 'name')->all();
-        $my_events = $volunteer -> events -> pluck('id', 'name')->all();
+        $my_shows  = $volunteer -> shows -> pluck('name')->all();
+        $my_events = $volunteer -> events -> pluck('name')->all();
         $volunteer -> sponsor;
 
         $code = Config::get('constants.codes.OkCode'); 
@@ -259,12 +276,15 @@ class VolunteersController extends Controller
     {
         $user = JWTAuth::toUser($request -> input('Authorization'));
 
-        if(!$request -> name && !$request -> status && !$request -> description && !$request->file('image')){
+        if(!$request -> name && !$request -> status && !$request -> description && !$request->file('image')
+            && !$request -> show_id){
             $code = Config::get('constants.codes.MissingInputCode');
             $msg = Config::get('constants.msgs.MissingInputMsg');
 
             return view('admin_dashboard')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -282,6 +302,8 @@ class VolunteersController extends Controller
 
                         return view('admin_dashboard')
                         -> with('user', $user -> name)
+                        -> with('sales', $this -> sales)
+                        -> with('events', $this -> events)
                         -> with('code', $code)
                         -> with('msg', $msg);
                     }
@@ -303,7 +325,7 @@ class VolunteersController extends Controller
 
                 if(!empty($request -> file('image'))){
                     $file = $request -> file('image');
-                    $name = $request -> name . '.' . $file->getClientOriginalExtension();
+                    $name = $volunteer -> name . '.' . $file->getClientOriginalExtension();
                     if(file_exists(public_path() . '/images/volunteers/' . $volunteer -> image)){
                         Storage::delete(public_path() . '/images/volunteers/' . $volunteer -> image);
                     }
@@ -322,6 +344,8 @@ class VolunteersController extends Controller
 
                 return view('admin_dashboard')
                 -> with('user', $user -> name)
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -331,6 +355,8 @@ class VolunteersController extends Controller
 
             return view('admin_dashboard')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -354,6 +380,8 @@ class VolunteersController extends Controller
 
         return view('admin_dashboard')
         -> with('user', $user -> name)
+        -> with('sales', $this -> sales)
+        -> with('events', $this -> events)
         -> with('code', $code)
         -> with('msg', $msg);
     }

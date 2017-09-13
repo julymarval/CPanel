@@ -33,9 +33,7 @@
             <thead >
                 <tr class="bg-info ">
                     <th></th>
-                    <th>Name</th>
-                    <th>Date</th>
-                    <th>Description</th>
+                    <th style="text-align: center">Name</th>
                 </tr>
             </thead>
             
@@ -44,13 +42,11 @@
                 @foreach ($volunteers as $volunteer)
                     <tr>
                         <td style="width:140px; text-align: center">
-                        <div class="btn btn-sm btn-default"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
-                        <div class="btn btn-sm btn-default" ><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
-                        <div class="btn btn-sm btn-default"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
-                    </td>
-                        <td> {{ $volunteer["name"] }} </td>
-                        <td> {{ $volunteer["date"] }} </td>
-                        <td> {{$volunteer["status"]}} </td>
+                            <div class="btn btn-sm btn-default"><a href="{{route('volunteers.show', $volunteer -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
+                            <div class="btn btn-sm btn-default"><a href="{{route('volunteers.edit', $volunteer -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
+                            <div class="btn btn-sm btn-default"><a href="{{route('volunteers.destroy', $volunteer -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
+                        </td>
+                        <td> {{$volunteer["name"] }} </td>
                     </tr>
                 @endforeach      
                 

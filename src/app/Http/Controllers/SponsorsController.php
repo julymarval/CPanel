@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use Config;
 use App\Sponsor;
+use App\Sale;
 use App\Event;
 use App\Volunteer;
 
 class SponsorsController extends Controller
 {
     
+    private $sales, $events;
+
     /**
     * Constructor
     * It starts the jwt token validator before accessing to any function
@@ -27,6 +31,8 @@ class SponsorsController extends Controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
         $this->middleware('jwt.auth',['except' => ['index', 'show']]);
+        $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
+        $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
     }
     
     
@@ -93,6 +99,8 @@ class SponsorsController extends Controller
 
             return view('admin_dashboard') 
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -112,6 +120,8 @@ class SponsorsController extends Controller
 
                 return view('admin_dashboard')
                 -> with('user', $user -> name) 
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -127,6 +137,8 @@ class SponsorsController extends Controller
 
                 return view('admin_dashboard') 
                 -> with('user', $user -> name)
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -150,6 +162,8 @@ class SponsorsController extends Controller
 
                     return view('admin_dashboard') 
                     -> with('user', $user -> name)
+                    -> with('sales', $this -> sales)
+                    -> with('events', $this -> events)
                     -> with('code', $code)
                     -> with('msg', $msg);
                 }
@@ -161,6 +175,8 @@ class SponsorsController extends Controller
 
             return view('admin_dashboard') 
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
             
@@ -171,6 +187,8 @@ class SponsorsController extends Controller
 
             return view('admin_dashboard') 
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -196,8 +214,8 @@ class SponsorsController extends Controller
             -> with('msg', $msg);
         }
 
-        $my_events = $sponsor -> events -> pluck('id', 'name') -> all();
-        $my_volunteers = $sponsor -> volunteers -> pluck('id', 'name') -> all();
+        $my_events = $sponsor -> events -> pluck('name') -> all();
+        $my_volunteer = Volunteer::find($sponsor -> volunteer_id);
         
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
@@ -207,7 +225,7 @@ class SponsorsController extends Controller
         -> with('msg', $msg)
         -> with('sponsor', $sponsor)
         -> with('my_events', $my_events)
-        -> with('my_volunteers', $my_volunteers);
+        -> with('volunteer', $my_volunteer -> name);
     }
 
     /**
@@ -266,6 +284,8 @@ class SponsorsController extends Controller
 
                 return view('admin_dashboard')
                 -> with('user', $user -> name)
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
         }
@@ -284,6 +304,8 @@ class SponsorsController extends Controller
 
                             return view('admin_dashboard')
                             -> with('user', $user -> name)
+                            -> with('sales', $this -> sales)
+                            -> with('events', $this -> events)
                             -> with('code', $code)
                             -> with('msg', $msg);
                     }
@@ -299,6 +321,8 @@ class SponsorsController extends Controller
                             
                         return view('admin_dashboard')
                         -> with('user', $user -> name)
+                        -> with('sales', $this -> sales)
+                        -> with('events', $this -> events)
                         -> with('code', $code)
                         -> with('msg', $msg);
                     }
@@ -323,7 +347,7 @@ class SponsorsController extends Controller
 
                 if(!empty($request->file('image'))){
                     $file = $request -> file('image');
-                    $name = $request -> name . '.' . $file->getClientOriginalExtension();
+                    $name = $sponsor -> name . '.' . $file->getClientOriginalExtension();
                     if(file_exists(public_path() . '/images/sponsors/' . $sponsor -> image)){
                         Storage::delete(public_path() . '/images/sponsors/' . $sponsor -> image);
                     }
@@ -341,6 +365,8 @@ class SponsorsController extends Controller
 
                 return view('admin_dashboard')
                 -> with('user', $user -> name)
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -350,6 +376,8 @@ class SponsorsController extends Controller
 
             return view('admin_dashboard')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -373,6 +401,8 @@ class SponsorsController extends Controller
 
         return view('admin_dashboard')
         -> with('user', $user -> name)
+        -> with('sales', $this -> sales)
+        -> with('events', $this -> events)
         -> with('code', $code)
         -> with('msg', $msg);
     }

@@ -6,17 +6,23 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\User;
+use App\Event;
+use App\Sale;
 use Config;
 
 class UserController extends Controller
 {
     
+    private $sales, $events;
+
     public function __construct() {
         
         // Apply the jwt.auth middleware to all methods in this controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
         $this->middleware('jwt.auth',['except' => ['index', 'show', 'store','create']]);
+        $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
+        $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
     }
     
     /**
@@ -72,6 +78,8 @@ class UserController extends Controller
 
             return view('admin_dashboard')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -91,6 +99,8 @@ class UserController extends Controller
 
                 return view('admin_dashboard')
                 -> with('user', $user -> name)
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -105,6 +115,8 @@ class UserController extends Controller
 
                 return view('admin_dashboard')
                 -> with('user', $user -> name)
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -116,6 +128,8 @@ class UserController extends Controller
 
             return view('admin_dashboard')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
             
@@ -126,6 +140,8 @@ class UserController extends Controller
 
             return view('admin_dashboard')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -204,6 +220,8 @@ class UserController extends Controller
 
             return view('admin_dashboard')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -230,6 +248,8 @@ class UserController extends Controller
 
                 return view('admin_dashboard')
                 -> with('user', $user -> name)
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -239,6 +259,8 @@ class UserController extends Controller
 
             return view('admin_dashboard')
             -> with('user', $user -> name)
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -262,6 +284,8 @@ class UserController extends Controller
 
         return view('admin_dashboard')
         -> with('user', $user -> name)
+        -> with('sales', $this -> sales)
+        -> with('events', $this -> events)
         -> with('code', $code)
         -> with('msg', $msg);
     }

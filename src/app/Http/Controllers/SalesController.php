@@ -8,10 +8,13 @@ use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\Sale;
+use App\Event;
 use Config;
 
 class SalesController extends Controller
 {
+
+    private $sales, $events;
 
     /**
     * Constructor
@@ -26,6 +29,8 @@ class SalesController extends Controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
         $this->middleware('jwt.auth',['except' => ['index', 'show']]);
+        $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
+        $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
     }
 
     /**
@@ -81,6 +86,8 @@ class SalesController extends Controller
 
             return view('admin_dashboard') 
             -> with('user', $user -> name) 
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -99,6 +106,8 @@ class SalesController extends Controller
 
                 return view('admin_dashboard') 
                 -> with('user', $user -> name) 
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -114,6 +123,8 @@ class SalesController extends Controller
                 
                 return view('admin_dashboard')
                 -> with('user', $user -> name)  
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);;
             }
@@ -132,6 +143,8 @@ class SalesController extends Controller
             
             return view('admin_dashboard') 
             -> with('user', $user -> name) 
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
             
@@ -142,6 +155,8 @@ class SalesController extends Controller
 
             return view('admin_dashboard') 
             -> with('user', $user -> name) 
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -169,7 +184,7 @@ class SalesController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
         
-        return view('sale.show_sale') 
+        return view('sales.show_sale') 
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('sale', $sale);
@@ -220,6 +235,8 @@ class SalesController extends Controller
 
             return view('admin_dashboard')
             -> with('user', $user -> name) 
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -242,7 +259,7 @@ class SalesController extends Controller
                 }
                 if(!empty($request -> file('image'))){
                     $file = $request -> file('image');
-                    $name = $request -> name . '.' . $file->getClientOriginalExtension();
+                    $name = $sale -> name . '.' . $file->getClientOriginalExtension();
                     if(file_exists(public_path() . '/images/sales/' . $sale -> image)){
                         Storage::delete(public_path() . '/images/sales/' . $sale -> image);
                     }
@@ -260,6 +277,8 @@ class SalesController extends Controller
 
                 return view('admin_dashboard') 
                 -> with('user', $user -> name) 
+                -> with('sales', $this -> sales)
+                -> with('events', $this -> events)
                 -> with('code', $code)
                 -> with('msg', $msg);
             }
@@ -269,6 +288,8 @@ class SalesController extends Controller
             
             return view('admin_dashboard') 
             -> with('user', $user -> name) 
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -292,6 +313,8 @@ class SalesController extends Controller
 
         return view('admin_dashboard') 
         -> with('user', $user -> name) 
+        -> with('sales', $this -> sales)
+        -> with('events', $this -> events)
         -> with('code', $code)
         -> with('msg', $msg);
     }
