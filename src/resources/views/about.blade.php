@@ -18,7 +18,7 @@
 
   <h4>History</h4><br>
   <div class="row">
-    <div class="col-sm-5">
+    <div class="col-sm-6">
       
       <p  align="justify">Thru most of the 80’s and 90’s Mr. Ramon Rodriguez was director of a one hour weekly Spanish radio program, “Informando al Pueblo”. After Mr. Juan Lora, in charge of
           preparing and reading news for the weekly program, left in the mid 90’s, Mr. Eliud
@@ -100,8 +100,8 @@
           to be Sabor Latino volunteers and the way they wear clothing with our logo.</p><br>
     
     </div>
-    
-    <div class="col-sm-5">
+  
+    <div  id="your_col" class="col-sm-6">
       
       <p  align="justify">Thru most of the 80’s and 90’s Mr. Ramon Rodriguez was director of a one hour weekly Spanish radio program, “Informando al Pueblo”. After Mr. Juan Lora, in charge of
           preparing and reading news for the weekly program, left in the mid 90’s, Mr. Eliud

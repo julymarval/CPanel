@@ -33,7 +33,7 @@
             <thead >
                 <tr class="bg-info ">
                     <th></th>
-                    <th style="text-align: center">Name</th>>
+                    <th style="text-align: center">Name</th>
                 </tr>
             </thead>
             

@@ -1,11 +1,40 @@
+
+
+
 @extends('layouts.adminheader')
 @section('content')
-      <div class="container">
-      <div class="row vertical-offset-100">
-        <div class="col-md-4 col-md-offset-4">
+                <div class="col-md-10 col-sm-11 display-table-cell v-align">
+                 
+                    <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
+                    <div class="row">
+                        <header>
+                            <div class="col-md-7">
+                                <nav class="navbar-default pull-left">
+                                    <div class="navbar-header">
+                                        <button type="button" class="navbar-toggle collapsed" data-toggle="offcanvas" data-target="#side-menu" aria-expanded="false">
+                                            <span class="sr-only">Toggle navigation</span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></spadmin/authenticate#an>
+                                        </button>
+                                    </div>
+                                </nav>
+            
+                            </div>
+  
+                        </header>
+                    </div>
+                    <div class="user-dashboard">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12 gutter">
+    
+       <br>
+                    <br>
+                                     <div class="row vertical-offset-100">
+        <div class="col-md-8 col-md-offset-2">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Register an user</h3>
+              <h3 class="panel-title">Create a show</h3>
            </div>
             <div class="panel-body">
             <form id="check" method="POST" enctype="application/x-www-form-urlencoded" action="{{route('shows.store')}}">
@@ -28,10 +57,19 @@
         </div>
       </div>
     </div>
-  </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    
+    
+    
+        
+        <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
 
     </body>
-</html>
-
-
 @endsection
