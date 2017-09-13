@@ -70,7 +70,7 @@ class ShowsController extends Controller
      */
     public function create()
     {
-        $volunteers = Volunteer::orderBy('name','DESC')-> lists('name','id');
+        $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name','id')->all();
 
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
