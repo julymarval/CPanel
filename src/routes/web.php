@@ -38,6 +38,43 @@ Route::get('/', [
         'uses' => 'HomeController@index',
         'as'   => 'home']);
 
+/**
+* Admin Route: shows
+**/
+Route::get('/admin/shows', [
+    'uses' => 'AdminController@indexShows',
+    'as'   => 'admin.shows']);
+
+
+/**
+* Admin Route: events
+**/
+Route::get('/admin/events', [
+    'uses' => 'AdminController@indexEvents',
+    'as'   => 'admin.events']);
+
+/**
+* Admin Route: sales
+**/
+Route::get('/admin/sales', [
+    'uses' => 'AdminController@indexSales',
+    'as'   => 'admin.sales']);
+
+
+/**
+* Admin Route: volunteers
+**/
+Route::get('/admin/volunteers', [
+    'uses' => 'AdminController@indexVolunteers',
+    'as'   => 'admin.volunteers']);
+
+/**
+* Admin Route: sponsors
+**/
+Route::get('/admin/sponsors', [
+    'uses' => 'AdminController@indexSponsors',
+    'as'   => 'admin.sponsors']);
+
 
 /**
 * Users Route
@@ -128,6 +165,8 @@ Route::group(['prefix' => 'admin'],function(){
             'as'   => 'authenticate.auth']);
     
 });
+
+
 
 /**
 * UpdateDB Route

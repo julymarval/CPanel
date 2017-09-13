@@ -24,11 +24,11 @@
                     <div class="navi">
                         <ul>
                             <li><a href="{{route('dashboard')}}"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
-                            <li><a href="{{route('shows.index')}}"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Shows</span></a></li>
-                            <li><a href="{{route('sales.index')}}"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Tianguis</span></a></li>
-                            <li><a href="{{route('events.index')}}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Events</span></a></li>
-                            <li><a href="{{route('sponsors.index')}}"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Sponsors</span></a></li>
-                            <li><a href="{{route('volunteers.index')}}"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Volunteers</span></a></li>
+                            <li><a href="{{route('admin.shows')}}"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Shows</span></a></li>
+                            <li><a href="{{route('admin.sales')}}"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Tianguis</span></a></li>
+                            <li><a href="{{route('admin.events')}}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Events</span></a></li>
+                            <li><a href="{{route('admin.sponsors')}}"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Sponsors</span></a></li>
+                            <li><a href="{{route('admin.volunteers')}}"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Volunteers</span></a></li>
                         </ul>
                     </div>
                 </div>
