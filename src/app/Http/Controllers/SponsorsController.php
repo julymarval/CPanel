@@ -70,8 +70,8 @@ class SponsorsController extends Controller
      */
     public function create()
     {
-        $events   = Event::orderBy('name','DESC')-> lists('name','id');
-        $volunteers = Volunteer::orderBy('name','DESC')-> lists('name','id');
+        $events   = Event::orderBy('name','DESC') -> pluck('name', 'id') -> all();
+        $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name', 'id') -> all();
 
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
