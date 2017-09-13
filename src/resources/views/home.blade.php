@@ -41,7 +41,7 @@
         </li>
         <li><a href="{{ url('/about') }}">ABOUT</a></li>
         <li><a href="{{route('events.index')}}">EVENTS</a></li>
-        <li><a href="{{ url('/tianguis') }}">TIANGUIS</a></li>
+        <li><a href="{{route('sales.index')}}">TIANGUIS</a></li>
         <li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGJJ7RX543MDQ"target="_blank">DONA</a></li>
       </ul>
     </div>
