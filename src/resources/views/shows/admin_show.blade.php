@@ -7,17 +7,10 @@
                             <div class="col-md-7">
                                 <nav class="navbar-default pull-left">
                                     <div class="navbar-header">
-                                        <button type="button" class="navbar-toggle collapsed" data-toggle="offcanvas" data-target="#side-menu" aria-expanded="false">
-                                            <span class="sr-only">Toggle navigation</span>
-                                            <span class="icon-bar"></span>
-                                            <span class="icon-bar"></span>
-                                            <span class="icon-bar"></spadmin/authenticate#an>
-                                        </button>
+                                        <a href="{{route('shows.create')}}">ADD +</a>
                                     </div>
                                 </nav>
-            
-                            </div>
-  
+                            </div>  
                         </header>
                     </div>
                     <div class="user-dashboard">
@@ -26,9 +19,7 @@
     
                                 <div class="sales">
                                     <h2>Shows</h2>
-    
                                     <div class="row">
-        
         <table class="table table-bordered table-striped">
             <thead >
                 <tr class="bg-info ">

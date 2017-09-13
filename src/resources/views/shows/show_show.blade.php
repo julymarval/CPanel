@@ -81,5 +81,6 @@
         <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
 
     </body>
+</html>
 
 @endsection
