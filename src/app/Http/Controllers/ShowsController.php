@@ -96,7 +96,7 @@ class ShowsController extends Controller
             $msg = Config::get('constants.msgs.MissingInputMsg');
 
             return view('admin_dashboard') 
-            -> with('user', $user -> name)
+            // -> with('user', $user -> name)
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -116,7 +116,7 @@ class ShowsController extends Controller
                 $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
                 
                 return view('admin_dashboard') 
-                -> with('user', $user -> name)
+                // -> with('user', $user -> name)
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
                 -> with('code', $code)
@@ -133,7 +133,7 @@ class ShowsController extends Controller
                 $msg = Config::get('constants.msgs.ExistingShowMsg');
                 
                 return view('admin_dashboard') 
-                -> with('user', $user -> name)
+                // -> with('user', $user -> name)
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
                 -> with('code', $code)
@@ -160,7 +160,7 @@ class ShowsController extends Controller
                     $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
                     return view('admin_dashboard') 
-                    -> with('user', $user -> name)
+                    // -> with('user', $user -> name)
                     -> with('sales', $this -> sales)
                     -> with('events', $this -> events)
                     -> with('code', $code)
@@ -174,7 +174,7 @@ class ShowsController extends Controller
             $msg = Config::get('constants.msgs.OkMsg');
 
             return view('admin_dashboard') 
-            -> with('user', $user -> name)
+            // -> with('user', $user -> name)
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -186,7 +186,7 @@ class ShowsController extends Controller
             $msg = Config::get('constants.msgs.InternalErrorMsg');
             
             return view('admin_dashboard') 
-            -> with('user', $user -> name)
+            // -> with('user', $user -> name)
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -277,7 +277,7 @@ class ShowsController extends Controller
                 $msg = Config::get('constants.msgs.MissingInputMsg');
                 
                 return view('admin_dashboard') 
-                -> with('user', $user -> name)
+                // -> with('user', $user -> name)
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
                 -> with('code', $code)
@@ -297,7 +297,7 @@ class ShowsController extends Controller
                         $msg  = Config::get('constants.msgs.NonExistingVolunteerMsg');
                         
                         return view('admin_dashboard') 
-                        -> with('user', $user -> name)
+                        // -> with('user', $user -> name)
                         -> with('sales', $this -> sales)
                         -> with('events', $this -> events)
                         -> with('code', $code)
@@ -338,7 +338,7 @@ class ShowsController extends Controller
                 $msg = Config::get('constants.msgs.InternalErrorMsg');
 
                 return view('admin_dashboard') 
-                -> with('user', $user -> name)
+                // -> with('user', $user -> name)
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
                 -> with('code', $code)
@@ -349,7 +349,7 @@ class ShowsController extends Controller
             $msg = Config::get('constants.msgs.OkMsg');
 
             return view('admin_dashboard') 
-            -> with('user', $user -> name)
+            // -> with('user', $user -> name)
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -374,7 +374,7 @@ class ShowsController extends Controller
         $msg = Config::get('constants.msgs.OkMsg');
         
         return view('admin_dashboard') 
-        -> with('user', $user -> name)
+        // -> with('user', $user -> name)
         -> with('sales', $this -> sales)
         -> with('events', $this -> events)
         -> with('code', $code)
