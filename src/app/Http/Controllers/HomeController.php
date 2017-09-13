@@ -10,16 +10,31 @@ use Config;
 
 class HomeController extends Controller
 {
+
+    private $sales, $shows;
+    
+    /**
+    * Constructor
+    * It starts the jwt token validator before accessing to any function
+    * @param none
+    * @return none
+    */
+
+    public function __construct() {
+        
+        $this -> shows = Show::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
+        //$this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $shows = Show::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
-        
-        if(empty($shows)){
+    {             
+        if(empty($this -> shows)){
             $code = Config::get('constants.codes.NonExistingShowsCode'); 
             $msg = Config::get('constants.msgs.NonExistingShowsMsg');
             
@@ -34,7 +49,7 @@ class HomeController extends Controller
         return view('home')
         -> with('code', $code)
         -> with('msg', $msg)
-        -> with('shows', $shows);
+        -> with('shows', $this -> shows);
     }
 
     /**

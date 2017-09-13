@@ -78,29 +78,17 @@
   <div class="text-center showresult">
     <h1>Select a show</h1>
   </div>
-  <br>
-
+  <br>  
   <div class="row">
-      <div class="column col-sm-4 ">          
-        <div class=" card  show1">
-        <h4>El cuartel del Sargento </h4>
-        <br>
-      </div>
-      </div>
-    <div class="column col-sm-4 ">
-    <div class="card  show2">
-      <h4>Dame tu mano </h4>
-      <br>
-    </div>
+    @foreach ($shows as $show) 
+        <div class="column col-sm-4 ">          
+          <div class="card  show1">
+            <h4>{{$show["name"]}}</h4>
+            <br>
+          </div>
+        </div>
+    @endforeach
   </div>
-  <div class="column col-sm-4 ">
-    <div class="card show3">
-      <h4>Grandes momentos del recuerdo</h4>
-      <br>
-    </div>
-  </div>
-  </div>
-
 
 
 <div id="contact" class="container-fluid bg-grey">
