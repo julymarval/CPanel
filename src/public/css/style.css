@@ -5,7 +5,9 @@
 .bx-wrapper .bx-pager {
     bottom: -95px;
   }
-  
+   #your_col {
+      border-left: 2px solid #999;
+    }
   .bx-wrapper .bx-pager a {
     border: solid #ccc 1px;
     display: block;
