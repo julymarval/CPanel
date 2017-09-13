@@ -21,8 +21,8 @@
                         </header>
                     </div>
                     <div class="user-dashboard">
-                        <h1>Hello, {{$user}}</h1>
-                        {{$token}}
+                        <h1>Welcome</h1>
+                        
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-12 gutter">
     

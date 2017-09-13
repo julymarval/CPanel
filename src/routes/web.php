@@ -24,14 +24,19 @@ Route::get('/about', function () {
     return view('about');
 });
 
+/**
+* Admin Dashboard
+**/
+Route::get('/dashboard', [
+        'uses' => 'DashboardController@index',
+        'as'   => 'dashboard']);
 
 /**
 * Home Route
 **/
 Route::get('/', [
         'uses' => 'HomeController@index',
-        'as'   => 'home'
-        ]);
+        'as'   => 'home']);
 
 
 /**
