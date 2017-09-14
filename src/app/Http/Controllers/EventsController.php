@@ -194,7 +194,7 @@ class EventsController extends Controller
             $code = Config::get('constants.codes.OkCode');
             $msg = Config::get('constants.msgs.OkMsg');
             
-            return view('admin_dashboad')
+            return view('admin_dashboard')
             //-> with('user', $user -> name)
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)

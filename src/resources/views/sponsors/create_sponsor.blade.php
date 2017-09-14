@@ -48,9 +48,9 @@
                         </div>
                                                 <br>
                          <div class="form-group">
-                            <label for="sel1">Select a Level:</label>
+                            <label for="sel1">Select a Status:</label>
 
-                            <select class="form-control"  name="level">
+                            <select class="form-control"  name="status">
                                 <option disabled selected value> -- select an option -- </option>
                                 <option value="Activo">Activo</option>
                                 <option value="Inactivo">Inactivo</option>
@@ -66,14 +66,14 @@
                                 <option value="Oro">Oro</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                       <div class="form-group">
                             {!! Form::label('volunteers', 'Volunteers') !!}
-                            {!! Form::select('volunteer_id',$volunteers,null,['volunteers' => 'id', 'class' => 'form-control',
+                            {!! Form::select('volunteer_id',$volunteers," ",['volunteers' => 'id', 'class' => 'form-control',
                             'single',null]) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('events', 'Events') !!}
-                            {!! Form::select('event_id',$events,null,['events' => 'id', 'class' => 'form-control',
+                            {!! Form::select('event_id',$events," ",['events' => 'id', 'class' => 'form-control',
                             'single',null]) !!}
                         </div>
                         <br>
