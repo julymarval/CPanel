@@ -23,7 +23,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="#home">
+      <a class="navbar-brand" href="{{ url('/') }}">
         <img src="{{asset('/images/logo3.png')}}"  >
       </a>
     </div>
@@ -33,7 +33,7 @@
         <li><a href="{{ url('/about') }}">ABOUT</a></li>
         <li><a href="{{route('events.index')}}">EVENTS</a></li>
         <li><a href="{{route('sales.index')}}">TIANGUIS</a></li>
-        <li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGJJ7RX543MDQ"target="_blank">DONA</a></li>
+        <li class="active"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGJJ7RX543MDQ"target="_blank"><span class="glyphicon glyphicon-heart-empty red"></span> DONAR </a></li>
       </ul>
     </div>
   </div>

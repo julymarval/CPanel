@@ -28,8 +28,8 @@
   <br>
   <br>
   <p>
-    <a  id="page-help" href="http://streamdb6web.securenetsystems.net/v5/WSBL" onclick="window.open(this.href, 'popupwindow', 'width=500,height=300'); return false;" class="btn btn-primary btn-round-lg btn-lg"><span class="glyphicon glyphicon-play"></span>LIVE</a>
-    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGJJ7RX543MDQ"target="_blank" class="btn btn-default btn-round-lg btn-lg"> <span class="glyphicon glyphicon-heart-empty red"></span> DONATE</a>
+    <a  id="page-help" href="http://streamdb6web.securenetsystems.net/v5/WSBL" onclick="window.open(this.href, 'popupwindow', 'width=500,height=300'); return false;" class="btn btn-primary btn-round-lg btn-lg">EN VIVO <span class="glyphicon glyphicon-play"></span></a>
+    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGJJ7RX543MDQ"target="_blank" class="btn btn-default btn-round-lg btn-lg">  DONAR  <span class="glyphicon glyphicon-heart-empty red"></span></a>
   </p>
 <br>
 

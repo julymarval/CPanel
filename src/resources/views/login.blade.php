@@ -12,7 +12,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
             html, body {
-                background-color: #BBBBBB;
+                background-color: #f4511e;
                 color: #636b6f;
                 font-family: 'Raleway', sans-serif;
                 font-weight: 100;
@@ -22,6 +22,16 @@
             .vertical-offset-100{
                 padding-top:100px;
             }
+         .brand {
+            padding: 0px;
+            height: 80px;
+             text-align: center;
+          }
+        .brand>img {
+            height: 100%;
+            padding: 15px;
+            width: auto;
+          }
   </style>
 
 </head>
@@ -30,6 +40,7 @@
       <div class="container">
       <div class="row vertical-offset-100">
         <div class="col-md-4 col-md-offset-4">
+            
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Please sign in</h3>
@@ -49,6 +60,11 @@
                 </form>
             </div>
         </div>
+            <br>
+            <br>
+            <div class="brand">
+            <img src="{{asset('/images/logo3.png')}}" >
+            </div>
       </div>
     </div>
   </div>

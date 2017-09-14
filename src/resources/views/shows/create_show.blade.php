@@ -42,8 +42,12 @@
                         <div class="form-group">
                             <input class="form-control" placeholder="schedule" name="schedule" type="text" >
                         </div>
+                        
                         <div class="form-group">
                             <input class="form-control" placeholder="description" name="description" type="text" >
+                        </div>
+                        <div>
+                            <input class="form-control" placeholder="image" name="image" type="file">
                         </div>
                         <br>
                         <div class="form-group">

@@ -39,19 +39,33 @@
                         <div class="form-group">
                             <input class="form-control" placeholder="Name" name="name" type="text">
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Level" name="level" type="text" >
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Status" name="status" type="text" >
-                        </div>
+       
                         <div class="form-group">
                             <input class="form-control" placeholder="description" name="description" type="text" >
                         </div>
                         <div>
                             <input class="form-control" placeholder="image" name="image" type="file">
                         </div>
-                        <br>
+                                                <br>
+                         <div class="form-group">
+                            <label for="sel1">Select a Level:</label>
+
+                            <select class="form-control"  name="level">
+                                <option disabled selected value> -- select an option -- </option>
+                                <option value="Activo">Activo</option>
+                                <option value="Inactivo">Inactivo</option>
+                            </select>
+                        </div>  
+                          <div class="form-group">
+                         <label for="sel1">Select a Level:</label>
+
+                            <select class="form-control"  name="level">
+                                <option disabled selected value> -- select an option -- </option>
+                                <option value="Cobre">Cobre</option>
+                                <option value="Platino">Platino</option>
+                                <option value="Oro">Oro</option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             {!! Form::label('volunteers', 'Volunteers') !!}
                             {!! Form::select('volunteer_id',$volunteers,null,['volunteers' => 'id', 'class' => 'form-control',
