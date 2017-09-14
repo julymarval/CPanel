@@ -34,7 +34,7 @@
                 <tr class="bg-info ">
                     <th style="text-align: center">Image</th>
                     <th style="text-align: center">Description</th>
-                    <th style="text-align: center">Schedule</th>
+                    <th style="text-align: center">date</th>
                 </tr>
             </thead>
             
@@ -42,7 +42,7 @@
                 
                 <td> {{$event["image"] }} </td>
                 <td> {{$event["description"] }} </td>
-                <td> {{$event["schedule"] }} </td>
+                <td> {{$event["date"] }} </td>
               
             </tbody>    
             

@@ -11,6 +11,7 @@ use App\Volunteer;
 use App\Show;
 use App\Event;
 use App\Sale;
+use App\Sponsor;
 use Config;
 
 class VolunteersController extends Controller

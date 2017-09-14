@@ -15,16 +15,18 @@
                                         </button>
                                     </div>
                                 </nav>
-            
                             </div>
-  
                         </header>
                     </div>
                     <div class="user-dashboard">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 gutter">
     
-                                <div class="sales">
+                                <div class="volunteers">
+                                    <div class="pull-right">
+                                        <a class="btn btn-default btn-success btn-md" href="{{route('volunteers.create')}}">
+                                        NEW <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                                    </div>
                                     <h2>Volunteers</h2>
     
                                     <div class="row">

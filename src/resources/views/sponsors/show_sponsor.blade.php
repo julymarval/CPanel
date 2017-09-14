@@ -43,12 +43,12 @@
             
             <tbody id="list-itens">
                 
-                <td> {{$sponsor["image"] }} </td>
+                <td> {{$sponsor["image"]}} </td>
                 <td> {{$sponsor["name"] }} </td>
                 <td> {{$sponsor["description"] }} </td>
                 <td> {{$sponsor["level"] }} </td>
                 <td> {{$sponsor["status"] }} </td>
-                <td> {{$volunteer}}
+                <td> {{$volunteer}} </td>
               
             </tbody>    
             

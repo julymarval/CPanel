@@ -24,7 +24,6 @@
                         <h1>Welcome</h1>
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-12 gutter">
-    
                                 <div class="sales">
                                     <h2>Lastest Events</h2>
     
@@ -35,8 +34,6 @@
                 <tr class="bg-info ">
                     <th></th>
                     <th style="text-align: center">Name</th>
-                    <th style="text-align: center">Date</th>
-                    <th style="text-align: center">Description</th>
                 </tr>
             </thead>
             
@@ -49,9 +46,7 @@
                             <div class="btn btn-sm btn-default"><a href="{{route('events.edit', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
                             <div class="btn btn-sm btn-default"><a href="{{route('events.destroy', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
                         </td>
-                        <td> {{$event["name"] }} </td>
-                        <td> {{$event["date"] }} </td>
-                        <td> {{$event["description"]}} </td>
+                        <td style="text-align: center"> {{$event["name"] }} </td>
                     </tr>
                 @endforeach      
                 
@@ -75,8 +70,6 @@
                 <tr class="bg-info ">
                     <th></th>
                     <th style="text-align: center">Name</th>
-                    <th style="text-align: center">Price</th>
-                    <th style="text-align: center">Description</th>
                 </tr>
             </thead>
             
@@ -85,13 +78,11 @@
                 @foreach ($sales as $sale)
                     <tr>
                         <td style="width:140px; text-align: center">
-                            <div class="btn btn-sm btn-default"><a href="{{route('events.show', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
-                            <div class="btn btn-sm btn-default"><a href="{{route('events.edit', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
-                            <div class="btn btn-sm btn-default"><a href="{{route('events.destroy', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
+                            <div class="btn btn-sm btn-default"><a href="{{route('sales.show', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
+                            <div class="btn btn-sm btn-default"><a href="{{route('sales.edit', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
+                            <div class="btn btn-sm btn-default"><a href="{{route('sales.destroy', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
                         </td>
-                        <td> {{$sale["name"] }} </td>
-                        <td> {{$sale["price"] }} </td>
-                        <td> {{$sale["description"]}} </td>
+                        <td style="text-align: center"> {{$sale["name"] }} </td>
                     </tr>
                 @endforeach               
                 

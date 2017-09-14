@@ -22,7 +22,7 @@ Route::get('/about', function () {
 /**
 * Admin Dashboard
 **/
-Route::get('/dashboard', [
+Route::get('/admin/dashboard', [
         'uses' => 'DashboardController@index',
         'as'   => 'dashboard']);
 

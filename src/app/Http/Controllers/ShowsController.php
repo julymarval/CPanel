@@ -244,7 +244,7 @@ class ShowsController extends Controller
             -> with('msg', $msg);
         }
 
-        $my_volunteers = $show -> volunteers -> lists('id') -> toArray();
+        $my_volunteers = $show -> volunteers -> pluck('name','id')->all();
 
         $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name','id')->all();
 

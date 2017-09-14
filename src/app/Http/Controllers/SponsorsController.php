@@ -146,7 +146,7 @@ class SponsorsController extends Controller
             if($request->file('image')){
                 $file = $request -> file('image');
                 $name = $request -> name . '.' . $file->getClientOriginalExtension();
-                $path = public_path() . '/images/events/';
+                $path = public_path() . '/images/sponsors/';
                 $file -> move($path,$name);
                 $sponsor -> image = $name;
             }
@@ -247,8 +247,8 @@ class SponsorsController extends Controller
             -> with('msg', $msg);
         }
 
-        $my_volunteers = $sponsor -> volunteers -> pluck('id', 'name') -> all();
-        $my_events     = $sponsor -> events -> pluck('id','name') -> all();
+        $my_volunteer =  Volunteer::find($sponsor -> volunteer_id);
+        $my_events    = $sponsor -> events -> pluck('id','name') -> all();
 
         $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name','id');
         $events     = Event::orderBy('name','DESC') -> pluck('name', 'id');
@@ -260,7 +260,7 @@ class SponsorsController extends Controller
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('sponsor', $sponsor)
-        -> with('my_volunteers', $my_volunteers)
+        -> with('my_volunteers', $my_volunteer)
         -> with('my_events',$my_events)
         -> with('volunteers',$volunteers)
         -> with('events', $events);

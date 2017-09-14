@@ -23,8 +23,11 @@
                     <div class="user-dashboard">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 gutter">
-    
-                                <div class="sales">
+                                <div class="events">
+                                    <div class="pull-right">
+                                        <a class="btn btn-default btn-success btn-md" href="{{route('events.create')}}">
+                                        NEW <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                                    </div>
                                     <h2>Events</h2>
     
                                     <div class="row">

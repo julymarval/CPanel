@@ -1,6 +1,3 @@
-
-
-
 @extends('layouts.adminheader')
 @section('content')
                 <div class="col-md-10 col-sm-11 display-table-cell v-align">
@@ -34,24 +31,29 @@
         <div class="col-md-8 col-md-offset-2">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Create a show</h3>
+              <h3 class="panel-title" style="text-align: center">Add new show</h3>
            </div>
             <div class="panel-body">
-            <form id="check" method="POST" enctype="application/x-www-form-urlencoded" action="{{route('shows.store')}}">
-  
-                      <fieldset>
-                      <div class="form-group">
-                    <input class="form-control" placeholder="Name" name="name" type="text">
-                </div>
-                  <div class="form-group">
-                    <input class="form-control" placeholder="schedule" name="schedule" type="text" >
-                </div>
-                <div class="form-group">
-                    <input class="form-control" placeholder="description" name="description" type="text" >
-                </div>
-               
-                <input class="btn btn-lg btn-success btn-block" type="submit" value="Save">
-              </fieldset>
+                <form id="check" method="POST" enctype="multipart/form-data" action="{{route('shows.store')}}">
+                    <fieldset>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Name" name="name" type="text">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="schedule" name="schedule" type="text" >
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="description" name="description" type="text" >
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            {!! Form::label('volunteers', 'Volunteers') !!}
+                            {!! Form::select('volunteer_id',$volunteers,null,['volunteers' => 'id', 'class' => 'form-control',
+                            'single',null]) !!}
+                        </div>
+                        <br>
+                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Save">
+                    </fieldset>
                 </form>
             </div>
         </div>

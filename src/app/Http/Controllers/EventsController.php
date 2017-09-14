@@ -194,7 +194,7 @@ class EventsController extends Controller
             $code = Config::get('constants.codes.OkCode');
             $msg = Config::get('constants.msgs.OkMsg');
             
-            return view('prueba')
+            return view('admin_dashboad')
             //-> with('user', $user -> name)
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
@@ -274,6 +274,8 @@ class EventsController extends Controller
 
         $my_volunteers = $event -> volunteers -> pluck('id', 'name')->all();        
         $my_sponsors   = $event -> sponsors   -> pluck('id', 'name')->all();
+        $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name','id')->all();
+        $sponsors = Sponsor::orderBy('name','DESC') -> pluck('name','id')->all();
 
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
@@ -282,8 +284,10 @@ class EventsController extends Controller
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('event', $event)
-        -> with('volunteers', $my_volunteers)
-        -> with('sponsors', $my_sponsors);
+        -> with('volunteer', $my_volunteers)
+        -> with('sponsor', $my_sponsors)
+        -> with('volunteers', $volunteers)
+        -> with('sponsors', $sponsors);
 
         
     }
