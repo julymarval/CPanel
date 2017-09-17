@@ -52,8 +52,10 @@
                                         </tr>
                                     @endforeach          
                                 </tbody>     
-                            </table>      
-                        </div>
+                            </table>
+                            {{$sales}}  
+                        </div>   
+                        
                     </div>
                 </div>
                             
@@ -61,7 +63,6 @@
         </div>
     </div>
     </div>
-    
     </div>
     
     

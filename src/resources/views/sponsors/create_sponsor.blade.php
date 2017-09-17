@@ -68,13 +68,13 @@
                         </div>
                        <div class="form-group">
                             {!! Form::label('volunteers', 'Volunteers') !!}
-                            {!! Form::select('volunteer_id',$volunteers," ",['volunteers' => 'id', 'class' => 'form-control',
+                            {!! Form::select('volunteer_id', $volunteers,null,['volunteers' => 'id', 'class' => 'form-control',
                             'single',null]) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('events', 'Events') !!}
-                            {!! Form::select('event_id',$events," ",['events' => 'id', 'class' => 'form-control',
-                            'single',null]) !!}
+                            {!! Form::select('event_id[]',[null => '-- No Events --'] + $events,null,['events' => 'id', 'class' => 'form-control',
+                            'multiple',null]) !!}
                         </div>
                         <br>
                 <input class="btn btn-lg btn-success btn-block" type="submit" value="Save">

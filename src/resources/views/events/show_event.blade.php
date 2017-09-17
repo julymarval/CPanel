@@ -38,9 +38,8 @@
                 </tr>
             </thead>
             
-            <tbody id="list-itens">
-                
-                <td> {{$event["image"] }} </td>
+            <tbody id="list-itens">   
+                <td align="center"><img src="/images/events/{{$event["image"]}}"></td>
                 <td> {{$event["description"] }} </td>
                 <td> {{$event["date"] }} </td>
               

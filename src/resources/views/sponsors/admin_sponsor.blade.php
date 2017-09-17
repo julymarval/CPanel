@@ -58,7 +58,7 @@
             
         </table>
         
-        
+       {{$sponsors}} 
         
     </div>
                                 </div>

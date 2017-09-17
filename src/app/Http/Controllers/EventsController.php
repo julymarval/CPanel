@@ -156,39 +156,48 @@ class EventsController extends Controller
             $event -> save();
 
             if(!empty($request -> volunteer_id)){
-                $volunteer = Volunteer::find($request -> volunteer_id);
-                
-                if(empty($volunteer)){
                     
-                    $code = Config::get('constants.codes.NonExistingVolunteerCode');
-                    $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
-                    
-                    return view('admin_dashboard')
-                    //-> with('user', $user -> name)
-                    -> with('sales', $this -> sales)
-                    -> with('events', $this -> events)
-                    -> with('code', $code)
-                    -> with('msg', $msg);
+                foreach($request -> volunteer_id as $id){
+                    $volunteer = Volunteer::find($id);
+                    if(empty($volunteer)){
+                        
+                        $code = Config::get('constants.codes.NonExistingVolunteerCode');
+                        $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
+                        
+                        return view('admin_dashboard')
+                        //-> with('user', $user -> name)
+                        -> with('sales', $this -> sales)
+                        -> with('events', $this -> events)
+                        -> with('code', $code)
+                        -> with('msg', $msg);
+                    }
                 }
-                $event -> volunteers() -> attach($request -> volunteer_id);
+
+                foreach($request -> volunteer_id as $id){
+                    $event -> volunteers() -> attach($id);
+                }
             }
 
             if(!empty($request -> sponsor_id)){
-                $sponsor = Sponsor::find($request -> sponsor_id);
-                
-                if(empty($sponsor)){
+                foreach($request -> sponsor_id as $id){
+                    $sponsor = Sponsor::find($id);
                     
-                    $code = Config::get('constants.codes.NonExistingVolunteerCode');
-                    $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
+                    if(empty($sponsor)){
+                        
+                        $code = Config::get('constants.codes.NonExistingVolunteerCode');
+                        $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
-                    return view('admin_dashboard')
-                    //-> with('user', $user -> name)
-                    -> with('sales', $this -> sales)
-                    -> with('events', $this -> events)
-                    -> with('code', $code)
-                    -> with('msg', $msg);
+                        return view('admin_dashboard')
+                        //-> with('user', $user -> name)
+                        -> with('sales', $this -> sales)
+                        -> with('events', $this -> events)
+                        -> with('code', $code)
+                        -> with('msg', $msg);
+                    }
                 }
-                $event -> sponsors() -> attach($request -> sponsor_id);
+                foreach($request -> sponsor_id as $id){
+                    $event -> sponsors() -> attach($id);
+                }
             }
 
             $code = Config::get('constants.codes.OkCode');
@@ -323,39 +332,47 @@ class EventsController extends Controller
             $update = array();
             try{
                 if(!empty($request -> volunteer_id)){
-                    $volunteer = Volunteer::find($request -> volunteer_id);
-                    
-                    if(empty($volunteer)){
+                    foreach($request -> volunteer_id as $id){
+                        $volunteer = Volunteer::find($id);
                         
-                        $code = Config::get('constants.codes.NonExistingVolunteerCode'); 
-                        $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
+                        if(empty($volunteer)){
+                            
+                            $code = Config::get('constants.codes.NonExistingVolunteerCode'); 
+                            $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
-                            return view('admin_dashboard')
+                                return view('admin_dashboard')
+                                //-> with('user', $user -> name)
+                                -> with('sales', $this -> sales)
+                                -> with('events', $this -> events)
+                                -> with('code', $code)
+                                -> with('msg', $msg);
+                        }
+                    }
+                    foreach($request -> volunteer_id as $id){
+                        $event -> volunteers() -> attach($id);
+                    }
+                }
+
+                if(!empty($request -> sponsor_id)){
+                    foreach($request -> sponsor_id as $id){
+                        $sponsor = Sponsor::find($id);
+                        
+                        if(empty($sponsor)){
+                            
+                            $code = Config::get('constants.codes.NonExistingVolunteerCode');
+                            $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
+                            
+                            return view('admin_dashboard') 
                             //-> with('user', $user -> name)
                             -> with('sales', $this -> sales)
                             -> with('events', $this -> events)
                             -> with('code', $code)
                             -> with('msg', $msg);
+                        }
                     }
-                    $event -> volunteers() -> attach($request -> volunteer_id);
-                }
-
-                if(!empty($request -> sponsor_id)){
-                    $sponsor = Sponsor::find($request -> sponsor_id);
-                    
-                    if(empty($sponsor)){
-                        
-                        $code = Config::get('constants.codes.NonExistingVolunteerCode');
-                        $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
-                        
-                        return view('admin_dashboard') 
-                        //-> with('user', $user -> name)
-                        -> with('sales', $this -> sales)
-                        -> with('events', $this -> events)
-                        -> with('code', $code)
-                        -> with('msg', $msg);
+                    foreach($request -> sponsor_id as $id){
+                        $event -> sponsors() -> attach($id);
                     }
-                    $event -> sponsors() -> attach($request -> sponsor_id);
                 }
 
                 if(!empty($request -> name)){

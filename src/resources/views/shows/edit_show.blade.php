@@ -48,8 +48,9 @@
                         <br>
                         <div class="form-group">
                             {!! Form::label('volunteers', 'Volunteers') !!}
-                            {!! Form::select('volunteer_id',$volunteers,$show -> volunteers,['volunteers' => 'id', 'class' => 'form-control',
-                            'single',null]) !!}
+                            {!! Form::select('volunteer_id[]',[null => 'No new Volunteers'] + $volunteers,
+                            null,['volunteers' => 'id', 'class' => 'form-control',
+                            'multiple',null]) !!}
                         </div>
                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Update">
                     </fieldset>

@@ -51,8 +51,15 @@
                         <br>
                         <div class="form-group">
                             {!! Form::label('shows', 'Shows') !!}
-                            {!! Form::select('show_id',$shows,null,['shows' => 'id', 'class' => 'form-control',
-                            'single',null]) !!}
+                            {!! Form::select('show_id[]',[null => '-- No Shows --'] + $shows,null,
+                            ['shows' => 'id', 'class' => 'form-control',
+                            'multiple',null]) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('events', 'Events') !!}
+                            {!! Form::select('event_id[]',$events,
+                            null,['events' => 'id', 'class' => 'form-control',
+                            'multiple',null]) !!}
                         </div>
                         <br>
                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Save">

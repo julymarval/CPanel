@@ -43,12 +43,12 @@
             
             <tbody id="list-itens">
                 
-                <td> {{$sponsor["image"]}} </td>
-                <td> {{$sponsor["name"] }} </td>
-                <td> {{$sponsor["description"] }} </td>
-                <td> {{$sponsor["level"] }} </td>
-                <td> {{$sponsor["status"] }} </td>
-                <td> {{$volunteer}} </td>
+                <td align="center"><img src="/images/sponsors/{{$sponsor["image"]}}"></td>
+                <td align="center"> {{$sponsor["name"] }} </td>
+                <td align="center"> {{$sponsor["description"] }} </td>
+                <td align="center"> {{$sponsor["level"] }} </td>
+                <td align="center"> {{$sponsor["status"] }} </td>
+                <td align="center"> {{$volunteer}} </td>
               
             </tbody>    
             

@@ -37,7 +37,7 @@
                 <form id="check" method="POST" enctype="multipart/form-data" action="{{route('shows.store')}}">
                     <fieldset>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Name" name="name" type="text">
+                            <input class="form-control" placeholder="name" name="name" type="text">
                         </div>
                         <div class="form-group">
                             <input class="form-control" placeholder="schedule" name="schedule" type="text" >
@@ -52,8 +52,8 @@
                         <br>
                         <div class="form-group">
                             {!! Form::label('volunteers', 'Volunteers') !!}
-                            {!! Form::select('volunteer_id',$volunteers,null,['volunteers' => 'id', 'class' => 'form-control',
-                            'single',null]) !!}
+                            {!! Form::select('volunteer_id[]',[null => 'No Volunteers'] + $volunteers,null,['volunteers' => 'id', 'class' => 'form-control',
+                            'multiple',null]) !!}
                         </div>
                         <br>
                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Save">

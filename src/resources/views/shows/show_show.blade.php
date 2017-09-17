@@ -40,9 +40,9 @@
             
             <tbody id="list-itens">
                 
-                <td> {{$show["image"] }} </td>
-                <td> {{$show["description"] }} </td>
-                <td> {{$show["schedule"] }} </td>
+                <td align="center"><img src="/images/shows/{{$show["image"]}}"></td>
+                <td align="center"> {{$show["description"] }} </td>
+                <td align="center"> {{$show["schedule"] }} </td>
               
             </tbody>    
             

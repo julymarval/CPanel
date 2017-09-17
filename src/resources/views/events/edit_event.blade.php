@@ -51,13 +51,15 @@
                         <br>
                         <div class="form-group">
                             {!! Form::label('volunteers', 'Volunteers') !!}
-                            {!! Form::select('volunteer_id',$volunteers,$event -> volunteers ,['volunteers' => 'id', 'class' => 'form-control',
-                            'single',null]) !!}
+                            {!! Form::select('volunteer_id[]',[null => 'No New Volunteers'] + $volunteers,
+                            null,['volunteers' => 'id', 'class' => 'form-control',
+                            'multiple',null]) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('sponsors', 'Sponsors') !!}
-                            {!! Form::select('sponsor_id',$sponsors,$event -> sponsors,['sponsors' => 'id', 'class' => 'form-control',
-                            'single',null]) !!}
+                            {!! Form::select('sponsor_id[]',[null => 'No New Sponsors'] + $sponsors,
+                            null,['sponsors' => 'id', 'class' => 'form-control',
+                            'multiple',null]) !!}
                         </div>
                         <br>
                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Update">

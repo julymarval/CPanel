@@ -40,7 +40,7 @@
             
             <tbody id="list-itens">
                 
-                <td> {{$volunteer["image"] }} </td>
+                <td align="center"><img src="/images/volunteers/{{$volunteer["image"]}}"></td>
                 <td> {{$volunteer["description"] }} </td>
                 <td> {{$volunteer["status"] }} </td>
               

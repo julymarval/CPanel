@@ -153,21 +153,24 @@ class ShowsController extends Controller
 
             if($request -> volunteer_id){
                 
-                $volunteer = Volunteer::find($request -> volunteer_id);
-                
-                if(empty($volunteer)){
-                    $code = Config::get('constants.codes.NonExistingVolunteerCode');
-                    $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
+                foreach($request -> volunteer_id as $id){
+                    $volunteer = Volunteer::find($id);
+                    
+                    if(empty($volunteer)){
+                        $code = Config::get('constants.codes.NonExistingVolunteerCode');
+                        $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
-                    return view('admin_dashboard') 
-                    // -> with('user', $user -> name)
-                    -> with('sales', $this -> sales)
-                    -> with('events', $this -> events)
-                    -> with('code', $code)
-                    -> with('msg', $msg);
+                        return view('admin_dashboard') 
+                        // -> with('user', $user -> name)
+                        -> with('sales', $this -> sales)
+                        -> with('events', $this -> events)
+                        -> with('code', $code)
+                        -> with('msg', $msg);
+                    }
                 }
-
-                $show -> volunteers() -> attach($request -> volunteer_id);
+                foreach ($request -> volunteer_id as $id){
+                    $show -> volunteers() -> attach($id);
+                }
             }
 
             $code = Config::get('constants.codes.OkCode'); 
@@ -214,6 +217,7 @@ class ShowsController extends Controller
         }
 
         $my_volunteers = $show -> volunteers -> pluck('name')->all();
+        $path = public_path() . '/images/shows/';
 
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
@@ -222,7 +226,8 @@ class ShowsController extends Controller
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('show', $show)
-        -> with('volunteers', $my_volunteers);
+        -> with('volunteers', $my_volunteers)
+        -> with('path', $path);
     }
 
     /**
@@ -290,21 +295,24 @@ class ShowsController extends Controller
             $update = array();
             try{
                 if(!empty($request -> volunteer_id)){
-                    $volunteer = Volunteer::find($request -> volunteer_id);
-                    
-                    if(empty($volunteer)){
-                        $code = Config::get('constants.codes.NonExistingVolunteerCode'); 
-                        $msg  = Config::get('constants.msgs.NonExistingVolunteerMsg');
+                    foreach($request -> volunteer_id as $id){
+                        $volunteer = Volunteer::find($id);
                         
-                        return view('admin_dashboard') 
-                        // -> with('user', $user -> name)
-                        -> with('sales', $this -> sales)
-                        -> with('events', $this -> events)
-                        -> with('code', $code)
-                        -> with('msg', $msg);
+                        if(empty($volunteer)){
+                            $code = Config::get('constants.codes.NonExistingVolunteerCode'); 
+                            $msg  = Config::get('constants.msgs.NonExistingVolunteerMsg');
+                            
+                            return view('admin_dashboard') 
+                            // -> with('user', $user -> name)
+                            -> with('sales', $this -> sales)
+                            -> with('events', $this -> events)
+                            -> with('code', $code)
+                            -> with('msg', $msg);
+                        }
                     }
-                    
-                    $show -> volunteers() -> attach($request -> volunteer_id);
+                    foreach($request -> volunteer_id as $id){
+                        $show -> volunteers() -> attach($id);
+                    }
                 }
                 
                 if(!empty($request -> name)){

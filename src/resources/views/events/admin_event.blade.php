@@ -29,7 +29,6 @@
                                         NEW <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
                                     </div>
                                     <h2>Events</h2>
-    
                                     <div class="row">
         
         <table class="table table-bordered table-striped">
@@ -58,7 +57,7 @@
         </table>
         
         
-        
+        {{$events}}
     </div>
                                 </div>
                             </div>
@@ -68,10 +67,7 @@
                 </div>
             </div>
     
-        </div>
-    
-    
-    
+        </div>       
         
         <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
 
