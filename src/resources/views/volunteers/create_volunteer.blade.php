@@ -51,14 +51,14 @@
                         <br>
                         <div class="form-group">
                             {!! Form::label('shows', 'Shows') !!}
-                            {!! Form::select('show_id[]',[null => '-- No Shows --'] + $shows,null,
+                            {!! Form::select('show_id[]',$shows," ",
                             ['shows' => 'id', 'class' => 'form-control',
                             'multiple',null]) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('events', 'Events') !!}
                             {!! Form::select('event_id[]',$events,
-                            null,['events' => 'id', 'class' => 'form-control',
+                            " ",['events' => 'id', 'class' => 'form-control',
                             'multiple',null]) !!}
                         </div>
                         <br>

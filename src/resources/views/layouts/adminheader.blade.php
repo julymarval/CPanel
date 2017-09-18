@@ -22,6 +22,7 @@
                         </a>
                     </div>
                     <div class="navi">
+                        @include('flash::message')
                         <ul>
                             <li><a href="{{route('dashboard')}}"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
                             <li><a href="{{route('admin.shows')}}"><i class="fa fa-music" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Shows</span></a></li>

@@ -52,7 +52,8 @@
                         <br>
                         <div class="form-group">
                             {!! Form::label('volunteers', 'Volunteers') !!}
-                            {!! Form::select('volunteer_id[]',[null => 'No Volunteers'] + $volunteers,null,['volunteers' => 'id', 'class' => 'form-control',
+                            {!! Form::select('volunteer_id[]',$volunteers," ",
+                            ['volunteers' => 'id', 'class' => 'form-control',
                             'multiple',null]) !!}
                         </div>
                         <br>

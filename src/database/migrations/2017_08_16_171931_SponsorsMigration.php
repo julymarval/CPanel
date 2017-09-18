@@ -21,7 +21,7 @@ class SponsorsMigration extends Migration
             $table->string('status',80);
             $table->string('image',80)->nullable();
             $table->timestamps();
-            $table->integer('volunteer_id')->unsigned()->nullable()->default(0);
+            $table->integer('volunteer_id')->unsigned()->nullable();
 
             $table->index(['id', 'name']);
             $table->foreign('volunteer_id')->references('id')->on('volunteers')->onDelete('cascade');

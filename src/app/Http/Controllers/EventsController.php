@@ -93,7 +93,7 @@ class EventsController extends Controller
     {
         //$user = JWTAuth::toUser($request -> input('Authorization'));
 
-        if (!$request -> name || !$request -> date) {
+       if (!$request -> name || !$request -> date) {
             
                 $code = Config::get('constants.codes.MissingInputCode'); 
                 $msg   = Config::get('constants.msgs.MissingInputMsg');
@@ -155,12 +155,10 @@ class EventsController extends Controller
 
             $event -> save();
 
-            if(!empty($request -> volunteer_id)){
-                    
+            if($request -> volunteer_id){      
                 foreach($request -> volunteer_id as $id){
                     $volunteer = Volunteer::find($id);
                     if(empty($volunteer)){
-                        
                         $code = Config::get('constants.codes.NonExistingVolunteerCode');
                         $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
                         
@@ -178,7 +176,7 @@ class EventsController extends Controller
                 }
             }
 
-            if(!empty($request -> sponsor_id)){
+            if($request -> sponsor_id){
                 foreach($request -> sponsor_id as $id){
                     $sponsor = Sponsor::find($id);
                     

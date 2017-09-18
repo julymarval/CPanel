@@ -22,6 +22,7 @@
                     </div>
                     <div class="user-dashboard">
                         <h1>Welcome</h1>
+                       {{$msg}}
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-12 gutter">
                                 <div class="sales">
