@@ -48,7 +48,7 @@
                 <td align="center"> {{$sponsor["description"] }} </td>
                 <td align="center"> {{$sponsor["level"] }} </td>
                 <td align="center"> {{$sponsor["status"] }} </td>
-                <td align="center"> {{$volunteer}} </td>
+                <td align="center"> {{$volunteer["name"]}} </td>
               
             </tbody>    
             

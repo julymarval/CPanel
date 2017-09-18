@@ -228,7 +228,7 @@ class SponsorsController extends Controller
         -> with('msg', $msg)
         -> with('sponsor', $sponsor)
         -> with('my_events', $my_events)
-        -> with('volunteer', $my_volunteer -> name);
+        -> with('volunteer', $my_volunteer);
     }
 
     /**
