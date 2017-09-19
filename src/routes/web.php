@@ -77,10 +77,13 @@ Route::get('/admin/sponsors', [
 Route::group(['prefix' => 'admin'],function(){
     
     Route::resource('users','UserController', [
-        'only' => ['index', 'store', 'create', 'destroy', 'show','edit']]);
+        'only' => ['index', 'store', 'create', 'show','edit']]);
     Route::post('users/{id}', [
         'uses' => 'UserController@update',
         'as'   => 'users.update']);
+    Route::get('users/{id}/destroy', [
+        'uses' => 'UserController@destroy',
+        'as'   => 'users.destroy']);
 });
 
 
@@ -90,10 +93,13 @@ Route::group(['prefix' => 'admin'],function(){
 Route::group(['prefix' => '/'],function(){
     
     Route::resource('sales','SalesController', [
-        'only' => ['index', 'store', 'create', 'destroy', 'show','edit']]);
+        'only' => ['index', 'store', 'create', 'show','edit']]);
     Route::post('sales/{id}', [
         'uses' => 'SalesController@update',
         'as'   => 'sales.update']);
+    Route::get('sales/{id}/destroy', [
+        'uses' => 'SalesController@destroy',
+        'as'   => 'sales.destroy']);
 });
 
 
@@ -107,6 +113,9 @@ Route::group(['prefix' => '/'],function(){
     Route::post('shows/{id}', [
         'uses' => 'ShowsController@update',
         'as'   => 'shows.update']);
+    Route::get('shows/{id}/destroy', [
+        'uses' => 'ShowsController@destroy',
+        'as'   => 'shows.destroy']);
 });
 
 
@@ -120,6 +129,9 @@ Route::group(['prefix' => '/'],function(){
     Route::post('events/{id}', [
         'uses' => 'EventsController@update',
         'as'   => 'events.update']);
+    Route::get('events/{id}/destroy', [
+        'uses' => 'EventsController@destroy',
+        'as'   => 'events.destroy']);
 });
 
 
@@ -133,6 +145,9 @@ Route::group(['prefix' => '/'],function(){
     Route::post('sponsors/{id}', [
         'uses' => 'SponsorsController@update',
         'as'   => 'sponsors.update']);
+    Route::get('sponsors/{id}/destroy', [
+        'uses' => 'SponsorsController@destroy',
+        'as'   => 'sponsors.destroy']);
 });
 
 
@@ -146,6 +161,9 @@ Route::group(['prefix' => '/'],function(){
     Route::post('volunteers/{id}', [
         'uses' => 'VolunteersController@update',
         'as'   => 'volunteers.update']);
+    Route::get('volunteers/{id}/destroy', [
+        'uses' => 'VolunteersController@destroy',
+        'as'   => 'volunteers.destroy']);
 });
 
 

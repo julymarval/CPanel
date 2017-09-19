@@ -402,7 +402,7 @@ class SponsorsController extends Controller
     public function destroy($id)
     {
         //$user = JWTAuth::toUser($request -> input('Authorization'));
-
+        
         $sponsor = Sponsor::find($id);
         $sponsor -> delete();
 
