@@ -50,6 +50,7 @@ class SponsorsController extends Controller
             $msg = Config::get('constants.msgs.NonExistingSponsorsMsg');
 
             return view('sponsors.sponsor') 
+            -> with('sponsors', $sponsors)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -214,6 +215,7 @@ class SponsorsController extends Controller
 
             return view('sponsors.show_sponsor') 
             -> with('code', $code)
+            -> with('sponsor', $sponsor)
             -> with('msg', $msg);
         }
 
@@ -247,6 +249,7 @@ class SponsorsController extends Controller
 
             return view('sponsors.edit_sponsor') 
             -> with('code', $code)
+            -> with('sponsor', $sponsor)
             -> with('msg', $msg);
         }
 

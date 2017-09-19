@@ -50,6 +50,7 @@ class ShowsController extends Controller
             $msg = Config::get('constants.msgs.NonExistingShowsMsg');
             
             return view('shows.show') 
+            -> with('shows', $shows)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -213,6 +214,7 @@ class ShowsController extends Controller
             
             return view('shows.show_show') 
             -> with('code', $code)
+            -> with('show', $show)
             -> with('msg', $msg);
         }
 
@@ -245,6 +247,7 @@ class ShowsController extends Controller
             $msg = Config::get('constants.msgs.NonExistingEventMsg');
 
             return view('shows.edit_show') 
+            -> with('show', $show)
             -> with('code', $code)
             -> with('msg', $msg);
         }

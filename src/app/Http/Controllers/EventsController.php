@@ -50,6 +50,7 @@ class EventsController extends Controller
             $msg = Config::get('constants.msgs.NonExistingEventMsg');
 
             return view('events.event') 
+            -> with('events', $events)
             -> with('code', $code)
             -> with('msg',$msg);
         }
@@ -240,6 +241,7 @@ class EventsController extends Controller
                 
             return view('events.show_event')
             -> with('code', $code)
+            > with('event', $event)
             -> with('msg', $msg);
         }
 
@@ -276,6 +278,7 @@ class EventsController extends Controller
 
             return view('events.edit_event') 
             -> with('code', $code)
+            > with('event', $event)
             -> with('msg', $msg);
         }
 

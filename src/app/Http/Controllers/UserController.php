@@ -39,6 +39,7 @@ class UserController extends Controller
             $msg = Config::get('constants.msgs.NonExistingAdminMsg');
 
             return view('users.index_user')
+            -> with('user', $users)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -162,6 +163,7 @@ class UserController extends Controller
             $msg = Config::get('constants.msgs.NonExistingSalesMsg');
 
             return view('users.show_user')
+            -> with('user', $user)
             -> with('code', $code)
             -> with('msg', $msg);
         }
@@ -190,6 +192,7 @@ class UserController extends Controller
             $msg = Config::get('constants.msgs.NonExistingEventMsg');
 
             return view('users.edit_user')
+            -> with('user', $user)
             -> with('code', $code)
             -> with('msg', $msg);
         }
