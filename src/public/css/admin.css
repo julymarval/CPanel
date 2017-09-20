@@ -556,6 +556,7 @@ header {
 .modal-header.login-header {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+}
 /*Main CSS*/
 
 
@@ -594,6 +595,9 @@ header {
     }
     .tab-content .tab-pane {
         padding: 20px 0;
+    }
+    #navigation{
+        max-width: 38px !important;
     }
     #navigation .navi a {
         font-size: 14px;
