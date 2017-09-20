@@ -44,9 +44,16 @@
 /* Add some shadows to create a card effect */
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin-bottom:10px;
+    max-height:230px;
+}
+.card img{
+    padding-top: 10px;
 }
 
-
+.card-name, .card-schedule, .card-description {
+    visibility: hidden;
+}
 .glyphicon { margin-right:5px; }
 .thumbnail
 {

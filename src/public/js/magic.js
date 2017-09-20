@@ -44,14 +44,13 @@ $(document).ready(function(){
       });
   
       $('.show1').click(function(){
-        $('.showresult').html('<h2>El cuartel del Sargento</h2><h4> Rubén Baca </h4>');
+        var cat =  $(this).children(".card-name").text();
+        var src = $('.card img').attr('src');
+        console.log(src);
+        var cat2 =  $(this).children(".card-schedule").text();
+        var cat3 =  $(this).children(".card-description").text();
+        
+        $('.showresult').html('<h2>'+cat+'</h2> <img src="'+src+'" width="400" height="280"> <h3>'+cat2+'</h3><h4>'+cat3+'</h4>');
        });
-       $('.show2').click(function(){
-        $('.showresult').html('<h2>Dame tu mano</h2><h4> Diana Montiel </h4>');
-       });
-       $('.show3').click(function(){
-        $('.showresult').html('<h2>Grandes momentos del recuerdo</h2><h4> Arturo Salazar</h4>');
-       });
-  
-       
+            
     })
