@@ -74,8 +74,9 @@
 <div id="shows" class="container-fluid text-center">
   <h2>SHOWS</h2>
   <h4>What we offer</h4>
-  <br>
   <div class="text-center showresult">
+  <br>
+
     <h1>Select a show</h1>
   </div>
   <br>  
@@ -83,7 +84,10 @@
     @foreach ($shows as $show) 
         <div class="column col-sm-4 ">          
           <div class="card  show1">
-            <h4>{{$show["name"]}}</h4>
+          <img class ="card-image" src="/images/shows/{{$show["image"]}}"  width="300" height="200">
+            <h4 class="card-name">{{$show["name"]}}</h4>
+            <h6 class="card-schedule">{{$show["schedule"]}}</h6>
+            <h6 class="card-description">{{$show["description"]}}</h6>
             <br>
           </div>
         </div>
@@ -98,7 +102,6 @@
       <p>Contact us and we'll get back to you within 24 hours.</p>
       <p><span class="glyphicon glyphicon-map-marker"></span> 2015 W Western Ave, South Bend, IN 46619</p>
       <p><span class="glyphicon glyphicon-phone"></span> +1 574232 3212</p>
-      <p><span class="glyphicon glyphicon-envelope"></span> myemail@something.com</p>
     </div>
     <div class="col-sm-7 slideanim">
       <div class="row">

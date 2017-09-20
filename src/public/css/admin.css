@@ -557,6 +557,11 @@ header {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
+
+#list-itens img{
+    max-width: 200px;
+    max-height: 200px;
+}
 /*Main CSS*/
 
 
