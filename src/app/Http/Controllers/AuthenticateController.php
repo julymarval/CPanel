@@ -45,7 +45,7 @@ class AuthenticateController extends Controller {
            
             return view('admin_dashboard')
             -> with('code', $code, 401)
-            -> with('user', $user->name)
+            -> with('user', " ")
             -> with ('msg', $msg)
             -> with('token','');
         }
@@ -57,7 +57,9 @@ class AuthenticateController extends Controller {
            
             return view('admin_dashboard')
             -> with('code', $code, 401)
-            -> with('user', $user->name)
+            -> with('user', '')
+            -> with('sales', '')
+            -> with('events', '')
             -> with ('msg', $msg)
             -> with('token','');
         }
@@ -70,8 +72,10 @@ class AuthenticateController extends Controller {
                 $msg = Config::get('constants.msgs.InvalidCredentialsMsg');
                
                 return view('admin_dashboard')
-                //-> with('user', $user->name)
+                -> with('user', '')
                 -> with('code', $code, 401)
+                -> with('sales', '')
+                -> with('events', '')
                 -> with ('msg', $msg)
                 -> with('token','');
             }
@@ -81,7 +85,10 @@ class AuthenticateController extends Controller {
             $msg = Config::get('constants.msgs.InternalErrorMsg');
            
             return view('admin_dashboard')
+            -> with('user', '')
             -> with('code', $code, 500)
+            -> with('sales', '')
+            -> with('events', '')
             -> with ('msg', $msg)
             -> with('token','');
         }
