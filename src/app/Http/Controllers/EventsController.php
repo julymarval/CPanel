@@ -152,12 +152,12 @@ class EventsController extends Controller
                 $name = $request -> name . time(). '.' . $file->getClientOriginalExtension();
                 $path = public_path() . '/images/events/';
                 $file -> move($path,$name);
-                $event -> image = $name;
+                /*$event -> image = $name;
 
                 $image = new Image();
                 $image -> name = $name;
                 $image -> events() -> associate($event);
-                $image -> save();
+                $image -> save();*/
             }
 
             $event -> save();
