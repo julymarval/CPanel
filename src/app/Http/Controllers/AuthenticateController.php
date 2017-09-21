@@ -21,7 +21,7 @@ class AuthenticateController extends Controller {
         // Apply the jwt.auth middleware to all methods in this controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
-        $this->middleware('jwt.auth', ['except' => ['authenticate']]);
+        //$this->middleware('jwt.auth', ['except' => ['authenticate']]);
 
         $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
@@ -45,7 +45,7 @@ class AuthenticateController extends Controller {
            
             return view('admin_dashboard')
             -> with('code', $code, 401)
-            -> with('user', " ")
+            //-> with('user', " ")
             -> with ('msg', $msg)
             -> with('token','');
         }
@@ -57,7 +57,7 @@ class AuthenticateController extends Controller {
            
             return view('admin_dashboard')
             -> with('code', $code, 401)
-            -> with('user', '')
+            //-> with('user', '')
             -> with('sales', '')
             -> with('events', '')
             -> with ('msg', $msg)
@@ -72,7 +72,7 @@ class AuthenticateController extends Controller {
                 $msg = Config::get('constants.msgs.InvalidCredentialsMsg');
                
                 return view('admin_dashboard')
-                -> with('user', '')
+                //-> with('user', '')
                 -> with('code', $code, 401)
                 -> with('sales', '')
                 -> with('events', '')
@@ -85,7 +85,7 @@ class AuthenticateController extends Controller {
             $msg = Config::get('constants.msgs.InternalErrorMsg');
            
             return view('admin_dashboard')
-            -> with('user', '')
+            //-> with('user', '')
             -> with('code', $code, 500)
             -> with('sales', '')
             -> with('events', '')
@@ -96,7 +96,7 @@ class AuthenticateController extends Controller {
         $msg = Config::get('constants.msgs.OkMsg');
 
         return view('admin_dashboard')
-        -> with('user', $user->name)
+        //-> with('user', $user->name)
         -> with('sales', $this -> sales)
         -> with('events', $this -> events)
         -> with('code', $code)
