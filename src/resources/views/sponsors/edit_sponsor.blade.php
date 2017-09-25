@@ -82,9 +82,9 @@
                         <br>
                         <div class="form-group">
                             {!! Form::label('volunteers', 'Volunteers') !!}
-                            {!! Form::select('volunteer_id[]',$volunteers," "
-                            ,['volunteers' => 'id', 'class' => 'form-control',
-                            'multiple',null]) !!}
+                            {!! Form::select('volunteer_id',[null => ' -- select a volunteer --'] + $volunteers,
+                            " ",['volunteers' => 'id', 'class' => 'form-control',
+                            'single',null]) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('events', 'Events') !!}

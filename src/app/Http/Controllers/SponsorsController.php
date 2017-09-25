@@ -256,7 +256,7 @@ class SponsorsController extends Controller
         $my_volunteer =  Volunteer::find($sponsor -> volunteer_id);
         $my_events    = $sponsor -> events -> pluck('id','name') -> all();
 
-        $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name','id');
+        $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name', 'id') -> all();
         $events     = Event::orderBy('name','DESC') -> pluck('name', 'id');
 
         $code = Config::get('constants.codes.OkCode'); 
@@ -361,7 +361,7 @@ class SponsorsController extends Controller
                     if(file_exists(public_path() . '/images/sponsors/' . $sponsor -> image)){
                         Storage::delete(public_path() . '/images/sponsors/' . $sponsor -> image);
                     }
-                    $path = public_path() . '/images/shows/';
+                    $path = public_path() . '/images/sponsors/';
                     $file -> move($path,$name);
                     $update['image'] = $name;
                 }
