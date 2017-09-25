@@ -26,7 +26,6 @@ class HomeController extends Controller
         //$this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
     }
 
-
     /**
      * Display a listing of the resource.
      *

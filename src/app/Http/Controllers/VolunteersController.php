@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuthExceptions\JWTException;
+use Auth;
 use App\Volunteer;
 use App\Show;
 use App\Event;
@@ -32,6 +31,7 @@ class VolunteersController extends Controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
         //$this->middleware('jwt.auth',['except' => ['index', 'show']]);
+        $this->middleware('auth',['except' => ['index', 'show']]);
         $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
     }
@@ -92,14 +92,14 @@ class VolunteersController extends Controller
      */
     public function store(Request $request)
     {
-        //$user = JWTAuth::toUser($request -> input('Authorization'));
+        $user = Auth::user();
 
         if (!$request -> name) {
             $code = Config::get('constants.codes.MissingInputCode'); 
             $msg = Config::get('constants.msgs.MissingInputMsg');
     
-            return view('admin_dashboard')
-            //-> with('user', $user -> name) 
+            return redirect() -> route('dashboard')
+            -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -117,8 +117,8 @@ class VolunteersController extends Controller
                 $code = Config::get('constants.codes.InvalidInputCode');
                 $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
         
-                return view('admin_dashboard')
-                //-> with('user', $user -> name) 
+                return redirect() -> route('dashboard')
+                -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
                 -> with('code', $code)
@@ -134,8 +134,8 @@ class VolunteersController extends Controller
                 $code = Config::get('constants.codes.ExistingVolunteerCode'); 
                 $msg = Config::get('constants.msgs.ExistingVolunteerMsg');
 
-                return view('admin_dashboard')
-                //-> with('user', $user -> name) 
+                return redirect() -> route('dashboard')
+                -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
                 -> with('code', $code)
@@ -159,8 +159,8 @@ class VolunteersController extends Controller
                         $code = Config::get('constants.codes.NonExistingShowsCode');
                         $msg = Config::get('constants.msgs.NonExistingShowsMsg');
 
-                        return view('admin_dashboard')
-                        //-> with('user', $user -> name) 
+                        return redirect() -> route('dashboard')
+                        -> with('user', $user -> name) 
                         -> with('sales', $this -> sales)
                         -> with('events', $this -> events)
                         -> with('code', $code)
@@ -179,8 +179,8 @@ class VolunteersController extends Controller
                         $code = Config::get('constants.codes.NonExistingEventCode');
                         $msg = Config::get('constants.msgs.NonExistingEventMsg');
 
-                        return view('admin_dashboard')
-                        //-> with('user', $user -> name) 
+                        return redirect() -> route('dashboard')
+                        -> with('user', $user -> name) 
                         -> with('sales', $this -> sales)
                         -> with('events', $this -> events)
                         -> with('code', $code)
@@ -195,8 +195,8 @@ class VolunteersController extends Controller
             $code = Config::get('constants.codes.OkCode'); 
             $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('admin_dashboard')
-            //-> with('user', $user -> name) 
+            return redirect() -> route('dashboard')
+            -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -207,8 +207,8 @@ class VolunteersController extends Controller
             $code = Config::get('constants.codes.InternalErrorCode'); 
             $msg = Config::get('constants.msgs.InternalErrorMsg');
             
-            return view('admin_dashboard')
-            //-> with('user', $user -> name) 
+            return redirect() -> route('dashboard')
+            -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -301,15 +301,15 @@ class VolunteersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //$user = JWTAuth::toUser($request -> input('Authorization'));
+        $user = Auth::user();
 
         if(!$request -> name && !$request -> status && !$request -> description && !$request->file('image')
             && !$request -> show_id && !$request -> event_id){
             $code = Config::get('constants.codes.MissingInputCode');
             $msg = Config::get('constants.msgs.MissingInputMsg');
 
-            return view('admin_dashboard')
-            //-> with('user', $user -> name) 
+            return redirect() -> route('dashboard')
+            -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -328,8 +328,8 @@ class VolunteersController extends Controller
                             $code = Config::get('constants.codes.NonExistingShowsCode'); 
                             $msg = Config::get('constants.msgs.NonExistingShowsMsg');
 
-                            return view('admin_dashboard')
-                            //-> with('user', $user -> name) 
+                            return redirect() -> route('dashboard')
+                            -> with('user', $user -> name) 
                             -> with('sales', $this -> sales)
                             -> with('events', $this -> events)
                             -> with('code', $code)
@@ -348,8 +348,8 @@ class VolunteersController extends Controller
                             $code = Config::get('constants.codes.NonExistingEventCode');
                             $msg = Config::get('constants.msgs.NonExistingEventMsg');
     
-                            return view('admin_dashboard')
-                            //-> with('user', $user -> name) 
+                            return redirect() -> route('dashboard')
+                            -> with('user', $user -> name) 
                             -> with('sales', $this -> sales)
                             -> with('events', $this -> events)
                             -> with('code', $code)
@@ -392,8 +392,8 @@ class VolunteersController extends Controller
                 $code = Config::get('constants.codes.InternalErrorCode'); 
                 $msg = Config::get('constants.msgs.InternalErrorMsg');
 
-                return view('admin_dashboard')
-                //-> with('user', $user -> name) 
+                return redirect() -> route('dashboard')
+                -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
                 -> with('code', $code)
@@ -403,8 +403,8 @@ class VolunteersController extends Controller
             $code = Config::get('constants.codes.OkCode'); 
             $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('admin_dashboard')
-            //-> with('user', $user -> name) 
+            return redirect() -> route('dashboard')
+            -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -420,7 +420,7 @@ class VolunteersController extends Controller
      */
     public function destroy($id)
     {
-        //$user = JWTAuth::toUser($request -> input('Authorization'));
+        $user = Auth::user();
 
         $volunteer = Volunteer::find($id);
         $volunteer -> delete();
@@ -428,8 +428,8 @@ class VolunteersController extends Controller
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('admin_dashboard')
-        //-> with('user', $user -> name) 
+        return redirect() -> route('dashboard')
+        -> with('user', $user -> name) 
         -> with('sales', $this -> sales)
         -> with('events', $this -> events)
         -> with('code', $code)

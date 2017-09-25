@@ -18,7 +18,6 @@ class EventsMigration extends Migration
             $table->string('name',80);
             $table->string('date',80);
             $table->text('description')->nullable();
-            $table->string('image',80)->nullable();
             $table->timestamps();
 
             $table->index(['id', 'name']);

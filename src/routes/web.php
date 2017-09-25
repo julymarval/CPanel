@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/login', function () {
-    return view('login');
-});
-
 Route::get('/about', function () {
     return view('about');
 });
@@ -74,7 +70,7 @@ Route::get('/admin/sponsors', [
 /**
 * Users Route
 **/
-Route::group(['prefix' => 'admin'],function(){
+Route::group(['prefix' => '/'],function(){
     
     Route::resource('users','UserController', [
         'only' => ['index', 'store', 'create', 'show','edit']]);
@@ -170,6 +166,9 @@ Route::group(['prefix' => '/'],function(){
 /**
 * Auth Route for admin login
 **/
+Auth::routes();
+
+/*
 Route::group(['prefix' => 'admin'],function(){
     
         Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
@@ -177,7 +176,7 @@ Route::group(['prefix' => 'admin'],function(){
             'uses' => 'AuthenticateController@authenticate',
             'as'   => 'authenticate.auth']);
     
-});
+});*/
 
 
 
@@ -188,3 +187,5 @@ Route::group(['prefix' => 'admin'],function(){
     
     Route::resource('updatedb','UpdateDBController',['only' => ['index']]);
 });
+
+

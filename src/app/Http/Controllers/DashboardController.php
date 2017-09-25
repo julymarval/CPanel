@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuthExceptions\JWTException;
+use Auth;
 use App\Event;
 use App\Sale;
 use Config;
@@ -21,6 +20,7 @@ class DashboardController extends Controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
         //$this->middleware('jwt.auth');
+        $this->middleware('auth');
 
         $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
@@ -34,10 +34,10 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-       // $user = JWTAuth::toUser($request -> input('Authorization'));
+        $user = Auth::user();
 
         return view('admin_dashboard')
-        //-> with('user', $user->name)
+        -> with('user', $user->name)
         -> with('sales', $this -> sales)
         -> with('events', $this -> events);  
     }

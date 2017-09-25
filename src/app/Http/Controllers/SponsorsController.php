@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuthExceptions\JWTException;
+use Auth;
 use Config;
 use App\Sponsor;
 use App\Sale;
@@ -31,6 +30,7 @@ class SponsorsController extends Controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
         //$this->middleware('jwt.auth',['except' => ['index', 'show']]);
+        $this->middleware('auth',['except' => ['index', 'show']]);
         $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
     }
@@ -92,14 +92,14 @@ class SponsorsController extends Controller
      */
     public function store(Request $request)
     {
-        //$user = JWTAuth::toUser($request -> input('Authorization'));
+        $user = Auth::user();
 
         if (!$request -> name && !$request -> status && !$request -> level) {
             $code = Config::get('constants.codes.MissingInputCode');
             $msg  = Config::get('constants.msgs.MissingInputMsg');
 
-            return view('admin_dashboard') 
-            //-> with('user', $user -> name) 
+            return redirect() -> route('dashboard') 
+            -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -119,8 +119,8 @@ class SponsorsController extends Controller
                 $code = Config::get('constants.codes.InvalidInputCode'); 
                 $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
 
-                return view('admin_dashboard')
-                //-> with('user', $user -> name)  
+                return redirect() -> route('dashboard')
+                -> with('user', $user -> name)  
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
                 -> with('code', $code)
@@ -136,8 +136,8 @@ class SponsorsController extends Controller
                 $code = Config::get('constants.codes.ExistingSponsorCode');
                 $msg = Config::get('constants.msgs.ExistingSponsorMsg');
 
-                return view('admin_dashboard') 
-                //-> with('user', $user -> name) 
+                return redirect() -> route('dashboard') 
+                -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
                 -> with('code', $code)
@@ -161,8 +161,8 @@ class SponsorsController extends Controller
                         $code = Config::get('constants.codes.NonExistingEventCode'); 
                         $msg = Config::get('constants.msgs.NonExistingEventMsg');
 
-                        return view('admin_dashboard') 
-                        //-> with('user', $user -> name) 
+                        return redirect() -> route('dashboard') 
+                        -> with('user', $user -> name) 
                         -> with('sales', $this -> sales)
                         -> with('events', $this -> events)
                         -> with('code', $code)
@@ -177,8 +177,8 @@ class SponsorsController extends Controller
             $code = Config::get('constants.codes.OkCode'); 
             $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('admin_dashboard') 
-            //-> with('user', $user -> name) 
+            return redirect() -> route('dashboard') 
+            -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -189,8 +189,8 @@ class SponsorsController extends Controller
             $code = Config::get('constants.codes.InternalErrorCode'); 
             $msg = Config::get('constants.msgs.InternalErrorMsg');
 
-            return view('admin_dashboard') 
-            //-> with('user', $user -> name) 
+            return redirect() -> route('dashboard') 
+            -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -281,15 +281,15 @@ class SponsorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = JWTAuth::toUser($request -> input('Authorization'));
+        $user = Auth::user();
 
         if(!$request -> name && !$request -> status && !$request -> description && !$request -> event_id 
             && !$request->file('image') && !$request -> volunteer_id && !$request -> level ){
                 $code = Config::get('constants.codes.MissingInputCode'); 
                 $msg = Config::get('constants.msgs.MissingInputMsg');
 
-                return view('admin_dashboard')
-                //-> with('user', $user -> name) 
+                return redirect() -> route('dashboard')
+                -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
                 -> with('code', $code)
@@ -308,8 +308,8 @@ class SponsorsController extends Controller
                         $code = Config::get('constants.codes.NonExistingVolunteerCode');
                         $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
-                            return view('admin_dashboard')
-                            //-> with('user', $user -> name) 
+                            return redirect() -> route('dashboard')
+                            -> with('user', $user -> name) 
                             -> with('sales', $this -> sales)
                             -> with('events', $this -> events)
                             -> with('code', $code)
@@ -326,8 +326,8 @@ class SponsorsController extends Controller
                             $code = Config::get('constants.codes.NonExistingEventCode'); 
                             $msg = Config::get('constants.msgs.NonExistingEventMsg');
                                 
-                            return view('admin_dashboard')
-                            //-> with('user', $user -> name) 
+                            return redirect() -> route('dashboard')
+                            -> with('user', $user -> name) 
                             -> with('sales', $this -> sales)
                             -> with('events', $this -> events)
                             -> with('code', $code)
@@ -373,8 +373,8 @@ class SponsorsController extends Controller
                 $code = Config::get('constants.codes.InternalErrorCode'); 
                 $msg = Config::get('constants.msgs.InternalErrorMsg');
 
-                return view('admin_dashboard')
-                //-> with('user', $user -> name) 
+                return redirect() -> route('dashboard')
+                -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
                 -> with('code', $code)
@@ -384,8 +384,8 @@ class SponsorsController extends Controller
             $code = Config::get('constants.codes.OkCode'); 
             $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('admin_dashboard')
-            //-> with('user', $user -> name) 
+            return redirect() -> route('dashboard')
+            -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -401,7 +401,7 @@ class SponsorsController extends Controller
      */
     public function destroy($id)
     {
-        //$user = JWTAuth::toUser($request -> input('Authorization'));
+        $user = Auth::user();
         
         $sponsor = Sponsor::find($id);
         $sponsor -> delete();
@@ -409,8 +409,8 @@ class SponsorsController extends Controller
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('admin_dashboard')
-        //-> with('user', $user -> name)
+        return redirect() -> route('dashboard')
+        -> with('user', $user -> name)
         -> with('sales', $this -> sales)
         -> with('events', $this -> events)
         -> with('code', $code)

@@ -181,8 +181,9 @@ return [
         * Personal Providers
         */
         Collective\Html\HtmlServiceProvider::class,
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class
-    ],
+        //Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class
+        ],
 
     /*
     |--------------------------------------------------------------------------
@@ -238,8 +239,9 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'JWTAuth'   => Tymon\JWTAuthFacades\JWTAuth::class,
-        'JWTFactory' => Tymon\JWTAuthFacades\JWTFactory::class
+        //'JWTAuth'   => Tymon\JWTAuthFacades\JWTAuth::class,
+        //'JWTFactory' => Tymon\JWTAuthFacades\JWTFactory::class,
+        'Flash' => Laracast\Flash\Flash::class
 
     ],
 
