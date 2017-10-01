@@ -150,9 +150,9 @@ class EventsController extends Controller
             $event -> save();
             
             if($request->file('images')){
-                $files = $request -> file('images');      
+                $files = $request -> file('images');  
                 foreach($files as $file){
-                    $name = $request -> name . time(). '.' . $file->getClientOriginalExtension();
+                    $name = $request -> name . "_" . $file -> getClientOriginalName();
                     $path = public_path() . '/images/events/';
                     $file -> move($path,$name);
 
@@ -160,6 +160,8 @@ class EventsController extends Controller
                     $image -> name = $name;
                     $image -> event_id = $event -> id;
                     $image -> save();
+
+                    $name = "";
                 }
             }
 
@@ -322,8 +324,8 @@ class EventsController extends Controller
     {
         $user = Auth::user();
 
-        if ((!$request -> name) && (!$request -> date) && (!$request -> description) 
-            && !$request -> volunteer_id && !$request -> sponsor_id) {
+        if (!$request -> name && !$request -> date && !$request -> description
+            && !$request -> volunteer_id && !$request -> sponsor_id && !$request -> file('images')) {
             
             $code = Config::get('constants.codes.MissingInputCode'); 
             $msg = Config::get('constants.msgs.MissingInputMsg');
@@ -338,6 +340,20 @@ class EventsController extends Controller
 
         else{
             $event = Event::find($id);
+
+            if($request->file('images')){
+                $files = $request -> file('images');      
+                foreach($files as $file){
+                    $name = $event -> name . "_" . $file -> getClientOriginalName();
+                    $path = public_path() . '/images/events/';
+                    $file -> move($path,$name);
+
+                    $image = new Image();
+                    $image -> name = $name;
+                    $image -> event_id = $event -> id;
+                    $image -> save();
+                }
+            }
 
             $update = array();
             try{
@@ -434,32 +450,8 @@ class EventsController extends Controller
                     $update['description'] =  $request -> description;
                 }
 
-                if(!empty($request -> file('image'))){
-                    $file = $request -> file('image');
-                    $name = $event -> name . '.' . $file->getClientOriginalExtension();
-                    if(file_exists(public_path() . '/images/events/' . $event -> image)){
-                        Storage::delete(public_path() . '/images/events/' . $event -> image);
-                    }
-                    $path = public_path() . '/images/events/';
-                    $file -> move($path,$name);
-                    $update['image'] = $name;
-                }
-
                 $event -> update($update);
 
-                if($request->file('images')){
-                    $files = $request -> file('images');      
-                    foreach($files as $file){
-                        $name = $request -> name . time(). '.' . $file->getClientOriginalExtension();
-                        $path = public_path() . '/images/events/';
-                        $file -> move($path,$name);
-    
-                        $image = new Image();
-                        $image -> name = $name;
-                        $image -> event_id = $event -> id;
-                        $image -> save();
-                    }
-                }
             }
             catch(QueryException $e){
                 
