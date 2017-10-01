@@ -8,7 +8,7 @@ class Image extends Model
 {
     protected $table = 'images';
     
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'event_id'];
 
     public function events(){
         return $this -> belongsTo('App\Event');

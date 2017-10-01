@@ -18,7 +18,4 @@ class Event extends Model {
         return $this -> belongsToMany('App\Volunteer')->withTimestamps();
     }
 
-    public function images(){
-        return $this -> hasMany('App\Image');
-    }
 }

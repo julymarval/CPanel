@@ -74,7 +74,7 @@
                             <input class="form-control" placeholder="description" name="description" type="text" >
                         </div>
                         <div>
-                            <input class="form-control" placeholder="image" name="image" type="file">
+                            <input type="file" name="images[]" multiple />
                         </div>
                         <br>
                         <div class="form-group">

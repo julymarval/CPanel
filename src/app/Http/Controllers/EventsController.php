@@ -149,7 +149,7 @@ class EventsController extends Controller
 
             $event -> save();
             
-            /*if($request->file('images')){
+            if($request->file('images')){
                 $files = $request -> file('images');      
                 foreach($files as $file){
                     $name = $request -> name . time(). '.' . $file->getClientOriginalExtension();
@@ -158,10 +158,10 @@ class EventsController extends Controller
 
                     $image = new Image();
                     $image -> name = $name;
-                    $image -> events() -> associate($event -> id);
+                    $image -> event_id = $event -> id;
                     $image -> save();
                 }
-            }*/
+            }
 
             if($request -> volunteer_id){      
                 foreach($request -> volunteer_id as $id){
@@ -254,7 +254,7 @@ class EventsController extends Controller
 
         $my_sponsors   = $event -> sponsors   -> pluck('name')->all();
         $my_volunteers = $event -> volunteers -> pluck('name')->all();
-        $event -> images();
+        $images = Image::select('id','name')->where('event_id', $id)->get();
 
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
@@ -264,7 +264,8 @@ class EventsController extends Controller
         -> with('msg', $msg)
         -> with('event', $event)
         -> with('my_sponsors', $my_sponsors)
-        -> with('my_volunteers', $my_volunteers);
+        -> with('my_volunteers', $my_volunteers)
+        -> with('images', $images);
 
         
     }
@@ -445,6 +446,20 @@ class EventsController extends Controller
                 }
 
                 $event -> update($update);
+
+                if($request->file('images')){
+                    $files = $request -> file('images');      
+                    foreach($files as $file){
+                        $name = $request -> name . time(). '.' . $file->getClientOriginalExtension();
+                        $path = public_path() . '/images/events/';
+                        $file -> move($path,$name);
+    
+                        $image = new Image();
+                        $image -> name = $name;
+                        $image -> event_id = $event -> id;
+                        $image -> save();
+                    }
+                }
             }
             catch(QueryException $e){
                 
