@@ -65,8 +65,13 @@
                 </tr>
             </thead>
             
-            <tbody id="list-itens">   
-                <td align="center"><img src="/images/events/{{$event["images"]}}"></td>
+            <tbody id="list-itens">  
+                <td align="center"><img src="/images/events/{{$images[0] -> name}}">
+                    <br><br>
+                    <div class="btn btn-sm btn-default"><a href="{{route('images.show', $event["id"])}}">
+                    <i class="icon-trash glyphicon glyphicon-eye-open text-primary"> <br> View All </i></div>
+
+                </td>
                 <td> {{$event["description"] }} </td>
                 <td> {{$event["date"] }} </td>
               

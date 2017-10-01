@@ -162,6 +162,18 @@ Route::group(['prefix' => '/'],function(){
         'as'   => 'volunteers.destroy']);
 });
 
+/**
+* Images Routes
+**/
+Route::group(['prefix' => '/'], function(){
+
+    Route::resource('images', 'ImagesController',[
+        'only' => ['show', 'destroy']]);
+    Route::get('images/{id}/destroy', [
+        'uses' => 'ImagesController@destroy',
+        'as'   => 'Images.destroy']);
+});
+
 
 /**
 * Auth Route for admin login
