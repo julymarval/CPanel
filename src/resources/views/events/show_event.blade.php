@@ -66,12 +66,15 @@
             </thead>
             
             <tbody id="list-itens">  
-                <td align="center"><img src="/images/events/{{$images[0] -> name}}">
-                    <br><br>
-                    <div class="btn btn-sm btn-default"><a href="{{route('images.show', $event["id"])}}">
-                    <i class="icon-trash glyphicon glyphicon-eye-open text-primary"> <br> View All </i></div>
-
-                </td>
+                @if(count($images) > 0)
+                    <td align="center"><img src="/images/events/{{$event["name"]}}/{{$images[0] -> name}}">
+                        <br><br>
+                        <div class="btn btn-sm btn-default"><a href="{{route('images.show', $event["id"])}}">
+                        <i class="icon-trash glyphicon glyphicon-eye-open text-primary"> <br> View All </i></div>
+                    </td>
+                @else
+                    <td>
+                @endif
                 <td> {{$event["description"] }} </td>
                 <td> {{$event["date"] }} </td>
               

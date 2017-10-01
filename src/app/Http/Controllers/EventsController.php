@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 use Config;
 use App\Event;
@@ -153,7 +154,8 @@ class EventsController extends Controller
                 $files = $request -> file('images');  
                 foreach($files as $file){
                     $name = $request -> name . "_" . $file -> getClientOriginalName();
-                    $path = public_path() . '/images/events/';
+                    $path = public_path() . '/images/events/' . $request -> name;
+                    Storage::makeDirectory($path);
                     $file -> move($path,$name);
 
                     $image = new Image();
@@ -345,7 +347,10 @@ class EventsController extends Controller
                 $files = $request -> file('images');      
                 foreach($files as $file){
                     $name = $event -> name . "_" . $file -> getClientOriginalName();
-                    $path = public_path() . '/images/events/';
+                    $path = public_path() . '/images/events/' . $event -> name;
+                    if(!is_dir($path)){
+                        Storage::makeDirectory($path);
+                    }
                     $file -> move($path,$name);
 
                     $image = new Image();
@@ -490,8 +495,18 @@ class EventsController extends Controller
         $user = Auth::user();
         
         $event = Event::find($id);
-        $event -> delete();
 
+        $images = Image::select('id','name')->where('event_id', $id)->get();
+        foreach($images as $image){
+            $image -> delete();
+        }
+        $path = public_path() . '/images/events/' . $event -> name;
+        \File::cleanDirectory($path);
+        Storage::deleteDirectory($path);
+        rmdir($path);
+
+        $event -> delete();
+        
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
 

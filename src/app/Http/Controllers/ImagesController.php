@@ -116,7 +116,8 @@ class ImagesController extends Controller
         $user = Auth::user();
 
         $image = Image::find($id);
-        $event = $image -> event_id;
+        $event = Event::find($image -> event_id);
+        \File::delete(public_path() . '/images/events/' . $event -> name . '/' . $image -> name);
         $image -> delete();
         
         $code = Config::get('constants.codes.OkCode'); 
