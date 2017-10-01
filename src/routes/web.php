@@ -171,7 +171,7 @@ Route::group(['prefix' => '/'], function(){
         'only' => ['show', 'destroy']]);
     Route::get('images/{id}/destroy', [
         'uses' => 'ImagesController@destroy',
-        'as'   => 'Images.destroy']);
+        'as'   => 'images.destroy']);
 });
 
 

@@ -11,6 +11,25 @@ use App\Image;
 
 class ImagesController extends Controller
 {
+
+    private $sales, $events;
+    
+    /**
+    * Constructor
+    * It starts the jwt token validator before accessing to any function
+    * @param none
+    * @return none
+    */
+
+    public function __construct() {
+        
+        // Apply the jwt.auth middleware to all methods in this controller
+        // except for the authenticate method. We don't want to prevent
+        // the user from retrieving their token if they don't already have it
+        //$this->middleware('jwt.auth',['except' => ['index', 'show']]);
+        $this->middleware('auth',['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -94,6 +113,19 @@ class ImagesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = Auth::user();
+
+        $image = Image::find($id);
+        $event = $image -> event_id;
+        $image -> delete();
+        
+        $code = Config::get('constants.codes.OkCode'); 
+        $msg = Config::get('constants.msgs.OkMsg');
+
+        return redirect()-> route('images.show',$event)
+        -> with('code', $code)
+        -> with('msg', $msg);
+
+
     }
 }
