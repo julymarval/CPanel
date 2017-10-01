@@ -6,7 +6,6 @@
     <br>
     <h2>EVENTS</h2><br>
     <h4>a description...</h4>
-    <br>
     <div id="exTab1" class="container">	
         <ul  class="nav nav-pills nav-justified">
               <li class="active">
@@ -15,7 +14,6 @@
               <li><a href="#2a" data-toggle="tab">Past</a>
               </li>
             </ul>
-        
               <div class="tab-content clearfix ">
                 <div class="tab-pane active" id="1a">
                     <br>
