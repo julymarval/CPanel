@@ -11,7 +11,7 @@
                                             <span class="sr-only">Toggle navigation</span>
                                             <span class="icon-bar"></span>
                                             <span class="icon-bar"></span>
-                                            <span class="icon-bar"></spadmin/authenticate#an>
+                                            <span class="icon-bar"></span>
                                         </button>
                                     </div>
                                 </nav>
@@ -70,9 +70,9 @@
                 @foreach ($events as $event)
                     <tr>
                         <td style="width:140px; text-align: center">
-                            <div class="btn btn-sm btn-default"><a href="{{route('events.show', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
-                            <div class="btn btn-sm btn-default"><a href="{{route('events.edit', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
-                            <div class="btn btn-sm btn-default"><a href="{{route('events.destroy', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
+                            <a class="btn btn-sm btn-default" href="{{route('events.show', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></a>
+                            <a class="btn btn-sm btn-default" href="{{route('events.edit', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></a>
+                            <a class="btn btn-sm btn-default" href="{{route('events.destroy', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></a>
                         </td>
                         <td style="text-align: center"> {{$event["name"] }} </td>
                     </tr>
@@ -91,7 +91,7 @@
     
                                 <div class="sales report">
                                     <h2>Lastest Sales</h2>
-                                     <div class="row">
+                                     <a class="row">
         
         <table class="table table-bordered table-striped">
             <thead >
@@ -106,9 +106,9 @@
                 @foreach ($sales as $sale)
                     <tr>
                         <td style="width:140px; text-align: center">
-                            <div class="btn btn-sm btn-default"><a href="{{route('sales.show', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
-                            <div class="btn btn-sm btn-default"><a href="{{route('sales.edit', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
-                            <div class="btn btn-sm btn-default"><a href="{{route('sales.destroy', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
+                            <a class="btn btn-sm btn-default" href="{{route('sales.show', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></a>
+                            <a class="btn btn-sm btn-default" href="{{route('sales.edit', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></a>
+                                <a class="btn btn-sm btn-default" href="{{route('sales.destroy', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></a>
                         </td>
                         <td style="text-align: center"> {{$sale["name"] }} </td>
                     </tr>

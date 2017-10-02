@@ -68,7 +68,7 @@
                             <input class="form-control" placeholder="Name" name="name" type="text">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="date: yyyy-mm-dd" name="date" type="text" >
+                            <input class="form-control" data-provide="datepicker" placeholder="click to select date" data-date-format="yyyy-mm-dd">
                         </div>
                         <div class="form-group">
                             <input class="form-control" placeholder="description" name="description" type="text" >
@@ -110,6 +110,7 @@
     
         
         <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
-
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js
+"></script>
     </body>
 @endsection

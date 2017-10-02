@@ -43,15 +43,15 @@
                             @endif
                         </ul>
                         <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12 gutter">
-                                <div class="shows">
+                            <a class="col-md-12 col-sm-12 col-xs-12 gutter">
+                                <a class="shows">
                                      <div class="pull-right">
                                         <a class="btn btn-default btn-success btn-md" href="{{route('events.create')}}">
                                         NEW <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
                                     </div>
                                 <h2>Events</h2>
 
-                            <div class="row">
+                            <a class="row">
 
                             <table class="table table-bordered table-striped">
                                 <thead >
@@ -65,9 +65,9 @@
                                     @foreach ($events as $event)
                                         <tr>
                                             <td style="width:140px; text-align: center">
-                                                <div class="btn btn-sm btn-default"><a href="{{route('events.show', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
-                                                <div class="btn btn-sm btn-default"><a href="{{route('events.edit', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
-                                                <div class="btn btn-sm btn-default"><a href="{{route('events.destroy', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
+                                                <a class="btn btn-sm btn-default" href="{{route('events.show', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></a>
+                                    <a class="btn btn-sm btn-default" href="{{route('events.edit', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></a>
+                                <a class="btn btn-sm btn-default" href="{{route('events.destroy', $event -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></a>
                                             </td>
                                             <td> {{$event["name"] }} </td>
                                         </tr>

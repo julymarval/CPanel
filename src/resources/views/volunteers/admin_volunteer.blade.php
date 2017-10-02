@@ -11,7 +11,7 @@
                                             <span class="sr-only">Toggle navigation</span>
                                             <span class="icon-bar"></span>
                                             <span class="icon-bar"></span>
-                                            <span class="icon-bar"></spadmin/authenticate#an>
+                                            <span class="icon-bar"></span>
                                         </button>
                                     </div>
                                 </nav>
@@ -48,16 +48,16 @@
                             @endif
                         </ul>
                         <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12 gutter">
+                            <a class="col-md-12 col-sm-12 col-xs-12 gutter">
 
-                                <div class="volunteers">
+                                <a class="volunteers">
                                     <div class="pull-right">
                                         <a class="btn btn-default btn-success btn-md" href="{{route('volunteers.create')}}">
                                         NEW <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
                                     </div>
                                     <h2>Volunteers</h2>
 
-                                    <div class="row">
+                                    <a class="row">
 
         <table class="table table-bordered table-striped">
             <thead >
@@ -73,9 +73,9 @@
                 @foreach ($volunteers as $volunteer)
                     <tr>
                         <td style="width:140px; text-align: center">
-                            <div class="btn btn-sm btn-default"><a href="{{route('volunteers.show', $volunteer -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
-                            <div class="btn btn-sm btn-default"><a href="{{route('volunteers.edit', $volunteer -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
-                            <div class="btn btn-sm btn-default"><a href="{{route('volunteers.destroy', $volunteer -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
+                            <a class="btn btn-sm btn-default" href="{{route('volunteers.show', $volunteer -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></a>
+                            <a class="btn btn-sm btn-default" href="{{route('volunteers.edit', $volunteer -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></a>
+                            <a class="btn btn-sm btn-default" href="{{route('volunteers.destroy', $volunteer -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></a>
                         </td>
                         <td> {{$volunteer["name"] }} </td>
                         <td> {{$volunteer["status"] }} </td>

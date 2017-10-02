@@ -43,9 +43,9 @@
                             @endif
                         </ul>
                         <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12 gutter">
+                            <a class="col-md-12 col-sm-12 col-xs-12 gutter">
     
-                                <div class="shows">
+                                <a class="shows">
                                      <div class="pull-right">
                                         <a class="btn btn-default btn-success btn-md" href="{{route('shows.create')}}">
                                         NEW <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
@@ -53,7 +53,7 @@
                                     <h2>Shows</h2>
                                     
                                    
-                                    <div class="row">
+                                    <a class="row">
         <table class="table table-bordered table-striped">
             <thead >
                 <tr class="bg-info ">
@@ -67,9 +67,9 @@
                 @foreach ($shows as $show)
                     <tr>
                         <td style="width:140px; text-align: center">
-                            <div class="btn btn-sm btn-default"><a href="{{route('shows.show', $show -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
-                            <div class="btn btn-sm btn-default"><a href="{{route('shows.edit', $show -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
-                            <div class="btn btn-sm btn-default"><a href="{{route('shows.destroy', $show -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
+                            <a class="btn btn-sm btn-default" href="{{route('shows.show', $show -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></a>
+                            <a class="btn btn-sm btn-default" href="{{route('shows.edit', $show -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></a>
+                            <a class="btn btn-sm btn-default" href="{{route('shows.destroy', $show -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></a>
                         </td>
                         <td> {{$show["name"] }} </td>
                     </tr>
