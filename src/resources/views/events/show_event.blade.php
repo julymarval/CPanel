@@ -11,7 +11,7 @@
                                             <span class="sr-only">Toggle navigation</span>
                                             <span class="icon-bar"></span>
                                             <span class="icon-bar"></span>
-                                            <span class="icon-bar"></spadmin/authenticate#an>
+                                            <span class="icon-bar"></span>
                                         </button>
                                     </div>
                                 </nav>
@@ -70,7 +70,8 @@
                     <td align="center"><img src="/images/events/{{$event["name"]}}/{{$images[0] -> name}}">
                         <br><br>
                         <div class="btn btn-sm btn-default"><a href="{{route('images.show', $event["id"])}}">
-                        <i class="icon-trash glyphicon glyphicon-eye-open text-primary"> <br> View All </i></div>
+                                <i class="icon-trash glyphicon glyphicon-eye-open text-primary"> <br> View All </i></a>
+                        </div>
                     </td>
                 @else
                     <td>
