@@ -12,7 +12,7 @@
                                             <span class="sr-only">Toggle navigation</span>
                                             <span class="icon-bar"></span>
                                             <span class="icon-bar"></span>
-                                            <span class="icon-bar"></spadmin/authenticate#an>
+                                            <span class="icon-bar"></span>
                                         </button>
                                     </div>
                                 </nav>
@@ -68,14 +68,12 @@
                             <input class="form-control" placeholder="Name" name="name" type="text">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="price" name="price" type="text" >
+                            <input class="form-control" placeholder="Price of product only numbers" name="price" type="text" >
                         </div>
                         <div class="form-group">
                             <input class="form-control" placeholder="description" name="description" type="text" >
                         </div>
-                        <div>
-                            <input class="form-control" placeholder="image" name="image" type="file">
-                        </div>
+
                         <br>
                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Save">
                     </fieldset>
