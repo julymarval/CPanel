@@ -190,14 +190,13 @@ Route::group(['prefix' => 'admin'],function(){
     
 });*/
 
-
-
 /**
-* UpdateDB Route
+* Contact Route
 **/
-Route::group(['prefix' => 'admin'],function(){
-    
-    Route::resource('updatedb','UpdateDBController',['only' => ['index']]);
+Route::group(['prefix' => 'contact'], function(){
+    Route::post('/', [
+        'uses' => 'ContactController@store',
+        'as'   => 'contact']);
 });
 
 
