@@ -16,7 +16,7 @@ use App\Image;
 class EventsController extends Controller
 {
 
-    private $sales, $events;
+    private $sales, $events, $sponsors;
 
     /**
     * Constructor
@@ -34,6 +34,7 @@ class EventsController extends Controller
         $this->middleware('auth',['except' => ['index', 'show']]);
         $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
+        $this -> sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC');
     }
 
 
@@ -53,6 +54,7 @@ class EventsController extends Controller
 
             return view('events.event') 
             -> with('events', $events)
+            -> with ('sponsors', $this -> sposnors)
             -> with('code', $code)
             -> with('msg',$msg);
         }
@@ -61,6 +63,7 @@ class EventsController extends Controller
         $msg = Config::get('constants.msgs.OkMsg');
 
         return view('events.event')
+        -> with('sponsors', $this -> sponsors)
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('events', $events);

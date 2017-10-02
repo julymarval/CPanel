@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use App\Sale;
 use App\Event;
+use App\Sponsor;
 use Config;
 
 class SalesController extends Controller
 {
 
-    private $sales, $events;
+    private $sales, $events, $sponsors;
 
     /**
     * Constructor
@@ -31,6 +32,7 @@ class SalesController extends Controller
         $this->middleware('auth',['except' => ['index', 'show']]);
         $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
+        $this -> sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC');
     }
 
     /**
@@ -46,7 +48,8 @@ class SalesController extends Controller
             $code = Config::get('constants.codes.NonExistingSalesCode');
             $msg = Config::get('constants.msgs.NonExistingSalesMsg');
             
-            return view('sales.sale') 
+            return view('sales.sale')
+            -> with('shows', $this -> sponsors) 
             -> with('sales', $sales)
             -> with('code', $code)
             -> with('msg', $msg);
@@ -69,6 +72,7 @@ class SalesController extends Controller
         $msg = Config::get('constants.msgs.OkMsg');
 
         return view('sales.sale') 
+        -> with('shows', $this -> sponsors) 
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('sales', $sales);

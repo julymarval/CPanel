@@ -3,17 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
-use App\Show;
-use App\Sponsor;
-use Config;
 
-class HomeController extends Controller
+class AboutController extends Controller
 {
+ 
+    private $sponsors;
 
-    private $sales, $shows, $sponsors;
-    
     /**
     * Constructor
     * It starts the jwt token validator before accessing to any function
@@ -23,27 +18,24 @@ class HomeController extends Controller
 
     public function __construct() {
         
-        $this -> shows = Show::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
-        //$this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
+        // Apply the jwt.auth middleware to all methods in this controller
+        // except for the authenticate method. We don't want to prevent
+        // the user from retrieving their token if they don't already have it
+        //$this->middleware('jwt.auth',['except' => ['index', 'show']]);
+        $this->middleware('auth',['except' => ['index', 'show']]);
         $this -> sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC');
     }
-
+ 
+ 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {             
-        
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-        
-        return view('home')
-        -> with('code', $code)
-        -> with('msg', $msg)
-        -> with('sponsors', $this -> sponsors)
-        -> with('shows', $this -> shows);
+    {
+        return view('about')
+        -> with('sponsors', $sponsors);
     }
 
     /**

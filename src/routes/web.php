@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/about', function () {
-    return view('about');
-});
+Route::get('/about', [
+    'uses' => 'AboutController@index',
+    'as'   => 'about']);
 
 /**
 * Admin Dashboard
