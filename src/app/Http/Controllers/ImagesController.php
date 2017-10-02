@@ -27,7 +27,7 @@ class ImagesController extends Controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
         //$this->middleware('jwt.auth',['except' => ['index', 'show']]);
-        $this->middleware('auth',['except' => ['index', 'show']]);
+        $this->middleware('auth',['except' => ['index', 'show','showPublic']]);
     }
 
     /**
@@ -88,9 +88,20 @@ class ImagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function showPublic($id)
     {
-        //
+        $images = Image::select('id','name')->where('event_id', $id)->get();
+        $event = Event::find($id);
+
+        $code = Config::get('constants.codes.OkCode');
+        $msg = Config::get('constants.msgs.OkMsg');
+
+        return view('events.event')
+        -> with('event', $event)
+        -> with('images', $images)
+        -> with ('code', $code)
+        -> with('msg', $msg);
+    
     }
 
     /**

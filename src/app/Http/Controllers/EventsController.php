@@ -8,15 +8,15 @@ use Illuminate\Support\Facades\Storage;
 use Auth;
 use Config;
 use App\Event;
+use App\Image;
 use App\Sale;
 use App\Sponsor;
 use App\Volunteer;
-use App\Image;
 
 class EventsController extends Controller
 {
 
-    private $sales, $events, $sponsors;
+    private $sales, $events, $sponsors, $image, $future, $past;
 
     /**
     * Constructor
@@ -35,6 +35,7 @@ class EventsController extends Controller
         $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         $this -> sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC');
+        
     }
 
 
@@ -54,18 +55,41 @@ class EventsController extends Controller
 
             return view('events.event') 
             -> with('events', $events)
-            -> with ('sponsors', $this -> sposnors)
+            -> with ('sponsors', $this -> sponsors)
             -> with('code', $code)
             -> with('msg',$msg);
         }
- 
+        $i = 0; $j = 0; $k = 0;
+
+        foreach($events as $event){
+            $event_date = new \DateTime($event -> date);
+            $current_date = new \DateTime();
+            
+            if ($event_date > $current_date || $event_date = $current_date){
+              $this -> future[$i] = $event;
+              $i = $i + 1;
+            }
+            else{
+                $this -> past[$j] = $event;
+                $j = $j +1;
+            }
+        }
+
+        foreach( $events as $event){
+            $image[$k] = Image::select('id','name')->where('event_id', $event -> id)-> first();
+            $k = $k +1;
+        }
+        
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
 
         return view('events.event')
         -> with('sponsors', $this -> sponsors)
+        -> with('images', $image)
         -> with('code', $code)
         -> with('msg', $msg)
+        -> with('pastevents', $this -> past)
+        -> with('futureevents' , $this -> future)
         -> with('events', $events);
     }
 
@@ -157,8 +181,7 @@ class EventsController extends Controller
                 $files = $request -> file('images');  
                 foreach($files as $file){
                     $name = $request -> name . "_" . $file -> getClientOriginalName();
-                    $path = public_path() . '/images/events/' . $request -> name;
-                    Storage::makeDirectory($path,0777,true);
+                    $path = public_path() . '/images/events/';
                     $file -> move($path,$name);
 
                     $image = new Image();
@@ -350,10 +373,7 @@ class EventsController extends Controller
                 $files = $request -> file('images');      
                 foreach($files as $file){
                     $name = $event -> name . "_" . $file -> getClientOriginalName();
-                    $path = public_path() . '/images/events/' . $event -> name;
-                    if(!is_dir($path)){
-                        Storage::makeDirectory($path,0777,true);
-                    }
+                    $path = public_path() . '/images/events/';
                     $file -> move($path,$name);
 
                     $image = new Image();

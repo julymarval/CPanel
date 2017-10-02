@@ -68,7 +68,7 @@
                             <input class="form-control" placeholder="Name" name="name" type="text">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" data-provide="datepicker" placeholder="click to select date" data-date-format="yyyy-mm-dd">
+                            <input class="form-control" name = "date" data-provide="datepicker" placeholder="click to select date" data-date-format="yyyy-mm-dd">
                         </div>
                         <div class="form-group">
                             <input class="form-control" placeholder="description" name="description" type="text" >

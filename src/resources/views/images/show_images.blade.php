@@ -57,7 +57,7 @@
                                 <div class = "col-md-4">
                                     <div class = "panel panel-default">
                                         <div class = "panel-body">
-                                            <img src = "/images/events/{{$event["name"]}}/{{$image["name"]}}" class = "img-responsive">
+                                            <img src = "/images/events/{{$image["name"]}}" class = "img-responsive">
                                             <br><br>
                                             <div class="btn btn-sm btn-default"><a href="{{route('images.destroy', $image["id"])}}">
                                                 <i class="icon-trash glyphicon glyphicon-eye-open text-primary"> <br> Delete </i>

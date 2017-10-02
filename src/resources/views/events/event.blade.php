@@ -18,10 +18,11 @@
                     <br>
 
                     <div id="products" class="row list-group">
+                        <?php $i = 0; ?>
                         @foreach ($events as $event)
                         <div class="item  col-xs-4 col-lg-4">
                             <div class="thumbnail">
-                            <!--    <img src="/images/events/{{$events["image"]}}" class="img-responsive"> -->
+                            <img src="/images/events/{{$images[$i] -> name}}" class="img-responsive">
                                 <div class="caption">
                                     <h4 class="pull-right">{{$event["date"] }}</h4>
                                     <h4>{{$event["name"] }}</h4>
@@ -29,11 +30,12 @@
                                 <div class="space-ten"></div>
                                 <div class="btn-ground text-center">
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#product_{{$event["id"] }}"><i class="fa fa-search"></i> Details
+                                            data-target="#product_{{$event["id"] }}"><a href="{{route('images.public', $event["id"])}}"><i class="fa fa-search"></i> Details
                                     </button>
                                 </div>
                             </div>
                         </div>
+                        <?php $i++; ?>
                         @endforeach
                     </div>
                 </div>
