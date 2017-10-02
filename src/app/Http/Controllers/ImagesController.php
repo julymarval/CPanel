@@ -98,7 +98,7 @@ class ImagesController extends Controller
 
         return view('events.event')
         -> with('event', $event)
-        -> with('images', $images)
+        -> with('imgs', $images)
         -> with ('code', $code)
         -> with('msg', $msg);
     

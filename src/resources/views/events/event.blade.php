@@ -93,6 +93,11 @@
 
                                 <!-- Wrapper for slides -->
                                 <div class="carousel-inner">
+                                   <!--@foreach($imgs as $image)
+                                        <div class="item active">
+                                            <img src="/images/events/{{$image -> name}}" class="img-responsive">
+                                        </div>
+                                    @endforeach -->
                                     <div class="item active">
                                         <img src="http://img.bbystatic.com/BestBuy_US/images/products/5613/5613060_sd.jpg"
                                              alt="Los Angeles" style="width:100%;">
