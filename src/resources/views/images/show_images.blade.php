@@ -60,7 +60,7 @@
                                             <img src = "/images/events/{{$image["name"]}}" class = "img-responsive">
                                             <br><br>
                                             <div class="btn btn-sm btn-default"><a href="{{route('images.destroy', $image["id"])}}">
-                                                <i class="icon-trash glyphicon glyphicon-eye-open text-primary"> <br> Delete </i>
+                                                <i class="icon-trash glyphicon glyphicon-trash text-primary"></i>
                                             </div>
                                         </div>
                                     </div>

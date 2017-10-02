@@ -75,17 +75,20 @@ class EventsController extends Controller
             }
         }
 
-        foreach( $events as $event){
+        foreach($events as $event){
             $image[$k] = Image::select('id','name')->where('event_id', $event -> id)-> first();
             $k = $k +1;
         }
-        
+
+        $images = Image::select('id','name','event_id')->get();
+
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
 
         return view('events.event')
         -> with('sponsors', $this -> sponsors)
         -> with('images', $image)
+        -> with('imgs', $images)
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('pastevents', $this -> past)

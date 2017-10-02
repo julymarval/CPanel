@@ -30,7 +30,7 @@
                                 <div class="space-ten"></div>
                                 <div class="btn-ground text-center">
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#product_{{$event["id"] }}"><a href="{{route('images.public', $event["id"])}}"><i class="fa fa-search"></i> Details
+                                            data-target="#product_{{$event["id"] }}"><i class="fa fa-search"></i> Details
                                     </button>
                                 </div>
                             </div>
@@ -93,27 +93,15 @@
 
                                 <!-- Wrapper for slides -->
                                 <div class="carousel-inner">
-                                   <!--@foreach($imgs as $image)
-                                        <div class="item active">
-                                            <img src="/images/events/{{$image -> name}}" class="img-responsive">
-                                        </div>
-                                    @endforeach -->
-                                    <div class="item active">
-                                        <img src="http://img.bbystatic.com/BestBuy_US/images/products/5613/5613060_sd.jpg"
-                                             alt="Los Angeles" style="width:100%;">
-                                    </div>
-
-                                    <div class="item">
-                                        <img src="http://tech.firstpost.com/wp-content/uploads/2014/09/Apple_iPhone6_Reuters.jpg"
-                                             alt="Chicago" style="width:100%;">
-                                    </div>
-
-                                    <div class="item">
-                                        <img src="http://img.bbystatic.com/BestBuy_US/images/products/5613/5613060_sd.jpg"
-                                             alt="New york" style="width:100%;">
-                                    </div>
+                                    @foreach($imgs as $image)
+                                        @if($image -> event_id == $event -> id)
+                                            <div class="item active">
+                                                <img src="/images/events/{{$image["name"]}}"
+                                                alt="Los Angeles" style="width:100%;">
+                                            </div>
+                                        @endif
+                                    @endforeach
                                 </div>
-
                                 <!-- Left and right controls -->
                                 <a class="left carousel-control" href="#myCarousel" data-slide="prev">
                                     <span class="glyphicon glyphicon-chevron-left"></span>
