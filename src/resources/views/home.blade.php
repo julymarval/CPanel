@@ -103,6 +103,7 @@
       <p><span class="glyphicon glyphicon-map-marker"></span> 2015 W Western Ave, South Bend, IN 46619</p>
       <p><span class="glyphicon glyphicon-phone"></span> +1 574232 3212</p>
     </div>
+    <form id="check" method="POST" enctype="multipart/form-data" action="{{route('contact')}}">  
     <div class="col-sm-7 slideanim">
       <div class="row">
         <div class="col-sm-6 form-group">
@@ -119,6 +120,7 @@
         </div>
       </div>
     </div>
+    </form>
   </div>
 </div>
 <div id="map"></div>
