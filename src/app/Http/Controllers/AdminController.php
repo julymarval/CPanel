@@ -79,6 +79,19 @@ class AdminController extends Controller
             -> with('code', $code)
             -> with('msg', $msg);
         }
+
+        foreach($sales as $sale){
+            $date = strtotime($sale -> created_at);
+            $newformat = date('Y-m-d',$date);
+            $today = date('Y-m-d',time());
+            $january = new \DateTime($newformat);
+            $february = new \DateTime($today);
+            $interval = $february->diff($january);
+            $days = $interval->format('%a');
+            if($days > 6){
+                $sale -> delete();
+            }
+        }
         
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');

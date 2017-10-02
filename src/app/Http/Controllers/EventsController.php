@@ -155,7 +155,7 @@ class EventsController extends Controller
                 foreach($files as $file){
                     $name = $request -> name . "_" . $file -> getClientOriginalName();
                     $path = public_path() . '/images/events/' . $request -> name;
-                    Storage::makeDirectory($path);
+                    Storage::makeDirectory($path,0777,true);
                     $file -> move($path,$name);
 
                     $image = new Image();
@@ -349,7 +349,7 @@ class EventsController extends Controller
                     $name = $event -> name . "_" . $file -> getClientOriginalName();
                     $path = public_path() . '/images/events/' . $event -> name;
                     if(!is_dir($path)){
-                        Storage::makeDirectory($path);
+                        Storage::makeDirectory($path,0777,true);
                     }
                     $file -> move($path,$name);
 
