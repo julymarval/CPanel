@@ -49,26 +49,27 @@
                         </ul>
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 gutter">
-    
+
                                 <div class="volunteers">
                                     <div class="pull-right">
                                         <a class="btn btn-default btn-success btn-md" href="{{route('volunteers.create')}}">
                                         NEW <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
                                     </div>
                                     <h2>Volunteers</h2>
-    
+
                                     <div class="row">
-        
+
         <table class="table table-bordered table-striped">
             <thead >
                 <tr class="bg-info ">
                     <th></th>
                     <th style="text-align: center">Name</th>
+                    <th style="text-align: center">Status</th>
                 </tr>
             </thead>
-            
+
             <tbody id="list-itens">
-                
+
                 @foreach ($volunteers as $volunteer)
                     <tr>
                         <td style="width:140px; text-align: center">
@@ -77,29 +78,30 @@
                             <div class="btn btn-sm btn-default"><a href="{{route('volunteers.destroy', $volunteer -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
                         </td>
                         <td> {{$volunteer["name"] }} </td>
+                        <td> {{$volunteer["status"] }} </td>
                     </tr>
-                @endforeach      
-                
-            </tbody>    
-            
+                @endforeach
+
+            </tbody>
+
         </table>
-        
+
         {{$volunteers}}
-        
+
     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
-    
+
         </div>
-    
-    
-    
-        
+
+
+
+
         <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
 
     </body>

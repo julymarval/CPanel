@@ -155,17 +155,15 @@
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHyMG1u6cbwDVjX3nT974k73SpMOaC8hQ&libraries=places&callback=initMap">
 </script>
+    <footer class="container-fluid text-center">
+        @include('includes.publicfooter')
+    </footer>
 
+    <script type="text/javascript" src="{{asset('js/magic.js')}}"></script>
 
-<footer class="container-fluid text-center">
-  <a href="#home" title="To Top">
-    <span class="glyphicon glyphicon-chevron-up"></span>
-  </a>
-  <p>Made By <a href="#" title="">Gabriel Rivas</a></p>
-</footer>
+    </body>
+    </html>
 
-<script type="text/javascript" src="{{asset('js/magic.js')}}"></script>
-
-</body>
-</html>
 @endsection
+
+

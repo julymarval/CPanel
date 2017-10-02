@@ -183,10 +183,7 @@
 
 </div>
 <footer class="container-fluid text-center">
-    <a href="#events" title="To Top">
-      <span class="glyphicon glyphicon-chevron-up"></span>
-    </a>
-    <p>Made By <a href="#" title="">Gabriel Rivas</a></p>
+    @include('includes.publicfooter')
   </footer>
   
   <script type="text/javascript" src="{{asset('js/magic.js')}}"></script>
