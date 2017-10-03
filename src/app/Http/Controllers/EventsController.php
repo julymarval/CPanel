@@ -87,7 +87,7 @@ class EventsController extends Controller
 
         return view('events.event')
         -> with('sponsors', $this -> sponsors)
-        -> with('images', $image)
+        -> with('images', $this -> image)
         -> with('imgs', $images)
         -> with('code', $code)
         -> with('msg', $msg)
