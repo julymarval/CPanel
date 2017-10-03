@@ -107,7 +107,7 @@ class VolunteersController extends Controller
         }
         
         $rules = [
-            'name'     => 'required|min:2|max:80|unique:volunteers',
+            'name'     => 'required|min:2|max:80|unique:volunteers|regex:/^[a-zA-ZÑñ\s]+$/',
         ];
 
         try {

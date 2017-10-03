@@ -65,7 +65,7 @@
                 <form id="check" method="POST" enctype="multipart/form-data" action="{{route('volunteers.store')}}">  
                     <fieldset>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Name" name="name" type="text">
+                            <input class="form-control" placeholder="Name" name="name" type="text" required>
                         </div>
                         <div class="form-group">
                             <label for="sel1">Select a Status:</label>

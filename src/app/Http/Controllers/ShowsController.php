@@ -105,7 +105,7 @@ class ShowsController extends Controller
         }
         
         $rules = [
-            'name'     => 'required|min:2|max:80|unique:shows',
+            'name'     => 'required|min:2|max:80|unique:shows|regex:/^[a-zA-ZÑñ\s]+$/',
             'schedule' => 'required'
         ];
 

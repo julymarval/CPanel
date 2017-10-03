@@ -111,7 +111,7 @@ class SalesController extends Controller
         }
         
         $rules = [
-            'name' => 'required|min:2|max:80',
+            'name' => 'required|min:2|max:80|regex:/^[a-zA-ZÑñ\s]+$/',
             'price'=> 'required',
         ];
 

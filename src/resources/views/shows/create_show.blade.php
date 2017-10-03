@@ -65,17 +65,17 @@
                 <form id="check" method="POST" enctype="multipart/form-data" action="{{route('shows.store')}}">
                     <fieldset>
                         <div class="form-group">
-                            <input class="form-control" placeholder="name" name="name" type="text">
+                            <input class="form-control" placeholder="name" name="name" type="text" required>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="schedule" name="schedule" type="text" >
+                            <input class="form-control" placeholder="schedule" name="schedule" type="text" required>
                         </div>
                         
                         <div class="form-group">
                             <input class="form-control" placeholder="description" name="description" type="text" >
                         </div>
                         <div>
-                            <input class="form-control" placeholder="image" name="image" type="file">
+                            <input class="form-control" placeholder="image" name="image" type="file" required>
                         </div>
                         <br>
                         <div class="form-group">

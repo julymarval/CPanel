@@ -39,16 +39,16 @@
   
                       <fieldset>
                       <div class="form-group">
-                    <input class="form-control" placeholder="Name" name="name" type="text">
+                    <input class="form-control" placeholder="Name" name="name" type="text" required>
                 </div>
                   <div class="form-group">
-                    <input class="form-control" placeholder="E-mail" name="email" type="text" >
+                    <input class="form-control" placeholder="E-mail" name="email" type="text" required>
                 </div>
                 <div class="form-group">
-                  <input class="form-control" placeholder="Password" name="password" type="password" value="" id="password">
+                  <input class="form-control" placeholder="Password" name="password" type="password" value="" id="password" required>
                 </div>
                 <div class="form-group">
-                  <input class="form-control" placeholder="Confirm Password" name="repassword" type="password" value="" id="repassword">
+                  <input class="form-control" placeholder="Confirm Password" name="repassword" type="password" value="" id="repassword" required>
                 </div>
                 <input class="btn btn-lg btn-success btn-block" type="submit" value="Register">
               </fieldset>

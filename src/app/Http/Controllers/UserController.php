@@ -87,7 +87,7 @@ class UserController extends Controller
         }
         
         $rules = [
-            'name'      => 'required|min:4|max:20',
+            'name'      => 'required|min:4|max:20|regex:/^[a-zA-ZÑñ\s]+$/',
             'email'     => 'required|email|unique:users',
             'password'  => 'required|min:8|max:10',
             ];

@@ -65,7 +65,7 @@
                 <form id="check" method="POST" enctype="multipart/form-data" action="{{route('sponsors.store')}}">
                     <fieldset>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Name" name="name" type="text">
+                            <input class="form-control" placeholder="Name" name="name" type="text" required>
                         </div>
        
                         <div class="form-group">
@@ -78,7 +78,7 @@
                          <div class="form-group">
                             <label for="sel1">Select a Status:</label>
 
-                            <select class="form-control"  name="status">
+                            <select class="form-control"  name="status" required>
                                 <option disabled selected value> -- select an option -- </option>
                                 <option value="Activo">Activo</option>
                                 <option value="Inactivo">Inactivo</option>
@@ -87,7 +87,7 @@
                           <div class="form-group">
                          <label for="sel1">Select a Level:</label>
 
-                            <select class="form-control"  name="level">
+                            <select class="form-control"  name="level" required>
                                 <option disabled selected value> -- select an option -- </option>
                                 <option value="Cobre">Cobre</option>
                                 <option value="Platino">Platino</option>
