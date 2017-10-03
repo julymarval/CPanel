@@ -168,10 +168,7 @@ Route::group(['prefix' => '/'],function(){
 Route::group(['prefix' => '/'], function(){
 
     Route::resource('images', 'ImagesController',[
-        'only' => ['show', 'destroy', 'showPublic']]);
-    Route::get('images/public',[
-        'uses' => 'ImagesController@showPublic',
-        'as'   => 'images.public']);
+        'only' => ['show', 'destroy']]);
     Route::get('images/{id}/destroy', [
         'uses' => 'ImagesController@destroy',
         'as'   => 'images.destroy']);

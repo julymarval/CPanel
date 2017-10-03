@@ -81,29 +81,7 @@ class ImagesController extends Controller
         -> with ('code', $code)
         -> with('msg', $msg);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showPublic($id)
-    {
-        $images = Image::select('id','name')->where('event_id', $id)->get();
-        $event = Event::find($id);
-
-        $code = Config::get('constants.codes.OkCode');
-        $msg = Config::get('constants.msgs.OkMsg');
-
-        return view('events.event')
-        -> with('event', $event)
-        -> with('imgs', $images)
-        -> with ('code', $code)
-        -> with('msg', $msg);
     
-    }
-
     /**
      * Update the specified resource in storage.
      *

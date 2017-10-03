@@ -81,17 +81,19 @@
   </div>
   <br>  
   <div class="row">
-    @foreach ($shows as $show) 
+    @if(count($shows) > 0)
+      @foreach ($shows as $show) 
         <div class="column col-sm-4 ">          
           <div class="card  show1">
-          <img class ="card-image" src="/images/shows/{{$show["image"]}}"  width="300" height="200">
+          <img class ="card-image" src="/images/shows/{{$show["image"]}}" width="300" height="200">
             <h4 class="card-name">{{$show["name"]}}</h4>
             <h6 class="card-schedule">{{$show["schedule"]}}</h6>
             <h6 class="card-description">{{$show["description"]}}</h6>
             <br>
           </div>
         </div>
-    @endforeach
+      @endforeach
+    @endif
   </div>
 
 
