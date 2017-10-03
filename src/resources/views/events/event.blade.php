@@ -20,7 +20,7 @@
                         @if(count($futureevents) > 0)
                         <?php $j = 0; ?>
                         <?php $i = 0; ?>
-                            <div class="item  col-xs-4 col-lg-4">
+                            <div class="item  col-xs-6 col-md-4">
                                 <div class="thumbnail">
                                 @if(count($images[0]) > 0)
                                     <img src="/images/events/{{$images[$i] -> name}}" class="img-responsive">
@@ -29,7 +29,6 @@
                                             <h4 class="pull-right">{{$futureevents[$j]->date }}</h4>
                                             <h4>{{$futureevents[$j]->name }}</h4>
                                         </div>
-                                        <div class="space-ten"></div>
                                             <div class="btn-ground text-center">
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                                     data-target="#product_{{$futureevents[$j]->id }}"><i class="fa fa-search"></i> Details
@@ -50,7 +49,7 @@
                         @if(count($pastevents) > 0)
                         <?php $j = 0; ?>
                         <?php $i = 0; ?>
-                        <div class="item  col-xs-4 col-lg-4">
+                            <div class="item  col-xs-6 col-md-4">
                             <div class="thumbnail">
                                 @if(count($images[0]) > 0)
                                     <img src="/images/events/{{$images[$i] -> name}}" class="img-responsive">
@@ -59,7 +58,6 @@
                                         <h4 class="pull-right">{{$pastevents[$j]->date }}</h4>
                                         <h4>{{$pastevents[$j]->name }}</h4>
                                     </div>
-                                    <div class="space-ten"></div>
                                     <div class="btn-ground text-center">
                                         <button type="button" class="btn btn-primary" data-toggle="modal"
                                                 data-target="#product_{{$pastevents[$j]->id }}"><i class="fa fa-search"></i> Details

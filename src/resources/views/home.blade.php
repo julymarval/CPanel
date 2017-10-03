@@ -1,39 +1,36 @@
 @extends('layouts.publicheader')
 @section('content')
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-    </ol>
 
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <img src="{{asset('/images/p1.JPG')}}"  width="1200" height="700">     
-      </div>
 
-      <div class="item">
-        <img src="{{asset('/images/p2.JPG')}}" width="1200" height="700">
-      
-      </div>
+<header style="background-image: url({{asset('/images/p1.JPG')}});
+        padding-top: 500px;
+        padding-bottom: 50px;
+        position: relative;
+        width: 100%;
+        min-height: auto;
+        text-align: center;
+        color: #fff;
+        background-position: center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;">
+
+<div class="header-content">
+    <div class="header-content-inner">
+        <h1 id="homeHeading">Radio Sabor Latino 93.5 FM</h1>
+        <hr>
+        <p>Contigo Siempre!</p>
+
+            <a  id="page-help" href="http://streamdb6web.securenetsystems.net/v5/WSBL" onclick="window.open(this.href, 'popupwindow', 'width=500,height=300'); return false;" class="btn btn-primary btn-xl js-scroll-trigger">Play <span class="glyphicon glyphicon-play"></span></a>
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGJJ7RX543MDQ"target="_blank" class="btn btn-primary btn-xl js-scroll-trigger">DONATE <span class="glyphicon glyphicon-heart-empty"></span></a>
+        <br>
     </div>
 </div>
+</header>
 
 
-<div class="text-center covertext">
-  <h1>RADIO SABOR LATINO 93.5 FM</h1>
-  <h3>SIEMPRE CONTIGO</h3>
-  <br>
-  <br>
-  <p>
-    <a  id="page-help" href="http://streamdb6web.securenetsystems.net/v5/WSBL" onclick="window.open(this.href, 'popupwindow', 'width=500,height=300'); return false;" class="btn btn-primary btn-round-lg btn-lg">LIVE <span class="glyphicon glyphicon-play"></span></a>
-    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGJJ7RX543MDQ"target="_blank" class="btn btn-default btn-round-lg btn-lg">DONATE <span class="glyphicon glyphicon-heart-empty red"></span></a>
-  </p>
-<br>
-
-</div>
 
 
 
@@ -50,7 +47,7 @@
   @if(count($shows) > 0)
     <div class="row">
         @foreach ($shows as $show)
-          <div class="column col-sm-4 ">          
+          <div class="column  col-xs-6 col-md-4">
             <div class="show1">
             <img class ="card-image" src="/images/shows/{{$show["image"]}}" width="300" height="200">
               <h4 class="card-name">{{$show["name"]}}</h4>

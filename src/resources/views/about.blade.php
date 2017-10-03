@@ -7,19 +7,19 @@
 <h1>ABOUT</h1>
 <div class="row">
      
-    <div class="col-sm-12">
+    <div class="col-sm-12 text-center">
     <h2>Mision</h2><br>
-      <blockquote>
+      <blockquote align="justify">
           Serve the Hispanic community of St. Joseph County, IN and surrounding areas by providing information, motivation and educational radio programming in an entertaining format and by distributing all revenues as college financial aid and scholarships.
       </blockquote>
         <br>       
     </div>
   </div>
 
-  <h2>History</h2><br>
+
   <div class="row">
-    <div class="col-sm-12">
-      
+    <div class="col-sm-12 text-center" >
+        <h2>History</h2><br>
       <p  align="justify">Thru most of the 80’s and 90’s Mr. Ramon Rodriguez was director of a one hour weekly Spanish radio program, “Informando al Pueblo”. After Mr. Juan Lora, in charge of
           preparing and reading news for the weekly program, left in the mid 90’s, Mr. Eliud
           Villanueva was asked by Mr. Rodriguez to replace him. Mr. Villanueva fell in love with

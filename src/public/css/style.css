@@ -57,6 +57,7 @@
 .glyphicon { margin-right:5px; }
 .thumbnail
 {
+    max-height: 20%;
     margin-bottom: 20px;
     padding: 0px;
     -webkit-border-radius: 0px;
@@ -139,13 +140,33 @@ h4 {
     color: #303030;
     font-weight: 400;
     margin-bottom: 30px;
-}  
-.jumbotron {
-    background-color: #f4511e;
-    color: #fff;
-    padding: 100px 25px;
-    font-family: Montserrat, sans-serif;
 }
+hr {
+    max-width: 50px;
+    border-width: 3px;
+    border-color: #f05f40;
+}
+header.masthead .header-content {
+    position: relative;
+    width: 100%;
+    padding: 50px 15px 10px;
+    text-align: center;
+}
+
+header.masthead {
+    position: relative;
+    width: 100%;
+    min-height: auto;
+    text-align: center;
+    color: #fff;
+
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
 .container-fluid {
     padding: 60px 50px;
 }
@@ -204,8 +225,7 @@ h4 {
     font-size: 19px;
     line-height: 1.375em;
     font-weight: 400;
-    font-style: italic;
-    margin: 70px 0;
+    margin: 7px 0;
 }
 .item span {
     font-style: normal;
@@ -280,8 +300,21 @@ footer .glyphicon {
 .nav-pills>li.active>a:hover {
    background-color: #f4511e;
 }
-.btn-primary{
-    background-color: #f4511e; 
+.btn-xl {
+    padding: 15px 30px;
+}
+
+.btn {
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 300px;
+    font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+}
+.btn-primary {
+    color: #fff;
+    border-color: #f05f40;
+    background-color: #f05f40;
 }
 .slideanim {visibility:hidden;}
 .slide {
@@ -376,15 +409,17 @@ modal {
     margin:auto;
    
   }
-
+div {
+    display: block;
+}
   blockquote{
     font-size: 1.4em;
-    width:60%;
-    margin:50px auto;
+    width:100%;
+    margin:20px auto;
     font-family:Open Sans;
     font-style:italic;
     color: #555555;
-    padding:1.2em 30px 1.2em 75px;
+    padding:1.2em 15px 1.2em 40px;
     border-left:8px solid #f4511e ;
     line-height:1.6;
     position: relative;

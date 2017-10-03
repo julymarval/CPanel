@@ -2,7 +2,7 @@
 
 <div class="row">
     @foreach ($sponsors as $sponsor)
-        <div class="column col-sm-4 ">
+        <div class="column col-xs-4 col-md-3 ">
             {{$sponsor["name"] }}
         </div>
     @endforeach

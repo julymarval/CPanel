@@ -3,7 +3,7 @@
 
     <div id="tianguis" class="container-fluid text-center bg-grey">
         <br><h2>TIANGUIS</h2><br>
-        <h4>What we are selling</h4>
+        <h4>"what the community is selling"</h4>
         <div class="row">
             <table class="table table-striped">
                 <thead >
