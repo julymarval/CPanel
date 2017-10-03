@@ -38,7 +38,8 @@
                                 <?php $i++; ?>
                             </div>
                         @endforeach
-                    </div>-->
+                    </div>
+                    {{$events}}
                 </div>
                 <div class="tab-pane" id="2a">
                     <br>

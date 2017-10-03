@@ -65,16 +65,16 @@
                 <form id="check" method="POST" enctype="multipart/form-data" action="{{route('events.store')}}">
                     <fieldset>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Name" name="name" type="text">
+                            <input class="form-control" placeholder="Name" name="name" type="text" required>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name = "date" data-provide="datepicker" placeholder="click to select date" data-date-format="yyyy-mm-dd">
+                            <input class="form-control" name = "date" data-provide="datepicker" placeholder="click to select date" data-date-format="yyyy-mm-dd" required>
                         </div>
                         <div class="form-group">
                             <input class="form-control" placeholder="description" name="description" type="text" >
                         </div>
                         <div>
-                           <input type="file" name="images[]" multiple />
+                           <input type="file" name="images[]" multiple required/>
                         </div>
                         <br>
                         <div class="form-group">
