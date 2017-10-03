@@ -16,28 +16,29 @@
             <div class="tab-content clearfix ">
                 <div class="tab-pane active" id="1a">
                     <br>
-
                     <div id="products" class="row list-group">
                         <?php $i = 0; ?>
                         @foreach ($events as $event)
-                        <div class="item  col-xs-4 col-lg-4">
-                            <div class="thumbnail">
-                            <img src="/images/events/{{$images[$i] -> name}}" class="img-responsive">
-                                <div class="caption">
-                                    <h4 class="pull-right">{{$event["date"] }}</h4>
-                                    <h4>{{$event["name"] }}</h4>
-                                </div>
-                                <div class="space-ten"></div>
-                                <div class="btn-ground text-center">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#product_{{$event["id"] }}"><i class="fa fa-search"></i> Details
-                                    </button>
-                                </div>
+                            <div class="item  col-xs-4 col-lg-4">
+                                <div class="thumbnail">
+                                @if(count($images) > 0)
+                                    <img src="/images/events/{{$images[$i] -> name}}" class="img-responsive">
+                                        <div class="caption">
+                                            <h4 class="pull-right">{{$event["date"] }}</h4>
+                                            <h4>{{$event["name"] }}</h4>
+                                        </div>
+                                        <div class="space-ten"></div>
+                                            <div class="btn-ground text-center">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#product_{{$event["id"] }}"><i class="fa fa-search"></i> Details
+                                                </button>
+                                            </div>
+                                        </div>
+                                @endif
+                                <?php $i++; ?>
                             </div>
-                        </div>
-                        <?php $i++; ?>
                         @endforeach
-                    </div>
+                    </div>-->
                 </div>
                 <div class="tab-pane" id="2a">
                     <br>

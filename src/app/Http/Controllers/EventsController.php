@@ -16,7 +16,7 @@ use App\Volunteer;
 class EventsController extends Controller
 {
 
-    private $sales, $events, $sponsors, $image, $future, $past;
+    private $sales, $events, $sponsors, $future, $past;
 
     /**
     * Constructor
@@ -46,6 +46,8 @@ class EventsController extends Controller
      */
     public function index()
     {
+        $image;
+
         $events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         
         if(empty($events)){
@@ -61,7 +63,11 @@ class EventsController extends Controller
         }
         $i = 0; $j = 0; $k = 0;
 
-        foreach($events as $event){
+        $now = date('Y-m-d');
+        $futureevents = DB::table('events') -> whereDate('date', '>=', $now)-> paginate(5);
+        $pastevents = DB::table('events') -> whereDate('date', '<', $now)-> paginate(5);
+
+        /*foreach($events as $event){
             $event_date = new \DateTime($event -> date);
             $current_date = new \DateTime();
             
@@ -73,7 +79,7 @@ class EventsController extends Controller
                 $this -> past[$j] = $event;
                 $j = $j +1;
             }
-        }
+        }*/
 
         foreach($events as $event){
             $image[$k] = Image::select('id','name')->where('event_id', $event -> id)-> first();
@@ -87,7 +93,7 @@ class EventsController extends Controller
 
         return view('events.event')
         -> with('sponsors', $this -> sponsors)
-        -> with('images', $this -> image)
+        -> with('images', $image)
         -> with('imgs', $images)
         -> with('code', $code)
         -> with('msg', $msg)
