@@ -90,8 +90,10 @@
                             <select class="form-control"  name="level" required>
                                 <option disabled selected value> -- select an option -- </option>
                                 <option value="Cobre">Cobre</option>
-                                <option value="Platino">Platino</option>
+                                <option value="Plata">Plata</option>
                                 <option value="Oro">Oro</option>
+                                <option value="Platino">Platino</option>
+                                <option value="Diamante">Diamante</option>
                             </select>
                         </div>
                        <div class="form-group">

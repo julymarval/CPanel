@@ -68,10 +68,25 @@
                             <input class="form-control" placeholder="Name" name="name" type="text">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Level" name="level" type="text" >
+                            <label for="sel1">Select a Status:</label>
+
+                            <select class="form-control"  name="status" required>
+                                <option disabled selected value> -- select an option -- </option>
+                                <option value="Activo">Activo</option>
+                                <option value="Inactivo">Inactivo</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Status" name="status" type="text" >
+                            <label for="sel1">Select a Level:</label>
+
+                            <select class="form-control"  name="level" required>
+                                <option disabled selected value> -- select an option -- </option>
+                                <option value="Cobre">Cobre</option>
+                                <option value="Plata">Plata</option>
+                                <option value="Oro">Oro</option>
+                                <option value="Platino">Platino</option>
+                                <option value="Diamante">Diamante</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <input class="form-control" placeholder="description" name="description" type="text" >
