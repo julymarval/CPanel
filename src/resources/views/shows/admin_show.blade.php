@@ -76,10 +76,8 @@
                 @endforeach      
                 
             </tbody>    
-            
+            {{$shows}}
         </table>
-        {{$shows}}
-        
         
     </div>
                                 </div>

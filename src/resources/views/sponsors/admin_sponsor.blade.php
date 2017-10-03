@@ -83,10 +83,9 @@
                 @endforeach      
                 
             </tbody>    
-            
+            {{$sponsors}}     
         </table>
         
-       {{$sponsors}} 
         
     </div>
                                 </div>

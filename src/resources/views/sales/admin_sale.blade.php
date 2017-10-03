@@ -74,8 +74,8 @@
                                         </tr>
                                     @endforeach          
                                 </tbody>     
-                            </table>
-                            {{$sales}}  
+                                {{$sales}}
+                            </table>  
                         </div>   
                         
                     </div>

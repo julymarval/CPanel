@@ -83,10 +83,8 @@
                 @endforeach
 
             </tbody>
-
+            {{$volunteers}}
         </table>
-
-        {{$volunteers}}
 
     </div>
                                 </div>
