@@ -25,7 +25,7 @@ class HomeController extends Controller
         
         $this -> shows = Show::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         //$this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
-        $this -> sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC');
+        $this -> sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC')->get();
     }
 
     /**
@@ -35,7 +35,7 @@ class HomeController extends Controller
      */
     public function index()
     {             
-        
+
         $code = Config::get('constants.codes.OkCode'); 
         $msg = Config::get('constants.msgs.OkMsg');
         

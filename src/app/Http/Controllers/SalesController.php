@@ -32,7 +32,7 @@ class SalesController extends Controller
         $this->middleware('auth',['except' => ['index', 'show']]);
         $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
-        $this -> sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC');
+        $this -> sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC')->get();
     }
 
     /**
@@ -72,7 +72,7 @@ class SalesController extends Controller
         $msg = Config::get('constants.msgs.OkMsg');
 
         return view('sales.sale') 
-        -> with('shows', $this -> sponsors) 
+        -> with('sponsors', $this -> sponsors) 
         -> with('code', $code)
         -> with('msg', $msg)
         -> with('sales', $sales);

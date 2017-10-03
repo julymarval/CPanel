@@ -34,7 +34,7 @@ class EventsController extends Controller
         $this->middleware('auth',['except' => ['index', 'show']]);
         $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
-        $this -> sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC');
+        $this -> sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC')->get();
         
     }
 
@@ -525,7 +525,7 @@ class EventsController extends Controller
         $images = Image::select('id','name')->where('event_id', $id)->get();
         foreach($images as $image){
             $path = public_path() . '/images/events/' . $image -> name;
-            \File::delete($path);
+            \Storage::delete($path);
             $image -> delete();
         }
         

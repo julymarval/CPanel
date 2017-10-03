@@ -61,7 +61,10 @@ return [
         'IdField'                 => 'id',
         'NameField'               => 'name',
         'EmailField'              => 'email'
-    ]
+    ],
+    'email' => [
+        'email'                   => ''
+    ],
 ];
 
 

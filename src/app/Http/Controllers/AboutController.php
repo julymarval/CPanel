@@ -27,7 +27,7 @@ class AboutController extends Controller
         // the user from retrieving their token if they don't already have it
         //$this->middleware('jwt.auth',['except' => ['index', 'show']]);
         $this->middleware('auth',['except' => ['index', 'show']]);
-        $this -> sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC');
+        $this -> sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC')->get();
     }
  
  

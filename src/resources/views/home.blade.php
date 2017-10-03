@@ -96,7 +96,6 @@
     @endif
   </div>
 
-
 <div id="contact" class="container-fluid bg-grey">
   <h2 class="text-center">CONTACT</h2>
   <div class="row">

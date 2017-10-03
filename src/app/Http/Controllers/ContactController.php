@@ -58,7 +58,7 @@ class ContactController extends Controller
                 'email' => $request->email,
                 'user_message' => $request->comments
             ), function($message){
-                    $message->to('july.marval@gmail.com', 'Admin')->subject('RadioLatina Feedback');
+                    $message->to('constants.email.email', 'Admin')->subject('RadioLatina Feedback');
                 });
         
         } catch(Exception $e) {
