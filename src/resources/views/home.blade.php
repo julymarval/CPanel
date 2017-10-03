@@ -62,6 +62,7 @@
         @endforeach
     </div>
   @endif
+  {{$shows}}
 </div>
 <div id="contact" class="container-fluid bg-grey">
   <h2 class="text-center">CONTACT</h2>
