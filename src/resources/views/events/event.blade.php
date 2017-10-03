@@ -44,29 +44,6 @@
                 <div class="tab-pane" id="2a">
                     <br>
                     <div id="products" class="row list-group">
-                        <div class="item  col-xs-4 col-lg-4">
-                            <div class="thumbnail">
-                                <img src="http://tech.firstpost.com/wp-content/uploads/2014/09/Apple_iPhone6_Reuters.jpg"
-                                     alt="" class="img-responsive">
-                                <div class="caption">
-                                    <h4 class="pull-right">$700.99</h4>
-                                    <h4>Mobile Product</h4>
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                        Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                        unknown printer took a galley of type and scrambled it to make a type specimen
-                                        book.</p>
-                                </div>
-                                <div class="space-ten"></div>
-                                <div class="btn-ground text-center">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#product_view2"><i class="fa fa-search"></i> Details
-                                    </button>
-                                </div>
-
-                            </div>
-
-
-                        </div>
                     </div>
 
                 </div>
@@ -85,28 +62,50 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div id="myCarousel" class="carousel  col-md-6 product_img" data-ride="carousel">
+                                <div id="myCarousel" class="carousel col-md-6 product_img" data-ride="carousel">
                                     <!-- Indicators -->
                                     <ol class="carousel-indicators">
-                                        @foreach($imgs as $image)
+                                        @foreach($imgs as $i => $image)
+                                            @if ($i ==0)
                                             <li data-target="#carouselExampleIndicators" 
                                             data-slide-to="{{ $loop->index }}" 
-                                            class="{{ $loop->first ? 'active' : '' }}"></li>
+                                            class="active"></li>
+                                            @else
+                                                <li data-target="#carouselExampleIndicators"
+                                                    data-slide-to="{{ $loop->index }}"></li>
+                                            @endif
+
                                         @endforeach
                                     </ol>
 
                                     <!-- Wrapper for slides -->
                                     <div class="carousel-inner" role="listbox">
-                                        @foreach($imgs as $image)
+                                        @foreach($imgs as $i => $image)
                                             @if($image -> event_id == $event -> id)
+                                                @if ($i == 0)
                                                 <div class="active item">
                                                     <img class="d-block img-fluid" src="/images/events/{{$image -> name}}"
                                                     alt="{{ $event->name }}" style="width:100%;">
                                                 </div>
+                                                @else
+                                                    <div class="item">
+                                                        <img class="d-block img-fluid" src="/images/events/{{$image -> name}}"
+                                                             alt="{{ $event->name }}" style="width:100%;">
+                                                    </div>
+                                                @endif
                                             @endif
+
                                         @endforeach
                                     </div>
-
+                                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
                                     <div class="col-md-6 product_content">
                                         <p>
                                             {{$event["description"] }}
@@ -124,10 +123,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
         @endforeach
-
-    </div>
+            </div>
     <footer class="container-fluid text-center">
         @include('includes.publicfooter')
     </footer>
