@@ -524,13 +524,11 @@ class EventsController extends Controller
 
         $images = Image::select('id','name')->where('event_id', $id)->get();
         foreach($images as $image){
+            $path = public_path() . '/images/events/' . $image -> name;
+            \File::delete($path);
             $image -> delete();
         }
-        $path = public_path() . '/images/events/' . $event -> name;
-        \File::cleanDirectory($path);
-        Storage::deleteDirectory($path);
-        rmdir($path);
-
+        
         $event -> delete();
         
         $code = Config::get('constants.codes.OkCode'); 
