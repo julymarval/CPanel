@@ -36,40 +36,7 @@
 </div>
 
 
-<div id="team" class="container-fluid text-center bg-grey">
-    <h2>TEAM</h2>
-    <div class="row row-centered">
-        
-                <div class="col-md-4 team">
-                    <img src="http://www.radiosaborlatino.com/wp-content/uploads/2016/07/13709631_10100201065576745_590823939_o-1-e1470878796336.jpg" alt="Mike">
-                    <div>
-                      <h2>Jose Flores</h2>
-                      <p class="title">CEO &amp; Founder</p>
-                      <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                    </div>
-                </div>
-              
-                <div class="col-md-4 team">
-                    <img src="http://www.radiosaborlatino.com/wp-content/uploads/2016/07/13692413_10100201065566765_1983183408_o-e1470879004167.jpg" alt="Mike">
-                    <div>
-                      <h2>Mike Ross</h2>
-                      <p class="title">Art Director</p>
-                      <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                    </div>
-                </div>
-              
-                <div class="col-md-4 team">
-                    <img src="http://www.radiosaborlatino.com/wp-content/uploads/2016/07/13709631_10100201065576745_590823939_o-1-e1470878796336.jpg" alt="Mike">
-                    <div>
-                      <h2>John Doe</h2>
-                      <p class="title">Designer</p>
-                      <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                    </div>
-                </div>
-        
-        
-            </div>
-  </div>
+
 
 <div id="shows" class="container-fluid text-center">
   <h2>SHOWS</h2>
@@ -82,9 +49,9 @@
   <br>  
   @if(count($shows) > 0)
     <div class="row">
-        @foreach ($shows as $show) 
+        @foreach ($shows as $show)
           <div class="column col-sm-4 ">          
-            <div class="card  show1">
+            <div class="show1">
             <img class ="card-image" src="/images/shows/{{$show["image"]}}" width="300" height="200">
               <h4 class="card-name">{{$show["name"]}}</h4>
               <h6 class="card-schedule">{{$show["schedule"]}}</h6>
@@ -95,7 +62,7 @@
         @endforeach
     </div>
   @endif
-
+</div>
 <div id="contact" class="container-fluid bg-grey">
   <h2 class="text-center">CONTACT</h2>
   <div class="row">
@@ -158,6 +125,7 @@
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHyMG1u6cbwDVjX3nT974k73SpMOaC8hQ&libraries=places&callback=initMap">
 </script>
+
     <footer class="container-fluid text-center">
         @include('includes.publicfooter')
     </footer>
