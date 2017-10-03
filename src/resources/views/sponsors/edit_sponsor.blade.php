@@ -68,6 +68,12 @@
                             <input class="form-control" placeholder="Name" name="name" type="text">
                         </div>
                         <div class="form-group">
+                            <input class="form-control" placeholder="description" name="description" type="text" >
+                        </div>
+                        <div>
+                            <input class="form-control" placeholder="image" name="image" type="file">
+                        </div>
+                        <div class="form-group">
                             <label for="sel1">Select a Status:</label>
 
                             <select class="form-control"  name="status" required>
@@ -88,13 +94,6 @@
                                 <option value="Diamante">Diamante</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="description" name="description" type="text" >
-                        </div>
-                        <div>
-                            <input class="form-control" placeholder="image" name="image" type="file">
-                        </div>
-                        <br>
                         <div class="form-group">
                             {!! Form::label('volunteers', 'Volunteers') !!}
                             {!! Form::select('volunteer_id',[null => ' -- select a volunteer --'] + $volunteers,
