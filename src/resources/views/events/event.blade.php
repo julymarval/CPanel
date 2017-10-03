@@ -86,25 +86,26 @@
                                 <div id="myCarousel" class="carousel  col-md-6 product_img" data-ride="carousel">
                                     <!-- Indicators -->
                                     <ol class="carousel-indicators">
-                                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                        <li data-target="#myCarousel" data-slide-to="1"></li>
-                                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                                        @foreach($imgs as $image)
+                                            <li data-target="#carouselExampleIndicators" 
+                                            data-slide-to="{{ $loop->index }}" 
+                                            class="{{ $loop->first ? 'active' : '' }}"></li>
+                                        @endforeach
                                     </ol>
 
                                     <!-- Wrapper for slides -->
-                                    <div class="carousel-inner">
+                                    <div class="carousel-inner" role="listbox">
                                         @foreach($imgs as $image)
                                             @if($image -> event_id == $event -> id)
-                                                <div class="item active">
-                                                    <img src="/images/events/{{$image -> name}}"
-                                                    alt="Los Angeles" style="width:100%;">
+                                                <div class="active item">
+                                                    <img class="d-block img-fluid" src="/images/events/{{$image -> name}}"
+                                                    alt="{{ $event->name }}" style="width:100%;">
                                                 </div>
                                             @endif
                                         @endforeach
                                     </div>
 
                                     <div class="col-md-6 product_content">
-
                                         <p>
                                             {{$event["description"] }}
                                         </p>

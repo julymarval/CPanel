@@ -49,17 +49,15 @@ class ContactController extends Controller
                 
                 $code = Config::get('constants.codes.InvalidInputCode'); 
                 $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
-                dd($msg);
-                //return redirect()-> route('home');
+                return redirect()-> route('home');
             }
 
-            \Mail::send('about',
+            \Mail::send('email',
             array(
                 'name' => $request->name,
                 'email' => $request->email,
                 'user_message' => $request->comments
             ), function($message){
-                    $message->from('july.marval@gmail.com');
                     $message->to('july.marval@gmail.com', 'Admin')->subject('RadioLatina Feedback');
                 });
         
@@ -68,11 +66,10 @@ class ContactController extends Controller
             
             $code = Config::get('constants.codes.InternalErrorCode'); 
             $msg = Config::get('constants.msgs.InternalErrorMsg');
-            dd($msg);
-            //return redirect()-> route('home');
+            return redirect()-> route('home');
         }
-        dd("ok");
-        //return redirect()-> route('home')->with('success', 'Thanks for contacting us!'); ;
+        
+        return redirect()-> route('home')->with('success', 'Thanks for contacting us!');
 
     }
 
