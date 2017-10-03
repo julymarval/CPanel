@@ -68,7 +68,7 @@
                             <input class="form-control" placeholder="Name" name="name" type="text" required>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Price of product only numbers" name="price" type="text" required>
+                            <input class="form-control" placeholder="Price of product only numbers (0.0)" name="price" type="text" required>
                         </div>
                         <div class="form-group">
                             <input class="form-control" placeholder="description" name="description" type="text" >
