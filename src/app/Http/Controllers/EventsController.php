@@ -16,7 +16,7 @@ use App\Volunteer;
 class EventsController extends Controller
 {
 
-    private $sales, $events, $sponsors, $future, $past;
+    private $sales, $events, $sponsors;
 
     /**
     * Constructor
@@ -61,7 +61,8 @@ class EventsController extends Controller
             -> with('code', $code)
             -> with('msg',$msg);
         }
-        $i = 0; $j = 0; $k = 0;
+        //$i = 0; $j = 0; 
+        $k = 0;
 
         $now = date('Y-m-d');
         $futureevents = DB::table('events') -> whereDate('date', '>=', $now)-> paginate(5);
@@ -97,8 +98,8 @@ class EventsController extends Controller
         -> with('imgs', $images)
         -> with('code', $code)
         -> with('msg', $msg)
-        -> with('pastevents', $this -> past)
-        -> with('futureevents' , $this -> future)
+        -> with('pastevents', $pastevents)
+        -> with('futureevents' , $futureevents)
         -> with('events', $events);
     }
 
