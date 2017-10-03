@@ -22,8 +22,9 @@
                         <?php $i = 0; ?>
                             <div class="item  col-xs-4 col-lg-4">
                                 <div class="thumbnail">
-                                @if(count($images) > 0)
+                                @if(count($images[0]) > 0)
                                     <img src="/images/events/{{$images[$i] -> name}}" class="img-responsive">
+                                @endif
                                         <div class="caption">
                                             <h4 class="pull-right">{{$futureevents[$j]->date }}</h4>
                                             <h4>{{$futureevents[$j]->name }}</h4>
@@ -35,14 +36,13 @@
                                                 </button>
                                             </div>
                                         </div>
-                                @endif
                                 <?php $i++; ?>
                             </div>
                             <?php $j++; ?>
-                            {{$futureevents}}
+                            
                             @endif
                     </div>
-
+                    {{$futureevents}}
                 </div>
                 <div class="tab-pane" id="2a">
                     <br>
@@ -52,8 +52,9 @@
                         <?php $i = 0; ?>
                         <div class="item  col-xs-4 col-lg-4">
                             <div class="thumbnail">
-                                @if(count($images) > 0)
+                                @if(count($images[0]) > 0)
                                     <img src="/images/events/{{$images[$i] -> name}}" class="img-responsive">
+                                @endif
                                     <div class="caption">
                                         <h4 class="pull-right">{{$pastevents[$j]->date }}</h4>
                                         <h4>{{$pastevents[$j]->name }}</h4>
@@ -65,14 +66,13 @@
                                         </button>
                                     </div>
                             </div>
-                            @endif
                             <?php $i++; ?>
                         </div>
                         <?php $j++; ?>
-                        {{$pastevents}}
+                        
                             @endif
                     </div>
-
+                    {{$pastevents}}
                 </div>
             </div>
 
