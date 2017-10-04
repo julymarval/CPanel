@@ -16,7 +16,7 @@ use App\Volunteer;
 class EventsController extends Controller
 {
 
-    private $sales, $events, $sponsors;
+    private $sales, $events, $sponsors, $image;
 
     /**
     * Constructor
@@ -46,7 +46,6 @@ class EventsController extends Controller
      */
     public function index()
     {
-        $image;
 
         $events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         
@@ -81,10 +80,12 @@ class EventsController extends Controller
                 $j = $j +1;
             }
         }*/
-
-        foreach($events as $event){
-            $image[$k] = Image::select('id','name')->where('event_id', $event -> id)-> first();
-            $k = $k +1;
+        
+        if(!empty($events)){
+            foreach($events as $event){
+                $this -> image[$k] = Image::select('id','name')->where('event_id', $event -> id)-> first();
+                $k = $k +1;
+            }
         }
 
         $images = Image::select('id','name','event_id')->get();
@@ -94,7 +95,7 @@ class EventsController extends Controller
 
         return view('events.event')
         -> with('sponsors', $this -> sponsors)
-        -> with('images', $image)
+        -> with('images', $this -> image)
         -> with('imgs', $images)
         -> with('code', $code)
         -> with('msg', $msg)
