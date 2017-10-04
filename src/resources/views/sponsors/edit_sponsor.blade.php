@@ -76,7 +76,7 @@
                         <div class="form-group">
                             <label for="sel1">Select a Status:</label>
 
-                            <select class="form-control"  name="status" required>
+                            <select class="form-control"  name="status">
                                 <option disabled selected value> -- select an option -- </option>
                                 <option value="Activo">Activo</option>
                                 <option value="Inactivo">Inactivo</option>
@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <label for="sel1">Select a Level:</label>
 
-                            <select class="form-control"  name="level" required>
+                            <select class="form-control"  name="level">
                                 <option disabled selected value> -- select an option -- </option>
                                 <option value="Cobre">Cobre</option>
                                 <option value="Plata">Plata</option>
