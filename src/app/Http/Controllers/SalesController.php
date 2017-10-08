@@ -269,6 +269,10 @@ class SalesController extends Controller
                 if(!empty($request -> name)){
                     $update['name'] = $request -> name;
                 }
+
+                if(!empty($request -> phone)){
+                    $update['phone'] = $request -> phone;
+                }
                 
                 if(!empty($request -> price)){
                     $update['price'] =  $request -> price;

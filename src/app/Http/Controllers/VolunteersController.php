@@ -373,6 +373,10 @@ class VolunteersController extends Controller
                     $update['description'] =  $request -> description;
                 }
 
+                if(!empty($request -> phone)){
+                    $update['phone'] = $request -> phone;
+                }
+
                 if(!empty($request -> file('image'))){
                     $file = $request -> file('image');
                     $name = $volunteer -> name . '.' . $file->getClientOriginalExtension();
