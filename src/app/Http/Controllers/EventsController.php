@@ -49,17 +49,6 @@ class EventsController extends Controller
 
         $events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         
-        if(empty($events)){
-                    
-            $code = Config::get('constants.codes.NonExistingEventCode'); 
-            $msg = Config::get('constants.msgs.NonExistingEventMsg');
-
-            return view('events.event') 
-            -> with('events', $events)
-            -> with ('sponsors', $this -> sponsors)
-            -> with('code', $code)
-            -> with('msg',$msg);
-        }
         //$i = 0; $j = 0; 
         $k = 0;
 
