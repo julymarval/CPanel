@@ -69,7 +69,7 @@
                         </div>
        
                         <div class="form-group">
-                            <input class="form-control" placeholder="description" name="description" type="text" >
+                            <textarea class="form-control" placeholder="description" name="description"></textarea>
                         </div>
                         <div>
                             <input class="form-control" placeholder="image" name="image" type="file">

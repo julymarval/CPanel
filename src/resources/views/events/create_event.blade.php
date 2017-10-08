@@ -71,7 +71,7 @@
                             <input class="form-control" name = "date" data-provide="datepicker" placeholder="click to select date" data-date-format="yyyy-mm-dd" required>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="description" name="description" type="text" >
+                            <textarea class="form-control" placeholder="description" name="description"></textarea>
                         </div>
                         <div>
                            <input type="file" name="images[]" multiple required/>

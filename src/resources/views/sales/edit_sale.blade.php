@@ -64,14 +64,14 @@
             <div class="panel-body">
                 <form id="check" method="POST" enctype="multipart/form-data" action="{{route('sales.update', $sale -> id)}}">
                     <fieldset>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Name" name="name" type="text">
+                        <div class="form-group">Name
+                            <input class="form-control" placeholder={{$sale['name']}} name="name" type="text">
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Price of product only numbers (0.0)" name="price" type="text" >
+                        <div class="form-group">Price
+                            <input class="form-control" placeholder={{$sale['price']}} name="price" type="textarea" >
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="description" name="description" type="text" >
+                        <div class="form-group">Description
+                            <textarea class="form-control" placeholder={{$sale['description']}} name="description"></textarea>
                         </div>
                         <br>
                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Update">

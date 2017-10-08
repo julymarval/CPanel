@@ -125,8 +125,8 @@ class EventsController extends Controller
 
         if (!$request -> name || !$request -> date) {
             
-                $code = Config::get('constants.codes.MissingInputCode'); 
-                $msg   = Config::get('constants.msgs.MissingInputMsg');
+            $code = Config::get('constants.codes.MissingInputCode'); 
+            $msg   = Config::get('constants.msgs.MissingInputMsg');
             
             return redirect() -> route('dashboard')
             -> with('user', $user -> name)
@@ -238,18 +238,8 @@ class EventsController extends Controller
                 }
             }
 
-            $code = Config::get('constants.codes.OkCode');
-            $msg = Config::get('constants.msgs.OkMsg');
-            
-            return redirect() -> route('dashboard')
-            -> with('user', $user -> name) 
-            -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
-
         } catch (Exception $e) {
-            \Log::info('Error creating sale: '.$e);
+            \Log::info('Error creating event: '.$e);
             
             $code = Config::get('constants.codes.InternalErrorCode'); 
             $msg = Config::get('constants.msgs.InternalErrorMsg');
@@ -261,6 +251,16 @@ class EventsController extends Controller
             -> with('code', $code)
             -> with('msg', $msg);
         }
+
+        $code = Config::get('constants.codes.OkCode');
+        $msg = Config::get('constants.msgs.OkMsg');
+        
+        return redirect() -> route('dashboard')
+        -> with('user', $user -> name) 
+        -> with('sales', $this -> sales)
+        -> with('events', $this -> events)
+        -> with('code', $code)
+        -> with('msg', $msg);
     }
 
     /**

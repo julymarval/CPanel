@@ -64,13 +64,13 @@
             <div class="panel-body">
                 <form id="check" method="POST" enctype="multipart/form-data" action="{{route('sponsors.update', $sponsor -> id)}}">
                     <fieldset>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Name" name="name" type="text">
+                        <div class="form-group">Name
+                            <input class="form-control" placeholder={{$sponsor['name']}} name="name" type="text">
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="description" name="description" type="text" >
+                        <div class="form-group">Description
+                            <textarea class="form-control" placeholder={{$sponsor->description}} name="description"></textarea>
                         </div>
-                        <div>
+                        <div>Image
                             <input class="form-control" placeholder="image" name="image" type="file">
                         </div>
                         <div class="form-group">

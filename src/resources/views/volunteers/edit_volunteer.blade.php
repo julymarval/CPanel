@@ -64,8 +64,8 @@
             <div class="panel-body">
                 <form id="check" method="POST" enctype="multipart/form-data" action="{{route('volunteers.update', $volunteer -> id)}}">
                     <fieldset>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Name" name="name" type="text">
+                        <div class="form-group">Name
+                            <input class="form-control" placeholder={{$volunteer['name']}} name="name" type="text">
                         </div>
                         <div class="form-group">
                             <label for="sel1">Select a Status:</label>
@@ -75,10 +75,10 @@
                                 <option value="Inactivo">Inactivo</option>
                             </select>
                         </div> 
-                        <div class="form-group">
-                            <input class="form-control" placeholder="description" name="description" type="text" >
+                        <div class="form-group">Description
+                            <textarea class="form-control" placeholder={{$volunteer['description']}} name="description"></textarea>
                         </div>
-                        <div>
+                        <div>Image
                             <input class="form-control" placeholder="image" name="image" type="file">
                         </div>
                         <br>

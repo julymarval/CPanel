@@ -26,7 +26,6 @@
     
                                 <div class="sales">
                                     <h2>Sponsors</h2>
-    
                                     <div class="row">
         
         <table class="table table-bordered table-striped">

@@ -64,16 +64,16 @@
             <div class="panel-body">
                 <form id="check" method="POST" enctype="multipart/form-data" action="{{route('shows.update', $show -> id)}}">
                     <fieldset>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Name" name="name" type="text">
+                        <div class="form-group">Name
+                            <input class="form-control" placeholder={{$show['name']}} name="name" type="text">
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="schedule" name="schedule" type="text" >
+                        <div class="form-group">Schedule
+                            <input class="form-control" placeholder={{$show['schedule']}} name="schedule" type="text" >
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="description" name="description" type="text" >
+                        <div class="form-group">Description
+                            <textarea class="form-control" placeholder={{$show['description']}} name="description"></textarea>
                         </div>
-                         <div>
+                         <div>Image
                             <input class="form-control" placeholder="image" name="image" type="file">
                         </div>
                         <br>

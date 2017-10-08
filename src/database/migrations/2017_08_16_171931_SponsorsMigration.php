@@ -17,6 +17,7 @@ class SponsorsMigration extends Migration
             $table->increments('id');
             $table->string('name',80);
             $table->text('description')->nullable();
+            $table->text('address')->nullable();
             $table->string('level',80);
             $table->string('status',80);
             $table->string('image',80)->nullable();

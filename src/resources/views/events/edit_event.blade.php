@@ -64,16 +64,16 @@
             <div class="panel-body">
                 <form id="check" method="POST" enctype="multipart/form-data" action="{{route('events.update', $event -> id)}}">
                     <fieldset>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Name" name="name" type="text">
+                        <div class="form-group"> Name
+                            <input class="form-control" placeholder={{$event['name']}} name="name" type="text">
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" data-provide="datepicker" placeholder="click to select date" data-date-format="yyyy-mm-dd">
+                        <div class="form-group">Date
+                            <input class="form-control" data-provide="datepicker" placeholder={{$event['date']}} data-date-format="yyyy-mm-dd">
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="description" name="description" type="text" >
+                        <div class="form-group">Description
+                            <textarea class="form-control" placeholder={{$event['description']}} name="description"></textarea>
                         </div>
-                        <div>
+                        <div>Images
                             <input type="file" name="images[]" multiple />
                         </div>
                         <br>
