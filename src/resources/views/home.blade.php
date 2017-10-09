@@ -43,22 +43,23 @@
 
     <h1>Select a show</h1>
   </div>
-  <br>  
   @if(count($shows) > 0)
-    <div class="row">
-        @foreach ($shows as $show)
-          <div class="column  col-xs-6 col-md-4">
-            <div class="show1">
-            <img class ="card-image" src="/images/shows/{{$show["image"]}}" width="300" height="200">
-              <h4 class="card-name">{{$show["name"]}}</h4>
-              <h6 class="card-schedule">{{$show["schedule"]}}</h6>
-              <h6 class="card-description">{{$show["description"]}}</h6>
-              <br>
-            </div>
-          </div>
-        @endforeach
-    </div>
-  @endif
+ 
+  <ul class="bxslider">
+  @foreach ($shows as $show)
+  <li> <img class ="card-image img-responsive center-block" src="/images/shows/{{$show["image"]}}"  title="{{$show["schedule"]}}" style="max-width: 100%; height: 600px;" ></li>
+
+  @endforeach
+</ul>
+
+<div id="bx-pager">
+  @foreach ($shows as $key => $show)
+  <a data-slide-index="{{$key}}" href=""><img src="/images/shows/{{$show["image"]}}" width="100" height="75"/></a>
+  @endforeach
+</div>
+@endif
+  <br>  
+
   {{$shows}}
 </div>
 <div id="contact" class="container-fluid bg-grey">

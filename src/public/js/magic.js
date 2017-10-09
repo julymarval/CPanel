@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    /*
+    
       // Add smooth scrolling to all links in navbar + footer link
-      $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+      $(".navbar a, footer a[href='#home']").on('click', function(event) {
     
         // Prevent default anchor click behavior
         event.preventDefault();
@@ -21,7 +21,7 @@ $(document).ready(function(){
           });
         }
       });
-      */
+      
       // Slide in elements on scroll
       $(window).scroll(function() {
         $(".slideanim").each(function(){
@@ -43,14 +43,10 @@ $(document).ready(function(){
         $('#products .item').addClass('grid-group-item');
       });
   
-      $('.show1').click(function(){
-        var cat =  $(this).children(".card-name").text();
-        var src = $('.card img').attr('src');
-        console.log(src);
-        var cat2 =  $(this).children(".card-schedule").text();
-        var cat3 =  $(this).children(".card-description").text();
-        
-        $('.showresult').html('<h2>'+cat+'</h2> <img src="'+src+'" width="400" height="280"> <h3>'+cat2+'</h3><h4>'+cat3+'</h4>');
-       });
+       $('.bxslider').bxSlider({
+        pagerCustom: '#bx-pager',
+        mode: 'fade',
+        captions: true
+      });
             
     })
