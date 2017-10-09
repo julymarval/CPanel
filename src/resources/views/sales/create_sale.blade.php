@@ -71,6 +71,9 @@
                             <input class="form-control" placeholder="Price of product only numbers (0.0)" name="price" type="text" required>
                         </div>
                         <div class="form-group">
+                            <input class="form-control" name="phone" placeholder="phone">
+                        </div>
+                        <div class="form-group">
                             <textarea class="form-control" placeholder="description" name="description"></textarea>
                         </div>
 

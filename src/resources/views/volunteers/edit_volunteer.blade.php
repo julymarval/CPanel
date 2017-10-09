@@ -67,6 +67,9 @@
                         <div class="form-group">Name
                             <input class="form-control" placeholder={{$volunteer['name']}} name="name" type="text">
                         </div>
+                        <div class="form-group">Phone
+                            <input class="form-control" name="phone" placeholder={{$volunteer['phone']}}>
+                        </div>
                         <div class="form-group">
                             <label for="sel1">Select a Status:</label>
                             <select class="form-control"  name="status">

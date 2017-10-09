@@ -8,7 +8,7 @@ class Sale extends Model {
     
     protected $table = 'sales';
 
-    protected $fillable = ['name','description','price','date', 'image'];
+    protected $fillable = ['name','description','price','date', 'image', 'phone'];
 
     /**
      * The attributes that should be hidden for arrays.

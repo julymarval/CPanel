@@ -8,7 +8,7 @@ class Volunteer extends Model {
     
     protected $table = 'volunteers';
 
-    protected $fillable = ['name','status','description','image'];
+    protected $fillable = ['name','status','description','image', 'phone'];
 
     public function events(){
         return $this -> belongsToMany('App\Event')->withTimestamps();

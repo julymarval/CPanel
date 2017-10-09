@@ -67,6 +67,9 @@
                         <div class="form-group">Name
                             <input class="form-control" placeholder={{$sponsor['name']}} name="name" type="text">
                         </div>
+                        <div class="form-group">Address
+                            <textarea class="form-control" placeholder={{$sponsor['address']}} name="address"></textarea>
+                        </div>
                         <div class="form-group">Description
                             <textarea class="form-control" placeholder={{$sponsor->description}} name="description"></textarea>
                         </div>

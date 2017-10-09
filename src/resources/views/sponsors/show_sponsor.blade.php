@@ -33,6 +33,7 @@
                 <tr class="bg-info ">
                     <th style="text-align: center">Image</th>
                     <th style="text-align: center">Name</th>
+                    <th style="text-align: center">Address</th>
                     <th style="text-align: center">Description</th>
                     <th style="text-align: center">Level</th>
                     <th style="text-align: center">Status</th>
@@ -44,6 +45,7 @@
                 
                 <td align="center"><img src="/images/sponsors/{{$sponsor["image"]}}"></td>
                 <td align="center"> {{$sponsor["name"] }} </td>
+                <td align="text-align: center">{{$sponsor["address"]}}</th>
                 <td align="center"> {{$sponsor["description"] }} </td>
                 <td align="center"> {{$sponsor["level"] }} </td>
                 <td align="center"> {{$sponsor["status"] }} </td>

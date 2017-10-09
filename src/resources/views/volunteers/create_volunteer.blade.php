@@ -68,6 +68,9 @@
                             <input class="form-control" placeholder="Name" name="name" type="text" required>
                         </div>
                         <div class="form-group">
+                            <input class="form-control" name="phone" placeholder="phone">
+                        </div>
+                        <div class="form-group">
                             <label for="sel1">Select a Status:</label>
 
                             <select class="form-control"  name="status">
@@ -76,7 +79,6 @@
                                 <option value="Inactivo">Inactivo</option>
                             </select>
                         </div> 
-                        
                         <div class="form-group">
                             <textarea class="form-control" placeholder="description" name="description"></textarea>
                         </div>

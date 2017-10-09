@@ -59,17 +59,19 @@
         <table class="table table-bordered table-striped">
             <thead >
                 <tr class="bg-info ">
-                    <th style="text-align: center">Image</th>
+                    <!--<th style="text-align: center">Image</th>-->
                     <th style="text-align: center">Description</th>
                     <th style="text-align: center">Price</th>
+                    <th style="text-align: center">Phone</th>
                 </tr>
             </thead>
             
             <tbody id="list-itens">
                 
-                <td align="center"><img src="/images/sales/{{$sale["image"]}}"></td>
+                <!--<td align="center"><img src="/images/sales/{{$sale["image"]}}"></td>-->
                 <td align="center"> {{$sale["description"] }} </td>
                 <td align="center"> {{$sale["price"] }} </td>
+                <td align="center"> {{$sale["phone"]}} </td>
               
             </tbody>    
             

@@ -70,6 +70,9 @@
                         <div class="form-group">Price
                             <input class="form-control" placeholder={{$sale['price']}} name="price" type="textarea" >
                         </div>
+                        <div class="form-group">Phone
+                            <input class="form-control" name="phone" placeholder={{$sale['phone']}}>
+                        </div>
                         <div class="form-group">Description
                             <textarea class="form-control" placeholder={{$sale['description']}} name="description"></textarea>
                         </div>

@@ -63,6 +63,7 @@
                     <th style="text-align: center">Image</th>
                     <th style="text-align: center">Description</th>
                     <th style="text-align: center">Status</th>
+                    <th style="text-align: center">Phone</th>
                 </tr>
             </thead>
             
@@ -71,6 +72,7 @@
                 <td align="center"><img src="/images/volunteers/{{$volunteer["image"]}}"></td>
                 <td> {{$volunteer["description"] }} </td>
                 <td> {{$volunteer["status"] }} </td>
+                <td> {{$volunteer["phone"]}} </td>
               
             </tbody>    
             
