@@ -15,7 +15,6 @@ li,ul{
     font-size: 18px;
 }
 .bg-image {
-    background: url(../images/background-login.jpg) no-repeat 0 0 / cover;
     position: relative;
     width: 100%;
     height: 100vh;
@@ -122,25 +121,8 @@ li,ul{
     width: 100%;
 }
 
-.user input {
-    background: rgba(0, 0, 0, 0) url("../images/user.png") no-repeat scroll 7px 12px;
-}
 
-.pass input {
-    background: rgba(0, 0, 0, 0) url("../images/password.png") no-repeat scroll 7px 12px;
-}
 
-.mail input {
-    background: rgba(0, 0, 0, 0) url("../images/mail.png") no-repeat scroll 4px 12px;
-}
-
-.login-signup .tab-content {
-    background: #ffffff none repeat scroll 0 0;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
-    display: inline-block;
-    margin-top: -8px;
-    width: 100%;
-}
 
 .form-btn {
     background: #5584ff none repeat scroll 0 0;
@@ -558,7 +540,7 @@ header {
     border-top-right-radius: 5px;
 }
 
-#list-itens img{
+#list-items img{
     max-width: 200px;
     max-height: 200px;
 }
@@ -594,6 +576,9 @@ header {
         margin-bottom: 20px;
         width: 100%;
     }
+    .navbar-right, .dropdown-menu{
+        text-align: right;
+    }
     .login-inner .form-btn {
         margin: 0;
         max-width: 180px;
@@ -602,7 +587,7 @@ header {
         padding: 20px 0;
     }
     #navigation{
-        max-width: 38px !important;
+        width: 55px !important;
     }
     #navigation .navi a {
         font-size: 14px;

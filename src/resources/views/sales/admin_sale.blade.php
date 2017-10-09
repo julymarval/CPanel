@@ -4,15 +4,22 @@
     <div class="col-md-10 col-sm-11 display-table-cell v-align">
                     <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
         <div class="row">
-            <header>
-                <div class="col-md-7">
-                    <nav class="navbar-default pull-left">
-                        <div class="navbar-header">
+        <header>
+        <div class="col-md-7">
+            <nav class="navbar-default pull-left">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="offcanvas" data-target="#side-menu" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+            </nav>
 
-                        </div>
-                    </nav>
-                </div>  
-            </header>
+        </div>
+
+    </header>
         </div>
         <div class="user-dashboard">
             <!-- Right Side Of Navbar -->
@@ -62,7 +69,7 @@
                                     </tr>
                                 </thead>
                                 
-                                <tbody id="list-itens"> 
+                                <tbody id="list-items"> 
                                     @foreach ($sales as $sale)
                                         <tr>
                                             <td style="width:140px; text-align: center">

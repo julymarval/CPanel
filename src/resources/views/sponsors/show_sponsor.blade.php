@@ -41,7 +41,7 @@
                 </tr>
             </thead>
             
-            <tbody id="list-itens">
+            <tbody id="list-items">
                 
                 <td align="center"><img src="/images/sponsors/{{$sponsor["image"]}}"></td>
                 <td align="center"> {{$sponsor["name"] }} </td>
@@ -62,7 +62,7 @@
                 </tr>
             </thead>
             
-            <tbody id="list-itens">
+            <tbody id="list-items">
                 
                 @foreach ($my_events as $event)
                     <tr>

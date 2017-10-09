@@ -69,7 +69,7 @@
                 </tr>
             </thead>
             
-            <tbody id="list-itens">
+            <tbody id="list-items">
                 
                 @foreach ($sponsors as $sponsor)
                     <tr>
