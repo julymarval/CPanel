@@ -65,7 +65,7 @@
                 </tr>
             </thead>
             
-            <tbody id="list-itens">
+            <tbody id="list-items">
                 
                 @foreach ($events as $event)
                     <tr>
@@ -101,7 +101,7 @@
                 </tr>
             </thead>
             
-            <tbody id="list-itens">
+            <tbody id="list-items">
                 
                 @foreach ($sales as $sale)
                     <tr>
@@ -120,12 +120,6 @@
         
         
         
-    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
     
         </div>

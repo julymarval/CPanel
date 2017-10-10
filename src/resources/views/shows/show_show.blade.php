@@ -66,7 +66,7 @@
                 </tr>
             </thead>
             
-            <tbody id="list-itens">
+            <tbody id="list-items">
                 
                 <td align="center"><img src="/images/shows/{{$show["image"]}}"></td>
                 <td align="center"> {{$show["description"] }} </td>
@@ -83,7 +83,7 @@
                 </tr>
             </thead>
             
-            <tbody id="list-itens">
+            <tbody id="list-items">
                 
                 @foreach ($volunteers as $volunteer)
                     <tr>

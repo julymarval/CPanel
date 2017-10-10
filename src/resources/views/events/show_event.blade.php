@@ -65,7 +65,7 @@
                 </tr>
             </thead>
             
-            <tbody id="list-itens">  
+            <tbody id="list-items">  
                 @if(count($images) > 0)
                     <td align="center"><img src="/images/events/{{$images[0] -> name}}">
                         <br><br>
@@ -90,7 +90,7 @@
                 </tr>
             </thead>
             
-            <tbody id="list-itens">
+            <tbody id="list-items">
                 
                 @foreach ($my_sponsors as $sponsor)
                     <tr>
@@ -109,7 +109,7 @@
                 </tr>
             </thead>
             
-            <tbody id="list-itens">
+            <tbody id="list-items">
                 
                 @foreach ($my_volunteers as $volunteer)
                     <tr>

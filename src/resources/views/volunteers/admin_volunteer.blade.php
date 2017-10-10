@@ -68,7 +68,7 @@
                 </tr>
             </thead>
 
-            <tbody id="list-itens">
+            <tbody id="list-items">
 
                 @foreach ($volunteers as $volunteer)
                     <tr>

@@ -66,7 +66,7 @@
                 </tr>
             </thead>
             
-            <tbody id="list-itens">
+            <tbody id="list-items">
                 
                 <!--<td align="center"><img src="/images/sales/{{$sale["image"]}}"></td>-->
                 <td align="center"> {{$sale["description"] }} </td>
