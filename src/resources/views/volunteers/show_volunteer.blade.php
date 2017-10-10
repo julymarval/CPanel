@@ -51,10 +51,8 @@
                         </ul>
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 gutter">
-    
                                 <div class="sales">
                                     <h2>{{$volunteer -> name}}</h2>
-    
                                     <div class="row">
         
         <table class="table table-bordered table-striped">
