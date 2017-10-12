@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    
+  /*  
       // Add smooth scrolling to all links in navbar + footer link
       $(".navbar a, footer a[href='#home']").on('click', function(event) {
     
@@ -21,7 +21,7 @@ $(document).ready(function(){
           });
         }
       });
-      
+    */  
       // Slide in elements on scroll
       $(window).scroll(function() {
         $(".slideanim").each(function(){
