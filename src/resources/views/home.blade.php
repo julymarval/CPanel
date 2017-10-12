@@ -47,7 +47,7 @@
  
   <ul class="bxslider">
   @foreach ($shows as $show)
-  <li> <img class ="card-image img-responsive center-block" src="/images/shows/{{$show["image"]}}"  title="{{$show["schedule"]}}" style="max-width: 100%; height: 600px;" ></li>
+  <li> <img class ="card-image img-responsive center-block" src="/images/shows/{{$show["image"]}}"  title="{{$show["schedule"]}} <br> {{$show["description"]}}" style="max-width: 100%; height: 600px;" ></li>
 
   @endforeach
 </ul>

@@ -8,9 +8,10 @@
             <table class="table table-striped">
                 <thead >
                 <tr>
-                    <th style="text-align: center">Name</th>
-                    <th style="text-align: center">Price</th>
-                    <th style="text-align: center">Description</th>
+                    <th  class="col-xs-2" style="text-align: center">Name</th>
+                    <th  class="col-xs-1" style="text-align: center">Phone</th>
+                    <th  class="col-xs-1" style="text-align: center">Price</th>
+                    <th  class="col-xs-8" style="text-align: center">Description</th>
                 </tr>
                 </thead>
 
@@ -20,6 +21,7 @@
                         <tr>
                             </td>
                             <td> {{$sale["name"] }} </td>
+                            <td> {{$sale["phone"] }} </td>
                             <td> {{$sale["price"] }}$ </td>
                             <td> {{$sale["description"] }} </td>
                         </tr>
