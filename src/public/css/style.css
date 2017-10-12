@@ -42,18 +42,7 @@
 }
 
 /* Add some shadows to create a card effect */
-.card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin-bottom:10px;
-    max-height:230px;
-}
-.card img{
-    padding-top: 10px;
-}
 
-.card-name, .card-schedule, .card-description {
-    visibility: hidden;
-}
 .glyphicon { margin-right:5px; }
 .thumbnail
 {
@@ -334,16 +323,7 @@ footer .glyphicon {
     transform: translateY(0%);
   }
 }
-@-webkit-keyframes slide {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateY(70%);
-  } 
-  100% {
-    opacity: 1;
-    -webkit-transform: translateY(0%);
-  }
-}
+
 @media screen and (max-width: 768px) {
   .col-sm-4 {
     text-align: center;
@@ -381,8 +361,6 @@ modal {
     background-color: black
 }
 .carousel-inner img {
-    -webkit-filter: grayscale(90%);
-   filter: grayscale(90%);/* make all photos black and white */ 
     margin: auto;
     background:rgba(0,0,0,0.6);
     min-height: 300px;
