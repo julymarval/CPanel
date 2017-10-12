@@ -154,13 +154,13 @@
 
         @if(count($pastevents) > 0)
             <?php $m = 0; ?>
-            <div class="modal fade product_view" id="product_{{$pastevents[$k]->id }}">
+            <div class="modal fade product_view" id="product_{{$pastevents[$m]->id }}">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <a href="#" data-dismiss="modal" class="class pull-right"><span
                                         class="glyphicon glyphicon-remove"></span></a>
-                            <h3 class="modal-title">{{$pastevents[$k]->name }}</h3>
+                            <h3 class="modal-title">{{$pastevents[$m]->name }}</h3>
                         </div>
                         <div class="modal-body">
                             <div class="row">
@@ -183,16 +183,16 @@
                                     <!-- Wrapper for slides -->
                                     <div class="carousel-inner" role="listbox">
                                         @foreach($imgs as $i => $image)
-                                            @if($image -> event_id == $pastevents[$k] -> id)
+                                            @if($image -> event_id == $pastevents[$m] -> id)
                                                 @if ($i == 0)
                                                     <div class="active item">
                                                         <img class="d-block img-fluid" src="/images/events/{{$image -> name}}"
-                                                             alt="{{ $pastevents[$k]->name }}" style="width:100%;">
+                                                             alt="{{ $pastevents[$m]->name }}" style="width:100%;">
                                                     </div>
                                                 @else
                                                     <div class="item">
                                                         <img class="d-block img-fluid" src="/images/events/{{$image -> name}}"
-                                                             alt="{{ $pastevents[$k]->name }}" style="width:100%;">
+                                                             alt="{{ $pastevents[$m]->name }}" style="width:100%;">
                                                     </div>
                                                 @endif
                                             @endif
@@ -210,10 +210,10 @@
                                 </div>
                                 <div class="col-md-6 product_content">
                                     <p>
-                                        {{$pastevents[$k]->description}}
+                                        {{$pastevents[$m]->description}}
                                     </p>
                                     <br>
-                                    <h3 class="cost"><span class="glyphicon glyphicon-calendar"></span> {{$pastevents[$k]->date }}</h3>
+                                    <h3 class="cost"><span class="glyphicon glyphicon-calendar"></span> {{$pastevents[$m]->date }}</h3>
 
                                 </div>
                             </div>
@@ -225,7 +225,7 @@
                     </div>
                 </div>
             </div>
-            <?php $k++; ?>
+            <?php $m++; ?>
         @endif
             </div>
     <footer class="container-fluid text-center">
