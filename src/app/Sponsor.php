@@ -8,7 +8,7 @@ class Sponsor extends Model {
     
     protected $table = 'sponsors';
 
-    protected $fillable = ['name','description','level','status','image','address','volunteer_id'];
+    protected $fillable = ['name','description','level','status','image','address','link','volunteer_id'];
 
     public function events(){
         return $this -> belongsToMany('App\Event')->withTimestamps();

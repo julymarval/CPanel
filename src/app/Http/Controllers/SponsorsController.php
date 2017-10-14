@@ -359,6 +359,10 @@ class SponsorsController extends Controller
                     $update['address'] =  $request -> address;
                 }
 
+                if(!empty($request -> link)){
+                    $update['link'] =  $request -> link;
+                }
+
                 if(!empty($request->file('image'))){
                     $file = $request -> file('image');
                     $name = $sponsor -> name . '.' . $file->getClientOriginalExtension();
