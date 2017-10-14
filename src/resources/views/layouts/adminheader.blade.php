@@ -29,6 +29,7 @@
                             <li><a href="{{route('admin.events')}}"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Events</span></a></li>
                             <li><a href="{{route('admin.sponsors')}}"><i class="fa fa-suitcase" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Sponsors</span></a></li>
                             <li><a href="{{route('admin.volunteers')}}"><i class="fa fa-users" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Volunteers</span></a></li>
+                            <li><a href="{{route('users.index')}}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Users</span></a></li>
                         </ul>
                     </div>
                 </div>

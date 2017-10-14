@@ -59,16 +59,19 @@ return [
         'SponsorsTable'           => 'sponsors',
         'EventsTable'             => 'events',
         'Show_Volunteer'          => 'show_volunteer',
-        'Event_Volunteer'         => 'event_volunteer'
+        'Event_Volunteer'         => 'event_volunteer',
+        'ImagesTable'             => 'images'
     ],
     'fields' => [
         'IdField'                 => 'id',
         'NameField'               => 'name',
-        'EmailField'              => 'email'
+        'EmailField'              => 'email',
     ],
-    'email' => [
-        'email'                   => ''
+    'emails' => [
+        'email'                   => '',
+        'Admin'                   => 'j@hotmail.com'
     ],
+
 ];
 
 

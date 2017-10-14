@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuthExceptions\JWTException;
+use Auth;
 use App\User;
 use App\Event;
 use App\Sale;
@@ -21,7 +20,7 @@ class UserController extends Controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
         //$this->middleware('jwt.auth');
-        $this->middleware('auth',['except' => ['create']]);
+        $this->middleware('auth');
         $this -> events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         $this -> sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
     }
@@ -36,10 +35,10 @@ class UserController extends Controller
         $users = User::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
         
         if(empty($users)){
-            $code = Config::get('constants.codes.NonExistingAdminCode'); 
-            $msg = Config::get('constants.msgs.NonExistingAdminMsg');
+            $code = Config::get('constants.codes.NonExistingUserCode'); 
+            $msg = Config::get('constants.msgs.NonExistingUserMsg');
 
-            return view('users.index_user')
+            return view('users.user')
             -> with('user', $users)
             -> with('code', $code)
             -> with('msg', $msg);
@@ -48,7 +47,7 @@ class UserController extends Controller
         $code = Config::get('constants.codes.OkCode');
         $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('users.index_user')
+            return view('users.user')
             -> with('code', $code)
             -> with('msg', $msg)
             -> with('users', $users);
@@ -61,94 +60,28 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create_user');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //$user = JWTAuth::toUser($request -> input('Authorization'));
+        $user = Auth::user();
         
-        if (!is_array($request->all())) {
-            $code = Config::get('constants.codes.MissingInputCode'); 
-            $msg = Config::get('constants.msgs.MisingInputMsg');
+        $email = Config::get('constants.emails.Admin');
+        
+        if($user -> email != $email){
 
-            return view('admin_dashboard')
-            ////-> with('user', $user -> name) 
+            $code = Config::get('constants.codes.InvalidAdminCode'); 
+            $msg = Config::get('constants.msgs.InvalidAdminMsg');
+
+            return redirect() -> route('dashboard') 
+            -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
-        
-        $rules = [
-            'name'      => 'required|min:4|max:20|regex:/^[a-zA-ZÑñ\s]+$/',
-            'email'     => 'required|email|unique:users',
-            'password'  => 'required|min:8|max:10',
-            ];
-
-        try {
-            
-            $validator = \Validator::make($request->all(), $rules);
-            if ($validator->fails()) {
-                $code = Config::get('constants.codes.InvalidInputCode'); 
-                $msg = Config::get('constants.msgs.InvalidInputMsg') . ": " .  $validator->errors();
-
-                return view('admin_dashboard')
-                ////-> with('user', $user -> name) 
-                -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
-            }
-
-            $user = new User($request->all());
-
-            $data = User::find($user->email);
-
-            if(!empty($data)){
-                $code = Config::get('constants.codes.ExistingAdminCode'); 
-                $msg = Config::get('constants.msgs.ExistingAdminMsg');
-
-                return view('admin_dashboard')
-                ////-> with('user', $user -> name) 
-                -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
-            }
-
-            $user->password = bcrypt($request->password);
-            $user -> save();
-            $code = Config::get('constants.codes.OkCode');
-            $msg = Config::get('constants.msgs.OkMsg');
-
-            return view('admin_dashboard')
-           // -> with('user', $user -> name)
-            -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
-            
-        } catch (Exception $e) {
-            \Log::info('Error creating user: '.$e);
-            $code = Config::get('constants.codes.InternalErrorCode'); 
-            $msg = Config::get('constants.msgs.InternalErrorMsg');
-
-            return view('admin_dashboard')
-            ////-> with('user', $user -> name) 
-            -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+        else{
+            return view('auth.register');
         }
     }
 
+    
     /**
      * Display the specified resource.
      *
@@ -160,8 +93,8 @@ class UserController extends Controller
         $user = User::find($id);
         
         if(empty($user)){
-            $code = Config::get('constants.codes.NonExistingSalesCode'); 
-            $msg = Config::get('constants.msgs.NonExistingSalesMsg');
+            $code = Config::get('constants.codes.NonExistingUserCode'); 
+            $msg = Config::get('constants.msgs.NonExistingUserMsg');
 
             return view('users.show_user')
             -> with('user', $user)
@@ -187,24 +120,40 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
+        $admin = Auth::user();
 
-        if(empty($user)){
-            $code = Config::get('constants.codes.NonExistingEventCode'); 
-            $msg = Config::get('constants.msgs.NonExistingEventMsg');
+        $email = Config::get('constants.emails.Admin');
 
-            return view('users.edit_user')
-            -> with('user', $user)
+        if($admin -> email != $email){
+            $code = Config::get('constants.codes.InvalidAdminCode'); 
+            $msg = Config::get('constants.msgs.InvalidAdminMsg');
+
+            return redirect() -> route('dashboard') 
+            -> with('user', $admin -> name) 
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
             -> with('code', $code)
             -> with('msg', $msg);
         }
+        else{
+            if(empty($user)){
+                $code = Config::get('constants.codes.NonExistingUserCode'); 
+                $msg = Config::get('constants.msgs.NonExistingUserMsg');
 
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
+                return view('users.edit_user')
+                -> with('user', $user)
+                -> with('code', $code)
+                -> with('msg', $msg);
+            }
 
-        return view('users.edit_user')
-        -> with('code', $code)
-        -> with('msg', $msg)
-        -> with('user', $user);
+            $code = Config::get('constants.codes.OkCode'); 
+            $msg = Config::get('constants.msgs.OkMsg');
+
+            return view('users.edit_user')
+            -> with('code', $code)
+            -> with('msg', $msg)
+            -> with('user', $user);
+        }
     }
 
     /**
@@ -215,15 +164,15 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //$user = JWTAuth::toUser($request -> input('Authorization'));
-        
-        if(!$request -> name){
+    {        
+        $user = User::find($id);
+
+        if(!$request -> name && !$request -> email && !$request -> password){
             $code = Config::get('constants.codes.MissingInputCode'); 
             $msg = Config::get('constants.msgs.MissingInputMsg');
 
-            return view('admin_dashboard')
-            ////-> with('user', $user -> name) 
+            return redirect() -> route('dashboard') 
+            -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -231,8 +180,6 @@ class UserController extends Controller
         }
         
         else{
-            $user = User::find($id);
-
             $update = array();
             try{
                 if(!empty($request -> name)){
@@ -243,6 +190,10 @@ class UserController extends Controller
                     $update['password'] = bcrypt($request -> password);
                 }
 
+                if(!empty($request -> email)){
+                    $update['email'] = bcrypt($request -> email);
+                }
+
                 $user -> update($update);
             }
             catch(QueryException $e){
@@ -250,8 +201,8 @@ class UserController extends Controller
                 $code = Config::get('constants.codes.InternalErrorCode'); 
                 $msg = Config::get('constants.msgs.InternalErrorMsg');
 
-                return view('admin_dashboard')
-                ////-> with('user', $user -> name) 
+                return redirect() -> route('dashboard') 
+                -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
                 -> with('code', $code)
@@ -261,8 +212,8 @@ class UserController extends Controller
             $code = Config::get('constants.codes.OkCode'); 
             $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('admin_dashboard')
-            //-> with('user', $user -> name) 
+            return redirect() -> route('dashboard') 
+            -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
             -> with('code', $code)
@@ -278,19 +229,35 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //$user = JWTAuth::toUser($request -> input('Authorization'));
-        
+                
         $user = User::find($id);
-        $user -> delete();
+        $admin = Auth::user();
+        
+        $email = Config::get('constants.emails.Admin');
 
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
+        if($admin -> email != $email){
+            $code = Config::get('constants.codes.InvalidAdminCode'); 
+            $msg = Config::get('constants.msgs.InvalidAdminMsg');
 
-        return view('admin_dashboard')
-        //-> with('user', $user -> name) 
-        -> with('sales', $this -> sales)
-        -> with('events', $this -> events)
-        -> with('code', $code)
-        -> with('msg', $msg);
+            return redirect() -> route('dashboard') 
+            -> with('user', $admin -> name) 
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
+            -> with('code', $code)
+            -> with('msg', $msg);
+        }
+        else{
+            $user -> delete();
+
+            $code = Config::get('constants.codes.OkCode'); 
+            $msg = Config::get('constants.msgs.OkMsg');
+
+            return redirect() -> route('dashboard') 
+            -> with('user', $admin -> name) 
+            -> with('sales', $this -> sales)
+            -> with('events', $this -> events)
+            -> with('code', $code)
+            -> with('msg', $msg);
+        }
     }
 }
