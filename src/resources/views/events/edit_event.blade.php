@@ -78,17 +78,17 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            {!! Form::label('volunteers', 'Volunteers') !!}
-                            {!! Form::select('volunteer_id[]',$volunteers,
-                            " ",['volunteers' => 'id', 'class' => 'form-control',
-                            'multiple',null]) !!}
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('sponsors', 'Sponsors') !!}
-                            {!! Form::select('sponsor_id[]',$sponsors,
-                            " ",['sponsors' => 'id', 'class' => 'form-control',
-                            'multiple',null]) !!}
-                        </div>
+                        {!! Form::label('volunteers', 'Volunteers') !!}
+                        {!! Form::select('volunteer_id[]',$volunteers," ",
+                        ['volunteers' => 'id', 'class' => 'form-control select-tag',
+                        'multiple',null]) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('sponsors', 'Sponsors') !!}
+                        {!! Form::select('sponsor_id[]',$sponsors," ",
+                        ['sponsors' => 'id', 'class' => 'form-control select-sponsor',
+                        'multiple',null]) !!}
+                    </div>
                         <br>
                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Update">
                     </fieldset>
@@ -110,7 +110,16 @@
     
         
         <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script>                       
+        <script>
+        $(".select-tag").chosen({
+            placeholder_text_multiple: 'Click to select volunteers',
+        });
+        $(".select-sponsor").chosen({
+            placeholder_text_multiple: 'Click to select sponsors',
+        });
+        </script>   
 
     </script>
 

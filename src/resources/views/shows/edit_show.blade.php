@@ -78,11 +78,11 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            {!! Form::label('volunteers', 'Volunteers') !!}
-                            {!! Form::select('volunteer_id[]',$volunteers,
-                            " ",['volunteers' => 'id', 'class' => 'form-control',
-                            'multiple',null]) !!}
-                        </div>
+                        {!! Form::label('volunteers', 'Volunteers') !!}
+                        {!! Form::select('volunteer_id[]',$volunteers," ",
+                        ['volunteers' => 'id', 'class' => 'form-control select-tag',
+                        'multiple']) !!}
+                    </div>
                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Update">
                     </fieldset>
                 </form>
@@ -103,6 +103,11 @@
     
         
         <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
-
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script>                       
+        <script>
+        $(".select-tag").chosen({
+            placeholder_text_multiple: 'Click to select volunteers',
+        });
+        </script>
     </body>
 @endsection

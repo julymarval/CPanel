@@ -62,31 +62,35 @@
               <h3 class="panel-title" style="text-align: center">Add new Event</h3>
            </div>
             <div class="panel-body">
-                <form id="check" method="POST" enctype="multipart/form-data" action="{{route('events.store')}}">
+                <form id="check" data-toggle="validator" method="POST" enctype="multipart/form-data" action="{{route('events.store')}}">
                     <fieldset>
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <input class="form-control" placeholder="Name" name="name" type="text" required>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" name = "date" data-provide="datepicker" placeholder="click to select date" data-date-format="yyyy-mm-dd" required>
+                        <div class="form-group has-feedback">
+                            <input class="form-control" name = "date" data-provide="datepicker" placeholder="click to select date" data-date-format="yyyy-mm-dd" data-error="Please fill out this field." required>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                         <div class="form-group">
                             <textarea class="form-control" placeholder="description" name="description"></textarea>
                         </div>
-                        <div>
-                           <input type="file" name="images[]" multiple required/>
+                        <div class="form-group has-feedback">
+                        
+                           <input type="file" name="images[]" multiple data-error="Please fill out this field." required/>
+                           <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                         <br>
                         <div class="form-group">
                             {!! Form::label('volunteers', 'Volunteers') !!}
                             {!! Form::select('volunteer_id[]',$volunteers," ",
-                            ['volunteers' => 'id', 'class' => 'form-control',
+                            ['volunteers' => 'id', 'class' => 'form-control select-tag',
                             'multiple',null]) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('sponsors', 'Sponsors') !!}
                             {!! Form::select('sponsor_id[]',$sponsors," ",
-                            ['sponsors' => 'id', 'class' => 'form-control',
+                            ['sponsors' => 'id', 'class' => 'form-control select-sponsor',
                             'multiple',null]) !!}
                         </div>
                         <br>
@@ -110,7 +114,17 @@
     
         
         <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js
-"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script>                       
+        <script>
+        $(".select-tag").chosen({
+            placeholder_text_multiple: 'Click to select volunteers',
+        });
+        $(".select-sponsor").chosen({
+            placeholder_text_multiple: 'Click to select sponsors',
+        });
+        </script>   
+
+
     </body>
 @endsection

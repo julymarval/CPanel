@@ -101,13 +101,13 @@
                        <div class="form-group">
                             {!! Form::label('volunteers', 'Volunteers') !!}
                             {!! Form::select('volunteer_id',[null => ' -- select a volunteer --'] + $volunteers," ",
-                            ['volunteers' => 'id', 'class' => 'form-control',
+                            ['volunteers' => 'id', 'class' => 'form-control select-tag',
                             'single',null]) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('events', 'Events') !!}
                             {!! Form::select('event_id[]',$events," ",
-                            ['events' => 'id', 'class' => 'form-control',
+                            ['events' => 'id', 'class' => 'form-control select-event',
                             'multiple',null]) !!}
                         </div>
                         <br>
@@ -131,6 +131,14 @@
     
         
         <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
-
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script>                       
+        <script>
+        $(".select-tag").chosen({
+            placeholder_text_multiple: 'Click to select volunteers',
+        });
+        $(".select-event").chosen({
+            placeholder_text_multiple: 'Click to select events',
+        });
+        </script>                         
     </body>
 @endsection

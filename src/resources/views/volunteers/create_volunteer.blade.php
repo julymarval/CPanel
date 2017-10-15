@@ -89,13 +89,13 @@
                         <div class="form-group">
                             {!! Form::label('shows', 'Shows') !!}
                             {!! Form::select('show_id[]',$shows," ",
-                            ['shows' => 'id', 'class' => 'form-control',
+                            ['shows' => 'id', 'class' => 'form-control select-show',
                             'multiple',null]) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('events', 'Events') !!}
                             {!! Form::select('event_id[]',$events,
-                            " ",['events' => 'id', 'class' => 'form-control',
+                            " ",['events' => 'id', 'class' => 'form-control select-event',
                             'multiple',null]) !!}
                         </div>
                         <br>
@@ -119,6 +119,14 @@
     
         
         <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
-
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script>                       
+        <script>
+        $(".select-show").chosen({
+            placeholder_text_multiple: 'Click to select show',
+        });
+        $(".select-event").chosen({
+            placeholder_text_multiple: 'Click to select events',
+        });
+        </script>
     </body>
 @endsection

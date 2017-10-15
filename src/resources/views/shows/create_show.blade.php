@@ -62,27 +62,29 @@
               <h3 class="panel-title" style="text-align: center">Add new show</h3>
            </div>
             <div class="panel-body">
-                <form id="check" method="POST" enctype="multipart/form-data" action="{{route('shows.store')}}">
+                <form id="check" data-toggle="validator" method="POST" enctype="multipart/form-data" action="{{route('shows.store')}}">
                     <fieldset>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="name" name="name" type="text" required>
+                        <div class="form-group has-feedback">
+                            <input class="form-control" placeholder="Name" name="name" type="text" required>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="schedule" name="schedule" type="text" required>
-                        </div>
-                        
+                        <div class="form-group has-feedback">
+                            <input class="form-control has-feedback" placeholder="schedule" name="schedule" type="text" required>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        </div>              
                         <div class="form-group">
                             <textarea class="form-control" placeholder="description" name="description"></textarea>
                         </div>
-                        <div>
+                        <div class="form-group has-feedback">
                             <input class="form-control" placeholder="image" name="image" type="file" required>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                         <br>
                         <div class="form-group">
                             {!! Form::label('volunteers', 'Volunteers') !!}
                             {!! Form::select('volunteer_id[]',$volunteers," ",
-                            ['volunteers' => 'id', 'class' => 'form-control',
-                            'multiple',null]) !!}
+                            ['volunteers' => 'id', 'class' => 'form-control select-tag',
+                            'multiple']) !!}
                         </div>
                         <br>
                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Save">
@@ -105,6 +107,11 @@
     
         
         <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
-
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script>                       
+        <script>
+        $(".select-tag").chosen({
+            placeholder_text_multiple: 'Click to select volunteers',
+        });
+        </script>
     </body>
 @endsection
