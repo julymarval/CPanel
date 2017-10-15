@@ -138,7 +138,7 @@ class EventsController extends Controller
         
         $rules = [
             'name' => 'required|min:2|max:80|regex:/^[a-zA-ZÑñ\s]+$/',
-            'date' => 'required|date_format:Y-m-d|after: ' . date('Y-m-d'),
+            'date' => 'required|date_format:Y-m-d',
         ];
 
         try {
