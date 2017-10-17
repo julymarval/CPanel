@@ -124,16 +124,12 @@ class EventsController extends Controller
         $user = Auth::user();
 
         if (!$request -> name || !$request -> date) {
-            
-            $code = Config::get('constants.codes.MissingInputCode'); 
-            $msg   = Config::get('constants.msgs.MissingInputMsg');
-            
-            return redirect() -> route('dashboard')
+                        
+            flash('Name and Date are required') -> error();
+            return redirect() -> route('events.create')
             -> with('user', $user -> name)
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
         
         $rules = [
@@ -146,15 +142,11 @@ class EventsController extends Controller
             $validator = \Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 
-                $code = Config::get('constants.codes.InvalidInputCode'); 
-                $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
-
-                return redirect() -> route('dashboard')
+                flash('One or more value are wrong.') -> error();
+                return redirect() -> route('events.create')
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('events', $this -> events);
             }
 
             $event = new Event($request->all());
@@ -164,15 +156,11 @@ class EventsController extends Controller
 
             if(!empty($data)){
                 
-                $code = Config::get('constants.codes.ExistingEventCode');
-                $msg = Config::get('constants.msgs.ExistingEventMsg');
-
-                return redirect() -> route('dashboard')
+                flash('This event already exists.') -> error();
+                return redirect() -> route('events.create')
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('events', $this -> events);
             }
 
             $event -> save();
@@ -199,15 +187,11 @@ class EventsController extends Controller
                 foreach($request -> volunteer_id as $id){
                     $volunteer = Volunteer::find($id);
                     if(empty($volunteer)){
-                        $code = Config::get('constants.codes.NonExistingVolunteerCode');
-                        $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
-                        
-                        return redirect() -> route('dashboard')
+                        flash('This volunteer doesnt exists. Please update the event and add a valid volunteer.') -> error();
+                        return redirect() -> route('events.index')
                         -> with('user', $user -> name) 
                         -> with('sales', $this -> sales)
-                        -> with('events', $this -> events)
-                        -> with('code', $code)
-                        -> with('msg', $msg);
+                        -> with('events', $this -> events);
                     }
                 }
 
@@ -222,15 +206,11 @@ class EventsController extends Controller
                     
                     if(empty($sponsor)){
                         
-                        $code = Config::get('constants.codes.NonExistingVolunteerCode');
-                        $msg   = Config::get('constants.msgs.NonExistingVolunteerMsg');
-
+                        flash('This sponsor doesnt exists. Please update the event and add a valid sponsor.') -> error();
                         return redirect() -> route('dashboard')
                         -> with('user', $user -> name) 
                         -> with('sales', $this -> sales)
-                        -> with('events', $this -> events)
-                        -> with('code', $code)
-                        -> with('msg', $msg);
+                        -> with('events', $this -> events);
                     }
                 }
                 foreach($request -> sponsor_id as $id){
@@ -241,26 +221,18 @@ class EventsController extends Controller
         } catch (Exception $e) {
             \Log::info('Error creating event: '.$e);
             
-            $code = Config::get('constants.codes.InternalErrorCode'); 
-            $msg = Config::get('constants.msgs.InternalErrorMsg');
-            
-            return redirect() -> route('dashboard')
+            flash('Ops! An error has ocurred. Please try again.') -> error();
+            return redirect() -> route('events.index')
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
 
-        $code = Config::get('constants.codes.OkCode');
-        $msg = Config::get('constants.msgs.OkMsg');
-        
+        flash('The event has been created correctly.') -> success();
         return redirect() -> route('dashboard')
         -> with('user', $user -> name) 
         -> with('sales', $this -> sales)
-        -> with('events', $this -> events)
-        -> with('code', $code)
-        -> with('msg', $msg);
+        -> with('events', $this -> events);
     }
 
     /**
@@ -287,13 +259,8 @@ class EventsController extends Controller
         $my_sponsors   = $event -> sponsors   -> pluck('name')->all();
         $my_volunteers = $event -> volunteers -> pluck('name')->all();
         $images = Image::select('id','name')->where('event_id', $id)->get();
-
-        $code = Config::get('constants.codes.OkCode');
-        $msg = Config::get('constants.msgs.OkMsg');
         
         return view('events.show_event')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('event', $event)
         -> with('my_sponsors', $my_sponsors)
         -> with('my_volunteers', $my_volunteers)
@@ -328,12 +295,7 @@ class EventsController extends Controller
         $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name','id')->all();
         $sponsors = Sponsor::orderBy('name','DESC') -> pluck('name','id')->all();
 
-        $code = Config::get('constants.codes.OkCode');
-        $msg = Config::get('constants.msgs.OkMsg');
-
         return view('events.edit_event')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('event', $event)
         -> with('volunteer', $my_volunteers)
         -> with('sponsor', $my_sponsors)
@@ -356,16 +318,12 @@ class EventsController extends Controller
 
         if (!$request -> name && !$request -> date && !$request -> description
             && !$request -> volunteer_id && !$request -> sponsor_id && !$request -> file('images')) {
-            
-            $code = Config::get('constants.codes.MissingInputCode'); 
-            $msg = Config::get('constants.msgs.MissingInputMsg');
-
-            return redirect() -> route('dashboard') 
+        
+            flash('At least one field is required.') -> error();
+            return redirect() -> route('events.edit',['id' => $id]) 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
 
         else{
@@ -392,16 +350,11 @@ class EventsController extends Controller
                         $volunteer = Volunteer::find($id);
                         
                         if(empty($volunteer)){
-                            
-                            $code = Config::get('constants.codes.NonExistingVolunteerCode'); 
-                            $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
-
-                                return redirect() -> route('dashboard')
-                                -> with('user', $user -> name) 
-                                -> with('sales', $this -> sales)
-                                -> with('events', $this -> events)
-                                -> with('code', $code)
-                                -> with('msg', $msg);
+                            flash('This volunteer doesnt exists. Please update the event and add a valid volunteer.') -> error();
+                            return redirect() -> route('events.index')
+                            -> with('user', $user -> name) 
+                            -> with('sales', $this -> sales)
+                            -> with('events', $this -> events);
                         }
                     }
                     foreach($request -> volunteer_id as $id){
@@ -412,18 +365,12 @@ class EventsController extends Controller
                 if(!empty($request -> sponsor_id)){
                     foreach($request -> sponsor_id as $id){
                         $sponsor = Sponsor::find($id);
-                        
                         if(empty($sponsor)){
-                            
-                            $code = Config::get('constants.codes.NonExistingVolunteerCode');
-                            $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
-                            
-                            return redirect() -> route('dashboard') 
+                            flash('This sponsor doesnt exists. Please update the event and add a valid sponsor.') -> error();
+                            return redirect() -> route('events.index') 
                             -> with('user', $user -> name) 
                             -> with('sales', $this -> sales)
-                            -> with('events', $this -> events)
-                            -> with('code', $code)
-                            -> with('msg', $msg);
+                            -> with('events', $this -> events);
                         }
                     }
                     foreach($request -> sponsor_id as $id){
@@ -440,10 +387,8 @@ class EventsController extends Controller
                     $validator = \Validator::make($request -> name, $rules);
                     if ($validator->fails()) {
                         
-                        $code = Config::get('constants.codes.InvalidInputCode');
-                        $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
-                        
-                        return redirect() -> route('dashboard') 
+                        flash('Invalid name format. Please enter a name with letters') -> error();
+                        return redirect() -> route('events.edit',['id' => $id]) 
                         -> with('user', $user -> name) 
                         -> with('sales', $this -> sales)
                         -> with('events', $this -> events)
@@ -457,16 +402,14 @@ class EventsController extends Controller
                     $update['date'] =  $request -> date;
 
                     $rules = [
-                        'date' => 'date_format:Y-m-d|after: ' . date('Y-m-d'),
+                        'date' => 'date_format:Y-m-d'
                     ];
                         
                     $validator = \Validator::make($request->all(), $rules);
                     if ($validator->fails()) {
                         
-                        $code = Config::get('constants.codes.InvalidInputCode'); 
-                        $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
-
-                        return redirect() -> route('dashboard') 
+                        flash('Invalid date format. Please enter a valid date.') -> error();
+                        return redirect() -> route('events.edit',['id' => $id]) 
                         -> with('user', $user -> name) 
                         -> with('sales', $this -> sales)
                         -> with('events', $this -> events)
@@ -486,26 +429,19 @@ class EventsController extends Controller
             catch(QueryException $e){
                 
                 \Log::error('Error creating sale: '.$e);
-                $code = Config::get('constants.codes.InternalErrorCode'); 
-                $msg =  Config::get('constants.msgs.InternalErrorMsg');
                 
-                return redirect() -> route('dashboard') 
+                flash('Ops! An error has ocurred. Please try again.') -> error();
+                return redirect() -> route('events.index') 
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('events', $this -> events);
             }
         
-            $code = Config::get('constants.codes.OkCode');
-            $msg = Config::get('constants.msgs.OkMsg');
-
+            flash('The event has been updated correctly.') -> success();
             return redirect() -> route('dashboard') 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
     }
 
@@ -530,14 +466,10 @@ class EventsController extends Controller
         
         $event -> delete();
         
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-
+        flash('The event has been deleted correctly.') -> success();
         return redirect() -> route('dashboard')
         -> with('user', $user -> name) 
         -> with('sales', $this -> sales)
-        -> with('events', $this -> events)
-        -> with('code', $code)
-        -> with('msg', $msg);
+        -> with('events', $this -> events);
     }
 }

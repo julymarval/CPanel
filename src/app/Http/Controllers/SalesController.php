@@ -99,10 +99,9 @@ class SalesController extends Controller
         $user = Auth::user();
 
         if (empty($request -> name) || (empty($request -> price))) {
-            $code = Config::get('constants.codes.MissingInputCode'); 
-            $msg = Config::get('constants.msgs.MissingInputMsg');
-
-            return redirect() -> route('dashboard') 
+            
+            flash('Name and price are required') -> error();
+            return redirect() -> route('sales.create') 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
@@ -119,10 +118,9 @@ class SalesController extends Controller
             
             $validator = \Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                $code = Config::get('constants.codes.InvalidInputCode'); 
-                $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
-
-                return redirect() -> route('dashboard') 
+                
+                flash('One or more value are wrong.') -> error();
+                return redirect() -> route('sales.create') 
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
@@ -136,15 +134,12 @@ class SalesController extends Controller
                 ->where(Config::get('constants.fields.NameField'), $sale->name)->first();
 
             if(!empty($data)){
-                $code = Config::get('constants.codes.ExistingSaleCode'); 
-                $msg = Config::get('constants.msgs.ExistingSaleMsg');
-                
-                return redirect() -> route('dashboard')
+               
+                flash('This tiangui already exists.') -> error(); 
+                return redirect() -> route('sales.create')
                 -> with('user', $user -> name)  
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);;
+                -> with('events', $this -> events);
             }
 
             if($request->file('image')){
@@ -156,22 +151,18 @@ class SalesController extends Controller
             }
 
             $sale -> save();
-            $code = Config::get('constants.codes.OkCode'); 
-            $msg = Config::get('constants.msgs.OkMsg');
             
+            flash('The tiangui has been created correctly.') -> success();
             return redirect() -> route('dashboard') 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
             
         } catch (Exception $e) {
             \Log::info('Error creating sale: '.$e);
-            $code = Config::get('constants.codes.InternalErrorCode'); 
-            $msg = Config::get('constants.msgs.InternalErrorMsg');
-
-            return redirect() -> route('dashboard') 
+            
+            flash('Ops! An error has ocurred. Please try again.') -> error();
+            return redirect() -> route('sales.index') 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
@@ -249,11 +240,11 @@ class SalesController extends Controller
     {
         $user = Auth::user();
 
-        if(!$request -> name && !$request -> price && !$request -> description && !$request->file('image')){
-            $code = Config::get('constants.codes.MissingInputCode'); 
-            $msg = Config::get('constants.msgs.MissingInputMsg');
-
-            return redirect() -> route('dashboard')
+        if(!$request -> name && !$request -> price && !$request -> description 
+            && !$request->file('image') && !$request -> phone){
+            
+            flash('At least one field is required.') -> error();
+            return redirect() -> route('sales.edit',['id' => $id])
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events)
@@ -296,10 +287,9 @@ class SalesController extends Controller
             }
             catch(QueryException $e){
                 \Log::error('Error creating sale: '.$e);
-                $code = Config::get('constants.codes.InternalErrorCode');
-                $msg = Config::get('constants.msgs.InternalErrorMsg');
-
-                return redirect() -> route('dashboard') 
+                
+                flash('Ops! An error has ocurred. Please try again.') -> error();
+                return redirect() -> route('sales.index') 
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events)
@@ -307,15 +297,11 @@ class SalesController extends Controller
                 -> with('msg', $msg);
             }
         
-            $code = Config::get('constants.codes.OkCode'); 
-            $msg = Config::get('constants.msgs.OkMsg');
-            
+            flash('The tiangui has been updated correctly.') -> success();
             return redirect() -> route('dashboard') 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
     }
 
@@ -332,14 +318,10 @@ class SalesController extends Controller
         $sale = Sale::find($id);
         $sale -> delete();
 
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-
+        flash('The tiangui has been deleted correctly.') -> success();
         return redirect() -> route('dashboard')
         -> with('user', $user -> name) 
         -> with('sales', $this -> sales)
-        -> with('events', $this -> events)
-        -> with('code', $code)
-        -> with('msg', $msg);
+        -> with('events', $this -> events);
     }
 }

@@ -61,7 +61,7 @@
   <script>
       $(document).ready(function(){
        $("#check").validate({
-     rules: {
+        rules: {
          password: {
              required: true,
              minlength: 8,
@@ -76,10 +76,11 @@
              required: "the password is required"
          }
      }
- });
-})
+    });
+    })
   </script>
-    </body>
+
+</body>
 </html>
 
 

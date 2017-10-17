@@ -59,7 +59,7 @@ class LoginController extends Controller
             'email'     => $email,
             'password'  => $password,
         ], $remember == 1 ? true : false)) {
- 
+            
             return redirect()->route('dashboard');
  
         }

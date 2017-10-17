@@ -95,15 +95,11 @@ class SponsorsController extends Controller
         $user = Auth::user();
 
         if (!$request -> name && !$request -> status && !$request -> level) {
-            $code = Config::get('constants.codes.MissingInputCode');
-            $msg  = Config::get('constants.msgs.MissingInputMsg');
-
-            return redirect() -> route('dashboard') 
+            flash('Name,Status and Level are required') -> error();
+            return redirect() -> route('sponsors.create') 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
         
         $rules = [
@@ -116,15 +112,11 @@ class SponsorsController extends Controller
             
             $validator = \Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                $code = Config::get('constants.codes.InvalidInputCode'); 
-                $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
-
-                return redirect() -> route('dashboard')
+                flash('One or more value are wrong.') -> error();
+                return redirect() -> route('sponsors.create')
                 -> with('user', $user -> name)  
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('events', $this -> events);
             }
 
             $sponsor = new Sponsor($request->all());
@@ -133,15 +125,11 @@ class SponsorsController extends Controller
                 ->where(Config::get('constants.fields.NameField'), $sponsor -> name)->first();
 
             if(!empty($data)){
-                $code = Config::get('constants.codes.ExistingSponsorCode');
-                $msg = Config::get('constants.msgs.ExistingSponsorMsg');
-
-                return redirect() -> route('dashboard') 
+                flash('This sponsor already exists.') -> error();
+                return redirect() -> route('sponsors.create') 
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('events', $this -> events);
             }
 
             if($request->file('image')){
@@ -158,15 +146,11 @@ class SponsorsController extends Controller
                 foreach($request -> event_id as $id){
                     $event = Event::find($id);
                     if(empty($event)){
-                        $code = Config::get('constants.codes.NonExistingEventCode'); 
-                        $msg = Config::get('constants.msgs.NonExistingEventMsg');
-
-                        return redirect() -> route('dashboard') 
+                        flash('This event doesnt exists. Please update the sponsor and add a valid event.') -> error();
+                        return redirect() -> route('sponsors.index') 
                         -> with('user', $user -> name) 
                         -> with('sales', $this -> sales)
-                        -> with('events', $this -> events)
-                        -> with('code', $code)
-                        -> with('msg', $msg);
+                        -> with('events', $this -> events);
                     }
                 }
                 foreach($request -> event_id as $id){
@@ -174,27 +158,20 @@ class SponsorsController extends Controller
                 }
             }
 
-            $code = Config::get('constants.codes.OkCode'); 
-            $msg = Config::get('constants.msgs.OkMsg');
-
+            flash('The sponsor has been created correctly.') -> success();
             return redirect() -> route('dashboard') 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
             
         } catch (Exception $e) {
             \Log::info('Error creating sale: '.$e);
-            $code = Config::get('constants.codes.InternalErrorCode'); 
-            $msg = Config::get('constants.msgs.InternalErrorMsg');
-
-            return redirect() -> route('dashboard') 
+            
+            flash('Ops! An error has ocurred. Please try again.') -> error();
+            return redirect() -> route('sponsors.index') 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
     }
 
@@ -284,16 +261,12 @@ class SponsorsController extends Controller
         $user = Auth::user();
 
         if(!$request -> name && !$request -> status && !$request -> description && !$request -> event_id 
-            && !$request->file('image') && !$request -> volunteer_id && !$request -> level ){
-                $code = Config::get('constants.codes.MissingInputCode'); 
-                $msg = Config::get('constants.msgs.MissingInputMsg');
-
-                return redirect() -> route('dashboard')
+            && !$request->file('image') && !$request -> volunteer_id && !$request -> level && !$request -> link ){
+                flash('At least one field is required.') -> error();
+                return redirect() -> route('sponsors.edit',['id' => $id])
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('events', $this -> events);
         }
             
         else{
@@ -305,15 +278,12 @@ class SponsorsController extends Controller
                     $volunteer = Volunteer::find($request -> volunteer_id);
                     
                     if(empty($volunteer)){
-                        $code = Config::get('constants.codes.NonExistingVolunteerCode');
-                        $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
-
-                            return redirect() -> route('dashboard')
-                            -> with('user', $user -> name) 
-                            -> with('sales', $this -> sales)
-                            -> with('events', $this -> events)
-                            -> with('code', $code)
-                            -> with('msg', $msg);
+                        
+                        flash('This volunteer doesnt exists. Please update the sponsor and add a valid volunteer.') -> error();
+                        return redirect() -> route('sponsors.index')
+                        -> with('user', $user -> name) 
+                        -> with('sales', $this -> sales)
+                        -> with('events', $this -> events);
                     }
                     $update['volunteer_id'] = $request -> volunteer_id;
                 }
@@ -321,17 +291,12 @@ class SponsorsController extends Controller
                 if(!empty($request -> event_id)){
                     foreach($request -> event_id as $id){
                         $event = Event::find($id);
-                        
                         if(empty($event)){
-                            $code = Config::get('constants.codes.NonExistingEventCode'); 
-                            $msg = Config::get('constants.msgs.NonExistingEventMsg');
-                                
-                            return redirect() -> route('dashboard')
+                            flash('This event doesnt exists. Please update the sponsor and add a valid event.') -> error();
+                            return redirect() -> route('sponsors.index')
                             -> with('user', $user -> name) 
                             -> with('sales', $this -> sales)
-                            -> with('events', $this -> events)
-                            -> with('code', $code)
-                            -> with('msg', $msg);
+                            -> with('events', $this -> events);
                         }
                     }
                     foreach($request -> event_id as $id){
@@ -378,26 +343,19 @@ class SponsorsController extends Controller
             }
             catch(QueryException $e){
                 \Log::error('Error updating show: '.$e);
-                $code = Config::get('constants.codes.InternalErrorCode'); 
-                $msg = Config::get('constants.msgs.InternalErrorMsg');
-
-                return redirect() -> route('dashboard')
+                
+                flash('Ops! An error has ocurred. Please try again.') -> error();
+                return redirect() -> route('sponsors.index')
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('events', $this -> events);
             }
         
-            $code = Config::get('constants.codes.OkCode'); 
-            $msg = Config::get('constants.msgs.OkMsg');
-
+            flash('The sponsor has been updated correctly.') -> success();
             return redirect() -> route('dashboard')
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
     }
 
@@ -414,14 +372,10 @@ class SponsorsController extends Controller
         $sponsor = Sponsor::find($id);
         $sponsor -> delete();
 
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-
+        flash('The sponsor has been deleted correctly.') -> success();
         return redirect() -> route('dashboard')
         -> with('user', $user -> name)
         -> with('sales', $this -> sales)
-        -> with('events', $this -> events)
-        -> with('code', $code)
-        -> with('msg', $msg);
+        -> with('events', $this -> events);
     }
 }

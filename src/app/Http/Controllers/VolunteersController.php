@@ -95,15 +95,11 @@ class VolunteersController extends Controller
         $user = Auth::user();
 
         if (!$request -> name) {
-            $code = Config::get('constants.codes.MissingInputCode'); 
-            $msg = Config::get('constants.msgs.MissingInputMsg');
-    
-            return redirect() -> route('dashboard')
+            flash('Name is required') -> error();
+            return redirect() -> route('volunteers.create')
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
         
         $rules = [
@@ -114,15 +110,11 @@ class VolunteersController extends Controller
             
             $validator = \Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                $code = Config::get('constants.codes.InvalidInputCode');
-                $msg = Config::get('constants.msgs.InvalidInputMsg') . ': ' . $validator->errors();
-        
-                return redirect() -> route('dashboard')
+                flash('One or more value are wrong.') -> error();
+                return redirect() -> route('volunteers.create')
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('events', $this -> events);
             }
 
             $volunteer = new Volunteer($request->all());
@@ -131,15 +123,11 @@ class VolunteersController extends Controller
                 ->where(Config::get('constants.fields.NameField'), $volunteer -> name)->first();
 
             if(!empty($data)){
-                $code = Config::get('constants.codes.ExistingVolunteerCode'); 
-                $msg = Config::get('constants.msgs.ExistingVolunteerMsg');
-
-                return redirect() -> route('dashboard')
+                flash('This volunteer already exists.') -> error();
+                return redirect() -> route('volunteers.create')
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('events', $this -> events);
             }
 
             if($request->file('image')){
@@ -156,15 +144,11 @@ class VolunteersController extends Controller
                 foreach($request -> show_id as $id){
                     $show = Show::find($id);
                     if(empty($show)){
-                        $code = Config::get('constants.codes.NonExistingShowsCode');
-                        $msg = Config::get('constants.msgs.NonExistingShowsMsg');
-
-                        return redirect() -> route('dashboard')
+                        flash('This show doesnt exists. Please update the volunteer and add a valid show.') -> error();
+                        return redirect() -> route('volunteers.index')
                         -> with('user', $user -> name) 
                         -> with('sales', $this -> sales)
-                        -> with('events', $this -> events)
-                        -> with('code', $code)
-                        -> with('msg', $msg);
+                        -> with('events', $this -> events);
                     }
                 }
                 foreach($request -> show_id as $id){
@@ -176,15 +160,11 @@ class VolunteersController extends Controller
                 foreach($request -> event_id as $id){
                     $event = Event::find($id);
                     if(empty($event)){
-                        $code = Config::get('constants.codes.NonExistingEventCode');
-                        $msg = Config::get('constants.msgs.NonExistingEventMsg');
-
-                        return redirect() -> route('dashboard')
+                        flash('This event doesnt exists. Please update the volunteer and add a valid event.') -> error();
+                        return redirect() -> route('volunteers.index')
                         -> with('user', $user -> name) 
                         -> with('sales', $this -> sales)
-                        -> with('events', $this -> events)
-                        -> with('code', $code)
-                        -> with('msg', $msg);
+                        -> with('events', $this -> events);
                     }
                 }
                 foreach($request -> event_id as $id){
@@ -192,27 +172,20 @@ class VolunteersController extends Controller
                 }
             }
             
-            $code = Config::get('constants.codes.OkCode'); 
-            $msg = Config::get('constants.msgs.OkMsg');
-
+            flash('The volunteer has been created correctly.') -> success();
             return redirect() -> route('dashboard')
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
             
         } catch (Exception $e) {
             \Log::info('Error creating sale: '.$e);
-            $code = Config::get('constants.codes.InternalErrorCode'); 
-            $msg = Config::get('constants.msgs.InternalErrorMsg');
             
-            return redirect() -> route('dashboard')
+            flash('Ops! An error has ocurred. Please try again.') -> error();
+            return redirect() -> route('volunteers.index')
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
     }
 
@@ -305,15 +278,11 @@ class VolunteersController extends Controller
 
         if(!$request -> name && !$request -> status && !$request -> description && !$request->file('image')
             && !$request -> show_id && !$request -> event_id){
-            $code = Config::get('constants.codes.MissingInputCode');
-            $msg = Config::get('constants.msgs.MissingInputMsg');
-
-            return redirect() -> route('dashboard')
+            flash('At least one field is requiered.') -> error();
+            return redirect() -> route('volunteers.edit', ['id' => $id])
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
 
         else{
@@ -325,15 +294,11 @@ class VolunteersController extends Controller
                     foreach($request -> show_id as $id){
                         $show = Show::find($id);
                         if(empty($show)){
-                            $code = Config::get('constants.codes.NonExistingShowsCode'); 
-                            $msg = Config::get('constants.msgs.NonExistingShowsMsg');
-
-                            return redirect() -> route('dashboard')
+                            flash('This show doesnt exists. Please update the volunteer and add a valid show.') -> error();
+                            return redirect() -> route('volunteers.index')
                             -> with('user', $user -> name) 
                             -> with('sales', $this -> sales)
-                            -> with('events', $this -> events)
-                            -> with('code', $code)
-                            -> with('msg', $msg);
+                            -> with('events', $this -> events);
                         }
                     }
                     foreach($request -> show_id as $id){
@@ -345,15 +310,11 @@ class VolunteersController extends Controller
                     foreach($request -> event_id as $id){
                         $event = Event::find($id);
                         if(empty($event)){
-                            $code = Config::get('constants.codes.NonExistingEventCode');
-                            $msg = Config::get('constants.msgs.NonExistingEventMsg');
-    
-                            return redirect() -> route('dashboard')
+                            flash('This event doesnt exists. Please update the volunteer and add a valid event.') -> error();
+                            return redirect() -> route('volunteers.index')
                             -> with('user', $user -> name) 
                             -> with('sales', $this -> sales)
-                            -> with('events', $this -> events)
-                            -> with('code', $code)
-                            -> with('msg', $msg);
+                            -> with('events', $this -> events);
                         }
                     }
                     foreach($request -> event_id as $id){
@@ -393,26 +354,19 @@ class VolunteersController extends Controller
             }
             catch(QueryException $e){
                 \Log::error('Error updating show: '.$e);
-                $code = Config::get('constants.codes.InternalErrorCode'); 
-                $msg = Config::get('constants.msgs.InternalErrorMsg');
-
-                return redirect() -> route('dashboard')
+                
+                flash('Ops! An error has ocurred. Please try again.') -> error();
+                return redirect() -> route('volunteers.index')
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('events', $this -> events);
             }
         
-            $code = Config::get('constants.codes.OkCode'); 
-            $msg = Config::get('constants.msgs.OkMsg');
-
+            flash('The volunteer has been updated correctly.') -> success();
             return redirect() -> route('dashboard')
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
     }
 
@@ -429,14 +383,10 @@ class VolunteersController extends Controller
         $volunteer = Volunteer::find($id);
         $volunteer -> delete();
 
-        $code = Config::get('constants.codes.OkCode');
-        $msg = Config::get('constants.msgs.OkMsg');
-
+        flash('The volunteer has been deleted correctly.') -> success();
         return redirect() -> route('dashboard')
         -> with('user', $user -> name) 
         -> with('sales', $this -> sales)
-        -> with('events', $this -> events)
-        -> with('code', $code)
-        -> with('msg', $msg);
+        -> with('events', $this -> events);
     }
 }
