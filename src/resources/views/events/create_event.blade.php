@@ -57,7 +57,7 @@
                                 <h3 class="panel-title" style="text-align: center">Add new Event</h3>
                             </div>
                             <div class="panel-body">
-                                <form id="check" data-toggle="validator" method="POST" enctype="multipart/form-data" action="{{route('events.store')}}">
+                               <!-- <form id="check" data-toggle="validator" method="POST" enctype="multipart/form-data" action="{{route('events.store')}}">
                                     <fieldset>
                                         <div class="form-group has-feedback">
                                             <input class="form-control" placeholder="Name" name="name" type="text" required>
@@ -71,19 +71,13 @@
                                             <textarea class="form-control" placeholder="description" name="description"></textarea>
                                         </div>
                                         <div class="form-group has-feedback">
-                                        <input type="file" id="fileupload" name="images[]" data-url="/admin/upload" multiple />
+                                            <input type="file" id="fileupload" name="images[]" data-url="/admin/upload" multiple />
                                         </div>
                                         <br />
                                         <div id="files_list"></div>
-                                        <p id="loading"></p>
+                                            <p id="loading"></p>
                                         <input type="hidden" name="file_ids" id="file_ids" value="" />
                                         
-                                        <!--
-                                        <div class="form-group has-feedback">
-                                            <input type="file" name="images[]" multiple data-error="Please fill out this field." required/>
-                                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                                        </div>
-                                        -->
                                         <br>
                                         <div class="form-group">
                                             {!! Form::label('volunteers', 'Volunteers') !!}
@@ -100,7 +94,24 @@
                                         <br>
                                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Save">
                                     </fieldset>
-                                </form>
+                                </form>-->
+
+                            <form action="/product" method="post">
+                                {{ csrf_field() }}
+                                Product name:
+                                <br />
+                                <input type="text" name="name" />
+                                <br /><br />
+                                Product photos (can add more than one):
+                                <br />
+                                <input type="file" id="fileupload" name="photos[]" data-url="/upload" multiple />
+                                <br />
+                                <div id="files_list"></div>
+                                <p id="loading"></p>
+                                <input type="hidden" name="file_ids" id="file_ids" value="" />
+                                <input type="submit" value="Upload" />
+                            </form>
+
                             </div>
                         </div>
                     </div>
@@ -116,9 +127,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.19.1/js/vendor/jquery.ui.widget.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.19.1/js/jquery.iframe-transport.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.19.1/js/jquery.fileupload.min.js"></script>
-                          
+        
     <script>
-    $('#fileupload').fileupload({
+        $('#fileupload').fileupload({
                 dataType: 'json',
                 add: function (e, data) {
                     $('#loading').text('Uploading...');

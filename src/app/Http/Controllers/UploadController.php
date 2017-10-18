@@ -10,30 +10,40 @@ class UploadController extends Controller
 {
     public function uploadSubmit(Request $request)
     {
-        $images = [];
-        $files = $request -> file('images');  
-        foreach($files as $file){
-        
-            $name = $file -> getClientOriginalName();
-            $path = public_path() . '/images/events/';
-            $file -> move($path,$name);
-
-            $image = new Image();
-            $image -> name = $name;
-            $image -> save();
-
+        /*$images = [];
+        foreach ($request->images as $image) {
+            $filename = $image->store('photos');
+            $product_photo = Image::create([
+                'name' => $filename
+            ]);
+     
             $photo_object = new \stdClass();
-            $photo_object->name = str_replace('photos/', '',$file->getClientOriginalName());
+            $photo_object->name = str_replace('photos/', '',$image->getClientOriginalName());
             $photo_object->size = round(Storage::size($filename) / 1024, 2);
-            $photo_object->fileID = $image->id;
+            $photo_object->fileID = $Image->id;
             $images[] = $photo_object;
         }
      
-        return response()->json(array('file' => $images), 200);
+        return response()->json(array('files' => $images), 200);*/
+        $photos = [];
+        foreach ($request->photos as $photo) {
+            $filename = $photo->store('photos');
+            $product_photo = ProductPhoto::create([
+                'filename' => $filename
+            ]);
+     
+            $photo_object = new \stdClass();
+            $photo_object->name = str_replace('photos/', '',$photo->getClientOriginalName());
+            $photo_object->size = round(Storage::size($filename) / 1024, 2);
+            $photo_object->fileID = $product_photo->id;
+            $photos[] = $photo_object;
+        }
+     
+        return response()->json(array('files' => $photos), 200);
     }
      
     public function postProduct(Request $request)
     {
-        // This method will cover whole product submit
+        dd("ok");
     }
 }

@@ -202,6 +202,7 @@ Route::group(['prefix' => 'contact'], function(){
 /*
 * Image upload Route
 **/
-Route::post('/admin/upload', 'UploadController@uploadSubmit');
+Route::post('/upload', 'UploadController@uploadSubmit');
+Route::post('/product', 'UploadController@postProduct');
 
 
