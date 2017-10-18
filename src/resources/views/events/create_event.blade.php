@@ -73,9 +73,19 @@
                                             <textarea class="form-control" placeholder="description" name="description"></textarea>
                                         </div>
                                         <div class="form-group has-feedback">
+                                        <input type="file" id="fileupload" name="images[]" data-url="/admin/upload" multiple />
+                                        </div>
+                                        <br />
+                                        <div id="files_list"></div>
+                                        <p id="loading"></p>
+                                        <input type="hidden" name="file_ids" id="file_ids" value="" />
+                                        
+                                        <!--
+                                        <div class="form-group has-feedback">
                                             <input type="file" name="images[]" multiple data-error="Please fill out this field." required/>
                                             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                         </div>
+                                        -->
                                         <br>
                                         <div class="form-group">
                                             {!! Form::label('volunteers', 'Volunteers') !!}
@@ -104,8 +114,29 @@
 
     <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script>                       
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.19.1/js/vendor/jquery.ui.widget.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.19.1/js/jquery.iframe-transport.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.19.1/js/jquery.fileupload.min.js"></script>
+                          
     <script>
+    $('#fileupload').fileupload({
+                dataType: 'json',
+                add: function (e, data) {
+                    $('#loading').text('Uploading...');
+                    data.submit();
+                },
+                done: function (e, data) {
+                    $.each(data.result.files, function (index, file) {
+                        $('<p/>').html(file.name + ' (' + file.size + ' KB)').appendTo($('#files_list'));
+                        if ($('#file_ids').val() != '') {
+                            $('#file_ids').val($('#file_ids').val() + ',');
+                        }
+                        $('#file_ids').val($('#file_ids').val() + file.fileID);
+                    });
+                    $('#loading').text('');
+                }
+            });
         $(".select-tag").chosen({
             placeholder_text_multiple: 'Click to select volunteers',
         });
