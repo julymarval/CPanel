@@ -103,13 +103,16 @@ class VolunteersController extends Controller
         }
         
         $rules = [
-            'name'     => 'required|min:2|max:80|unique:volunteers|regex:/^[a-zA-ZÑñ\s]+$/',
+            'name' => 'required|min:2|max:80|regex:/^[a-zA-ZÑñ\s]+$/',
         ];
 
         try {
             
             $validator = \Validator::make($request->all(), $rules);
             if ($validator->fails()) {
+                if(file_exists(public_path() . '/images/volunteers/' . $request -> image)){
+                    Storage::delete(public_path() . '/images/volunteers/' . $request -> image);
+                }
                 flash('One or more value are wrong.') -> error();
                 return redirect() -> route('volunteers.create')
                 -> with('user', $user -> name) 
@@ -123,19 +126,15 @@ class VolunteersController extends Controller
                 ->where(Config::get('constants.fields.NameField'), $volunteer -> name)->first();
 
             if(!empty($data)){
+                if(file_exists(public_path() . '/images/volunteers/' . $request -> image)){
+                    Storage::delete(public_path() . '/images/volunteers/' . $request -> image);
+                }
+
                 flash('This volunteer already exists.') -> error();
                 return redirect() -> route('volunteers.create')
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events);
-            }
-
-            if($request->file('image')){
-                $file = $request -> file('image');
-                $name = $request -> name . '.' . $file->getClientOriginalExtension();
-                $path = public_path() . '/images/volunteers/';
-                $file -> move($path,$name);
-                $volunteer -> image = $name;
             }
 
             $volunteer -> save();
@@ -180,6 +179,9 @@ class VolunteersController extends Controller
             
         } catch (Exception $e) {
             \Log::info('Error creating sale: '.$e);
+            if(file_exists(public_path() . '/images/volunteers/' . $request -> image)){
+                Storage::delete(public_path() . '/images/volunteers/' . $request -> image);
+            }
             
             flash('Ops! An error has ocurred. Please try again.') -> error();
             return redirect() -> route('volunteers.index')
@@ -276,8 +278,12 @@ class VolunteersController extends Controller
     {
         $user = Auth::user();
 
-        if(!$request -> name && !$request -> status && !$request -> description && !$request->file('image')
+       if(!$request -> name && !$request -> status && !$request -> description && !$request -> image_name
             && !$request -> show_id && !$request -> event_id){
+            
+            if(file_exists(public_path() . '/images/volunteers/' . $request -> image_name)){
+                Storage::delete(public_path() . '/images/volunteers/' . $request -> image_name);
+            }
             flash('At least one field is requiered.') -> error();
             return redirect() -> route('volunteers.edit', ['id' => $id])
             -> with('user', $user -> name) 
@@ -338,22 +344,21 @@ class VolunteersController extends Controller
                     $update['phone'] = $request -> phone;
                 }
 
-                if(!empty($request -> file('image'))){
-                    $file = $request -> file('image');
-                    $name = $volunteer -> name . '.' . $file->getClientOriginalExtension();
+                if($request -> image_name){
                     if(file_exists(public_path() . '/images/volunteers/' . $volunteer -> image)){
                         Storage::delete(public_path() . '/images/volunteers/' . $volunteer -> image);
                     }
-                    $path = public_path() . '/images/volunteers/';
-                    $file -> move($path,$name);
-                    $update['image'] = $name;
-
+                    $update['image'] = $request -> image_name;
                 }
 
                 $volunteer -> update($update);
             }
             catch(QueryException $e){
                 \Log::error('Error updating show: '.$e);
+
+                if(file_exists(public_path() . '/images/volunteers/' . $request -> image_name)){
+                    Storage::delete(public_path() . '/images/volunteers/' . $request -> image_name);
+                }
                 
                 flash('Ops! An error has ocurred. Please try again.') -> error();
                 return redirect() -> route('volunteers.index')
@@ -381,6 +386,9 @@ class VolunteersController extends Controller
         $user = Auth::user();
 
         $volunteer = Volunteer::find($id);
+        if(file_exists(public_path() . '/images/volunteers/' . $volunteer -> image)){
+            Storage::delete(public_path() . '/images/volunteers/' . $volunteer -> image);
+        }
         $volunteer -> delete();
 
         flash('The volunteer has been deleted correctly.') -> success();

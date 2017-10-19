@@ -93,7 +93,9 @@ class ShowsController extends Controller
         $user = Auth::user();
 
         if (empty($request -> name)) {
-            
+            if(file_exists(public_path() . '/images/shows/' . $request -> image)){
+                Storage::delete(public_path() . '/images/shows/' . $request -> image);
+            }
             flash('Name is required') -> error();
             return redirect() -> route('shows.create') 
             -> with('user', $user -> name) 
@@ -102,7 +104,7 @@ class ShowsController extends Controller
         }
         
         $rules = [
-            'name'     => 'required|min:2|max:80|unique:shows|regex:/^[a-zA-ZÑñ\s]+$/',
+            'name'     => 'required|min:2|max:80|regex:/^[a-zA-ZÑñ\s]+$/',
             'schedule' => 'required'
         ];
 
@@ -110,7 +112,9 @@ class ShowsController extends Controller
             
             $validator = \Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                
+                if(file_exists(public_path() . '/images/shows/' . $show -> image)){
+                    Storage::delete(public_path() . '/images/shows/' . $show -> image);
+                }
                 flash('One or more value are wrong.') -> error();
                 return redirect() -> route('shows.create') 
                 -> with('user', $user -> name) 
@@ -124,21 +128,15 @@ class ShowsController extends Controller
                 ->where(Config::get('constants.fields.NameField'), $show->name)->first();
 
             if(!empty($data)){
+                if(file_exists(public_path() . '/images/shows/' . $show -> image)){
+                    Storage::delete(public_path() . '/images/shows/' . $show -> image);
+                }
                 flash('This show already exists.') -> error();
                 return redirect() -> route('shows.create') 
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events);
             }
-
-            if($request->file('image')){
-                $file = $request -> file('image');
-                $name = $request -> name . '.' . $file->getClientOriginalExtension();
-                $path = public_path() . '/images/shows/';
-                $file -> move($path,$name);
-                $show -> image = $name;
-            }
-
 
             $show -> save();
 
@@ -165,7 +163,10 @@ class ShowsController extends Controller
             -> with('events', $this -> events);
             
         } catch (Exception $e) {
-            \Log::info('Error creating sale: '.$e);
+            \Log::info('Error creating show: '.$e);
+            if(file_exists(public_path() . '/images/shows/' . $request -> image)){
+                Storage::delete(public_path() . '/images/shows/' . $request -> image);
+            }
             
             flash('Ops! An error has ocurred. Please try again.') -> error();
             return redirect() -> route('dashboard') 
@@ -256,9 +257,11 @@ class ShowsController extends Controller
     {
         $user = Auth::user();
 
-        if(!$request -> name && !$request -> schedule && !$request -> description && !$request->file('image')
+        if(!$request -> name && !$request -> schedule && !$request -> description && !$request -> image_name
             && !$request -> volunteer_id){
-                
+                if(file_exists(public_path() . '/images/shows/' . $request -> image_name)){
+                    Storage::delete(public_path() . '/images/shows/' . $request -> image_name);
+                }
                 flash('At least one field is required.') -> error();
                 return redirect() -> route('shows.edit',['id' => $id]) 
                 -> with('user', $user -> name) 
@@ -299,15 +302,11 @@ class ShowsController extends Controller
                     $update['description'] =  $request -> description;
                 }
 
-                if(!empty($request->file('image'))){
-                    $file = $request -> file('image');
-                    $name = $show -> name . '.' . $file->getClientOriginalExtension();
+                if($request -> image_name){
                     if(file_exists(public_path() . '/images/shows/' . $show -> image)){
                         Storage::delete(public_path() . '/images/shows/' . $show -> image);
                     }
-                    $path = public_path() . '/images/shows/';
-                    $file -> move($path,$name);
-                    $update['image'] = $name;
+                    $update['image'] = $request -> image_name;
                 }
 
                 $show -> update($update);
@@ -315,6 +314,10 @@ class ShowsController extends Controller
             catch(QueryException $e){
                 \Log::error('Error updating show: '.$e);
                 
+                if(file_exists(public_path() . '/images/shows/' . $request -> image)){
+                    Storage::delete(public_path() . '/images/shows/' . $request -> image);
+                }
+
                 flash('Ops! An error has ocurred. Please try again.') -> error();
                 return redirect() -> route('shows.index') 
                 -> with('user', $user -> name) 
@@ -341,6 +344,9 @@ class ShowsController extends Controller
         $user = Auth::user();
 
         $show = Show::find($id);
+        if(file_exists(public_path() . '/images/shows/' . $show -> image)){
+            Storage::delete(public_path() . '/images/shows/' . $show -> image);
+        }
         $show -> delete();
 
         flash('The show has been deleted correctly.') -> success();

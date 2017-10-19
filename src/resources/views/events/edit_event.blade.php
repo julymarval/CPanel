@@ -49,7 +49,11 @@
         </ul>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 gutter">
-                <br>
+                <div class="container">
+                    <a href={{route('admin.events')}}>
+                        <span class="glyphicon glyphicon-triangle-left">Back</span>
+                    </a>
+                </div>
                 <br>
                 <div class="row vertical-offset-100">
                     <div class="col-md-8 col-md-offset-2">
@@ -69,9 +73,13 @@
                                         <div class="form-group">Description
                                             <textarea class="form-control" placeholder={{$event['description']}} name="description"></textarea>
                                         </div>
-                                        <div>Images
-                                            <input type="file" name="images[]" multiple />
+                                        <div class="form-group has-feedback"> Image
+                                            <input type="file" id="fileupload" name="photos[]" data-url="/uploadevent" multiple />
                                         </div>
+                                        <br />
+                                        <div id="files_list"></div>
+                                            <p id="loading"></p>
+                                        <input type="hidden" name="file_ids" id="file_ids" value="" />
                                         <br>
                                         <div class="form-group">
                                             {!! Form::label('volunteers', 'Volunteers') !!}
@@ -100,7 +108,28 @@
     <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script>                       
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.19.1/js/vendor/jquery.ui.widget.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.19.1/js/jquery.iframe-transport.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.19.1/js/jquery.fileupload.min.js"></script>
+
     <script>
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            add: function (e, data) {
+                $('#loading').text('Uploading...');
+                data.submit();
+            },
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('<p/>').html(file.name + ' (' + file.size + ' KB)').appendTo($('#files_list'));
+                    if ($('#file_ids').val() != '') {
+                        $('#file_ids').val($('#file_ids').val() + ',');
+                    }
+                    $('#file_ids').val($('#file_ids').val() + file.fileID);
+                });
+                $('#loading').text('');
+            }
+        });
         $(".select-tag").chosen({
             placeholder_text_multiple: 'Click to select volunteers',
         });
@@ -108,7 +137,7 @@
             placeholder_text_multiple: 'Click to select sponsors',
         });
     </script>   
-    </script>
+
     <script>
         $('div.alert').not('.alert-important').delay(8000).fadeOut(350);
     </script>

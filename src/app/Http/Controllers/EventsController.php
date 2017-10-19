@@ -122,7 +122,7 @@ class EventsController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-
+        
         if (!$request -> name || !$request -> date) {
                         
             flash('Name and Date are required') -> error();
@@ -155,32 +155,27 @@ class EventsController extends Controller
                 ->where(Config::get('constants.fields.NameField'), $event -> name)->first();
 
             if(!empty($data)){
+
+                $images = Image::select('id','name')->where('event_id', $data -> id)->get();
+                foreach($images as $image){
+                    $path = storage_path() . '/photos/events/' . $image -> name;
+                    \Storage::delete($path);
+                    $image -> delete();
+                }
                 
                 flash('This event already exists.') -> error();
                 return redirect() -> route('events.create')
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events);
+
             }
 
             $event -> save();
             
-            if($request->file('images')){
-                $files = $request -> file('images');  
-                foreach($files as $file){
-                
-                    $name = $request -> name . "_" . $file -> getClientOriginalName();
-                    $path = public_path() . '/images/events/';
-                    $file -> move($path,$name);
-
-                    $image = new Image();
-                    $image -> name = $name;
-                    $image -> event_id = $event -> id;
-                    $image -> save();
-
-                    $name = "";
-                
-                }
+            if($request -> file_ids){
+                Image::whereIn('id', explode(",", $request -> file_ids))
+                ->update(['event_id' => $event -> id]);
             }
 
             if($request -> volunteer_id){      
@@ -220,12 +215,20 @@ class EventsController extends Controller
 
         } catch (Exception $e) {
             \Log::info('Error creating event: '.$e);
+
+            $images = Image::select('id','name')->where('event_id', $id)->get();
+            foreach($images as $image){
+                $path = \storage_path() . '/photos/events/' . $image -> name;
+                \Storage::delete($path);
+                $image -> delete();
+            }
             
             flash('Ops! An error has ocurred. Please try again.') -> error();
             return redirect() -> route('events.index')
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
             -> with('events', $this -> events);
+
         }
 
         flash('The event has been created correctly.') -> success();
@@ -317,7 +320,7 @@ class EventsController extends Controller
         $user = Auth::user();
 
         if (!$request -> name && !$request -> date && !$request -> description
-            && !$request -> volunteer_id && !$request -> sponsor_id && !$request -> file('images')) {
+            && !$request -> volunteer_id && !$request -> sponsor_id && !$request -> file_ids) {
         
             flash('At least one field is required.') -> error();
             return redirect() -> route('events.edit',['id' => $id]) 
@@ -329,18 +332,9 @@ class EventsController extends Controller
         else{
             $event = Event::find($id);
 
-            if($request->file('images')){
-                $files = $request -> file('images');      
-                foreach($files as $file){
-                    $name = $event -> name . "_" . $file -> getClientOriginalName();
-                    $path = public_path() . '/images/events/';
-                    $file -> move($path,$name);
-
-                    $image = new Image();
-                    $image -> name = $name;
-                    $image -> event_id = $event -> id;
-                    $image -> save();
-                }
+            if($request -> file_ids){
+                Image::whereIn('id', explode(",", $request -> file_ids))
+                ->update(['event_id' => $event -> id]);
             }
 
             $update = array();

@@ -23,7 +23,12 @@
                     <div class="user-dashboard">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 gutter">
-    
+                                <div class="container">
+                                    <a href={{route('admin.sponsors')}}>
+                                        <span class="glyphicon glyphicon-triangle-left">Back</span>
+                                    </a>
+                                </div>
+                                <br>
                                 <div class="sales">
                                     <h2>Sponsors</h2>
                                     <div class="row">

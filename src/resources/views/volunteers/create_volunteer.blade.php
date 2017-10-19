@@ -48,7 +48,11 @@
         </ul>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 gutter">
-                <br>
+                <div class="container">
+                    <a href={{route('admin.volunteers')}}>
+                        <span class="glyphicon glyphicon-triangle-left"></span>
+                    </a>
+                </div>
                 <br>
                 <div class="row vertical-offset-100">
                     <div class="col-md-8 col-md-offset-2">
@@ -76,9 +80,13 @@
                                     <div class="form-group">
                                         <textarea class="form-control" placeholder="description" name="description"></textarea>
                                     </div>
-                                    <div>
-                                        <input class="form-control" placeholder="image" name="image" type="file">
+                                    <div class="form-group has-feedback">
+                                        <input type="file" id="fileupload" name="photos[]" data-url="/uploadvolunteer" multiple />
                                     </div>
+                                    <br>
+                                    <div id="files_list"></div>
+                                        <p id="loading"></p>
+                                        <input type="hidden" name="image" id="name" value="" />
                                     <br>
                                     <div class="form-group">
                                         {!! Form::label('shows', 'Shows') !!}
@@ -106,7 +114,29 @@
                
     <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script>                       
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.19.1/js/vendor/jquery.ui.widget.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.19.1/js/jquery.iframe-transport.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.19.1/js/jquery.fileupload.min.js"></script>
+
+    
     <script>
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            add: function (e, data) {
+                $('#loading').text('Uploading...');
+                data.submit();
+            },
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('<p/>').html(file.name + ' (' + file.size + ' KB)').appendTo($('#files_list'));
+                    if ($('#name').val() != '') {
+                        $('#name').val($('#name').val() + ',');
+                    }
+                    $('#name').val($('#name').val() + file.name);
+                });
+                $('#loading').text('');
+            }
+        });
         $(".select-show").chosen({
             placeholder_text_multiple: 'Click to select show',
         });

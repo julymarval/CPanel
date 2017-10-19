@@ -48,7 +48,11 @@
         </ul>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 gutter">
-                <br>
+                <div class="container">
+                    <a href={{route('admin.events')}}>
+                        <span class="glyphicon glyphicon-triangle-left">Back</span>
+                    </a>
+                </div>
                 <br>
                 <div class="row vertical-offset-100">
                     <div class="col-md-8 col-md-offset-2">
@@ -57,7 +61,7 @@
                                 <h3 class="panel-title" style="text-align: center">Add new Event</h3>
                             </div>
                             <div class="panel-body">
-                               <!-- <form id="check" data-toggle="validator" method="POST" enctype="multipart/form-data" action="{{route('events.store')}}">
+                               <form id="check" data-toggle="validator" method="POST" enctype="multipart/form-data" action="{{route('events.store')}}">
                                     <fieldset>
                                         <div class="form-group has-feedback">
                                             <input class="form-control" placeholder="Name" name="name" type="text" required>
@@ -71,13 +75,12 @@
                                             <textarea class="form-control" placeholder="description" name="description"></textarea>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <input type="file" id="fileupload" name="images[]" data-url="/admin/upload" multiple />
+                                            <input type="file" id="fileupload" name="photos[]" data-url="/uploadevent" multiple />
                                         </div>
-                                        <br />
+                                        <br>
                                         <div id="files_list"></div>
                                             <p id="loading"></p>
                                         <input type="hidden" name="file_ids" id="file_ids" value="" />
-                                        
                                         <br>
                                         <div class="form-group">
                                             {!! Form::label('volunteers', 'Volunteers') !!}
@@ -94,25 +97,8 @@
                                         <br>
                                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Save">
                                     </fieldset>
-                                </form>-->
-
-                            <form action="/product" method="post">
-                                {{ csrf_field() }}
-                                Product name:
-                                <br />
-                                <input type="text" name="name" />
-                                <br /><br />
-                                Product photos (can add more than one):
-                                <br />
-                                <input type="file" id="fileupload" name="photos[]" data-url="/upload" multiple />
-                                <br />
-                                <div id="files_list"></div>
-                                <p id="loading"></p>
-                                <input type="hidden" name="file_ids" id="file_ids" value="" />
-                                <input type="submit" value="Upload" />
-                            </form>
-
-                            </div>
+                                </form>
+                            <div>
                         </div>
                     </div>
                 </div>
@@ -145,7 +131,7 @@
                     });
                     $('#loading').text('');
                 }
-            });
+        });
         $(".select-tag").chosen({
             placeholder_text_multiple: 'Click to select volunteers',
         });

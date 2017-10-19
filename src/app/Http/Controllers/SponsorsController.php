@@ -95,6 +95,9 @@ class SponsorsController extends Controller
         $user = Auth::user();
 
         if (!$request -> name && !$request -> status && !$request -> level) {
+            if(file_exists(public_path() . '/images/sponsors/' . $resquest -> image)){
+                Storage::delete(public_path() . '/images/sponsors/' . $request -> image);
+            }
             flash('Name,Status and Level are required') -> error();
             return redirect() -> route('sponsors.create') 
             -> with('user', $user -> name) 
@@ -112,6 +115,9 @@ class SponsorsController extends Controller
             
             $validator = \Validator::make($request->all(), $rules);
             if ($validator->fails()) {
+                if(file_exists(public_path() . '/images/sponsors/' . $resquest -> image)){
+                    Storage::delete(public_path() . '/images/sponsors/' . $request -> image);
+                }
                 flash('One or more value are wrong.') -> error();
                 return redirect() -> route('sponsors.create')
                 -> with('user', $user -> name)  
@@ -125,19 +131,14 @@ class SponsorsController extends Controller
                 ->where(Config::get('constants.fields.NameField'), $sponsor -> name)->first();
 
             if(!empty($data)){
+                if(file_exists(public_path() . '/images/sponsors/' . $resquest -> image)){
+                    Storage::delete(public_path() . '/images/sponsors/' . $request -> image);
+                }
                 flash('This sponsor already exists.') -> error();
                 return redirect() -> route('sponsors.create') 
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
                 -> with('events', $this -> events);
-            }
-
-            if($request->file('image')){
-                $file = $request -> file('image');
-                $name = $request -> name . '.' . $file->getClientOriginalExtension();
-                $path = public_path() . '/images/sponsors/';
-                $file -> move($path,$name);
-                $sponsor -> image = $name;
             }
 
             $sponsor -> save();
@@ -166,7 +167,10 @@ class SponsorsController extends Controller
             
         } catch (Exception $e) {
             \Log::info('Error creating sale: '.$e);
-            
+            if(file_exists(public_path() . '/images/sponsors/' . $resquest -> image)){
+                Storage::delete(public_path() . '/images/sponsors/' . $request -> image);
+            }
+
             flash('Ops! An error has ocurred. Please try again.') -> error();
             return redirect() -> route('sponsors.index') 
             -> with('user', $user -> name) 
@@ -261,7 +265,11 @@ class SponsorsController extends Controller
         $user = Auth::user();
 
         if(!$request -> name && !$request -> status && !$request -> description && !$request -> event_id 
-            && !$request->file('image') && !$request -> volunteer_id && !$request -> level && !$request -> link ){
+            && !$request -> image_name && !$request -> volunteer_id && !$request -> level && !$request -> link ){
+                
+                if(file_exists(public_path() . '/images/sponsors/' . $resquest -> image_name)){
+                    Storage::delete(public_path() . '/images/sponsors/' . $request -> image_name);
+                }   
                 flash('At least one field is required.') -> error();
                 return redirect() -> route('sponsors.edit',['id' => $id])
                 -> with('user', $user -> name) 
@@ -278,6 +286,9 @@ class SponsorsController extends Controller
                     $volunteer = Volunteer::find($request -> volunteer_id);
                     
                     if(empty($volunteer)){
+                        if(file_exists(public_path() . '/images/sponsors/' . $sponsor -> image)){
+                            Storage::delete(public_path() . '/images/sponsors/' . $sponsor -> image);
+                        }
                         
                         flash('This volunteer doesnt exists. Please update the sponsor and add a valid volunteer.') -> error();
                         return redirect() -> route('sponsors.index')
@@ -328,21 +339,21 @@ class SponsorsController extends Controller
                     $update['link'] =  $request -> link;
                 }
 
-                if(!empty($request->file('image'))){
-                    $file = $request -> file('image');
-                    $name = $sponsor -> name . '.' . $file->getClientOriginalExtension();
+                if($request -> image_name){
                     if(file_exists(public_path() . '/images/sponsors/' . $sponsor -> image)){
                         Storage::delete(public_path() . '/images/sponsors/' . $sponsor -> image);
                     }
-                    $path = public_path() . '/images/sponsors/';
-                    $file -> move($path,$name);
-                    $update['image'] = $name;
+                    $update['image'] = $request -> image_name;
                 }
 
                 $sponsor -> update($update);
             }
             catch(QueryException $e){
                 \Log::error('Error updating show: '.$e);
+
+                if(file_exists(public_path() . '/images/sponsors/' . $request -> image_name)){
+                    Storage::delete(public_path() . '/images/sponsors/' . $request -> image_name);
+                }
                 
                 flash('Ops! An error has ocurred. Please try again.') -> error();
                 return redirect() -> route('sponsors.index')
@@ -370,6 +381,9 @@ class SponsorsController extends Controller
         $user = Auth::user();
         
         $sponsor = Sponsor::find($id);
+        if(file_exists(public_path() . '/images/sponsors/' . $sponsor -> image)){
+            Storage::delete(public_path() . '/images/sponsors/' . $sponsor -> image);
+        }
         $sponsor -> delete();
 
         flash('The sponsor has been deleted correctly.') -> success();
