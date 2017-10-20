@@ -4,7 +4,9 @@
     <div class="row">
         @foreach ($sponsors as $sponsor)
             <div class=" col-xs-4 col-md-3 ">
+            <a href="{{$sponsor["link"] }}" target="_blank">
                 <img src="/images/sponsors/{{$sponsor["image"]}}" width="150" height="150">
+                </a>
             </div>
         @endforeach
     </div>

@@ -22,7 +22,7 @@
                             </td>
                             <td> {{$sale["name"] }} </td>
                             <td> {{$sale["phone"] }} </td>
-                            <td> {{$sale["price"] }}$ </td>
+                            <td> ${{$sale["price"] }}</td>
                             <td> {{$sale["description"] }} </td>
                         </tr>
                     @endforeach
