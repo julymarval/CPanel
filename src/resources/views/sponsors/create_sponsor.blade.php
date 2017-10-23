@@ -72,6 +72,9 @@
                                         <textarea class="form-control" placeholder="Address" name="address"></textarea>
                                     </div>
                                     <div class="form-group">
+                                        <textarea class="form-control" placeholder="Website Link" name="link"></textarea>
+                                    </div>
+                                    <div class="form-group">
                                         <textarea class="form-control" placeholder="description" name="description"></textarea>
                                     </div>
                                     <div class="form-group has-feedback">

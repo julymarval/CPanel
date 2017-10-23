@@ -70,8 +70,14 @@
                                         <div class="form-group">Date
                                             <input class="form-control" data-provide="datepicker" placeholder={{$event['date']}} data-date-format="yyyy-mm-dd" name="date">
                                         </div>
-                                        <div class="form-group">Description
-                                            <textarea class="form-control" placeholder={{$event['description']}} name="description"></textarea>
+                                        <div class="form-group">Description<br> <!-- aqui abajo no se como hacer para que muestre el valor
+                                                                                pero por aqui van los tiros, el problema es con las llaves
+                                                                                que dan acceso a la variable que lo agarra como si cerrara el 
+                                                                                form. Si se puede hacer algo asi con el input que teniamos
+                                                                                antes mejor-->
+                                            {{                          
+                                            {!! Form::textarea('title',isset({{$event['description']}}) ? null : '',['class'=>'form-control', 'rows' => 4, 'cols' => 40]) !!}
+                                            }}
                                         </div>
                                         <div class="form-group has-feedback"> Image
                                             <input type="file" id="fileupload" name="photos[]" data-url="/uploadevent" multiple />

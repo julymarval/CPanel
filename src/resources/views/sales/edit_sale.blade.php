@@ -68,7 +68,7 @@
                                 <div class="form-group">Phone
                                     <input class="form-control" name="phone" placeholder={{$sale['phone']}}>
                                 </div>
-                                <div class="form-group">Description
+                                <div class="form-group">Description<br>
                                     <textarea class="form-control" placeholder={{$sale['description']}} name="description"></textarea>
                                 </div>
                                 <br>
