@@ -47,28 +47,13 @@ class EventsController extends Controller
     public function index()
     {
 
-        $events = Event::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
+        $events = Event::select('id','name','date','description')->orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         
-        //$i = 0; $j = 0; 
         $k = 0;
 
         $now = date('Y-m-d');
         $futureevents = DB::table('events') -> whereDate('date', '>=', $now)-> paginate(5);
         $pastevents = DB::table('events') -> whereDate('date', '<', $now)-> paginate(5);
-
-        /*foreach($events as $event){
-            $event_date = new \DateTime($event -> date);
-            $current_date = new \DateTime();
-            
-            if ($event_date > $current_date || $event_date = $current_date){
-              $this -> future[$i] = $event;
-              $i = $i + 1;
-            }
-            else{
-                $this -> past[$j] = $event;
-                $j = $j +1;
-            }
-        }*/
         
         if(!empty($events)){
             foreach($events as $event){
@@ -76,9 +61,9 @@ class EventsController extends Controller
                 $k = $k +1;
             }
         }
-
+        
         $images = Image::select('id','name','event_id')->get();
-
+        
         return view('events.event')
         -> with('sponsors', $this -> sponsors)
         -> with('images', $this -> image)
@@ -432,7 +417,7 @@ class EventsController extends Controller
             $path = public_path() . '/images/events/' . $image -> name;
             \Storage::delete($path);
             $image -> delete();
-        }
+        } 
         
         $event -> delete();
         

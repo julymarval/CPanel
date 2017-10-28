@@ -52,7 +52,6 @@
                 <span class="glyphicon glyphicon-triangle-left">Back</span>
             </a>            
             <div class="col-md-12 col-sm-12 col-xs-12 gutter">
-                <br>
                 <div class="row vertical-offset-100">
                     <div class="col-md-8 col-md-offset-2">
                         <div class="panel panel-default">

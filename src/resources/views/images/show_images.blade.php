@@ -49,6 +49,10 @@
                 @endif
             </ul>
             <div class="row">
+                <br>
+                <a href="{{route('events.show',$event["id"])}}">
+                    <span class="glyphicon glyphicon-triangle-left">Back</span>
+                </a> 
                 <div class="col-md-12 col-sm-12 col-xs-12 gutter">
                     <div class="images">
                         <h2>Gallery: {{$event["name"]}}</h2>

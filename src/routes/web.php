@@ -128,6 +128,9 @@ Route::group(['prefix' => '/'],function(){
     Route::get('events/{id}/destroy', [
         'uses' => 'EventsController@destroy',
         'as'   => 'events.destroy']);
+    Route::get('events/{id}',[
+        'uses' => 'EventsController@show',
+        'as'   => 'events.show']); 
 });
 
 
