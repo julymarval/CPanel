@@ -18,12 +18,14 @@
                     <br>
                     <div id="products" class="row list-group">
                         @if(count($futureevents) > 0)
+                            <?php $j = 0; ?>
                             @foreach ($futureevents as $futureevent)
-                                <?php $i = 0; ?>
                                 <div class="item  col-xs-6 col-md-4">
                                     <div class="thumbnail">
                                         @if(count($images[0]) > 0)
-                                            <img src="/images/events/{{$images[$i] -> name}}" class="img-responsive">
+                                            @if(!empty($images[$j]))
+                                                <img src="/images/events/{{$images[$j] -> name}}" class="img-responsive">
+                                            @endif
                                         @endif
                                         <div class="caption">
                                             <h4 class="pull-right">{{$futureevent->date }}</h4>
@@ -35,8 +37,8 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <?php $i++; ?>
                                 </div>
+                                <?php $j++; ?>
                             @endforeach
                         @endif
                     </div>
@@ -46,12 +48,14 @@
                     <br>
                     <div id="products" class="row list-group">
                         @if(count($pastevents) > 0)
+                            <?php $i = 0; ?>
                             @foreach($pastevents as $pastevent)
-                                <?php $i = 0; ?>
                                     <div class="item  col-xs-6 col-md-4">
                                     <div class="thumbnail">
                                         @if(count($images[0]) > 0)
-                                            <img src="/images/events/{{$images[$i] -> name}}" class="img-responsive">
+                                            @if(!empty($images[$i]))
+                                                <img src="/images/events/{{$images[$i] -> name}}" class="img-responsive">
+                                            @endif
                                         @endif
                                             <div class="caption">
                                                 <h4 class="pull-right">{{$pastevent->date }}</h4>
@@ -63,8 +67,8 @@
                                                 </button>
                                             </div>
                                     </div>
-                                    <?php $i++; ?>
                                 </div>
+                                <?php $i++; ?>
                             @endforeach    
                         @endif
                     </div>

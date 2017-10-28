@@ -57,7 +57,10 @@ class EventsController extends Controller
         
         if(!empty($events)){
             foreach($events as $event){
-                $this -> image[$k] = Image::select('id','name')->where('event_id', $event -> id)-> first();
+                $img = Image::select('id','name')->where('event_id', $event -> id)-> first();
+                if(!empty($img)){
+                    $this -> image[$k] = $img;
+                }
                 $k = $k +1;
             }
         }
