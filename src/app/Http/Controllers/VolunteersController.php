@@ -47,21 +47,12 @@ class VolunteersController extends Controller
         $volunteers = Volunteer::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         
         if(empty($volunteers)){
-            $code = Config::get('constants.codes.NonExistingVolunteerCode'); 
-            $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
-
+            
             return view('volunteers.volunteer')
-            -> with('volunteers', $volunteers)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('volunteers', $volunteers);
         }
         
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-
         return view('volunteers.volunteer')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('volunteers', $volunteers);
     }
 
@@ -74,12 +65,9 @@ class VolunteersController extends Controller
     {
         $events = Event::orderBy('name','DESC') -> pluck('name', 'id') -> all();
         $shows = Show::orderBy('name','DESC') -> pluck('name', 'id') -> all();
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
+        
 
         return view('volunteers.create_volunteer')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('events', $events)
         -> with('shows', $shows);
     }
@@ -202,25 +190,16 @@ class VolunteersController extends Controller
         $volunteer = Volunteer::find($id);
     
         if(empty($volunteer)){
-            $code = Config::get('constants.codes.NonExistingVolunteerCode'); 
-            $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
-
+            
             return view('volunteers.show_volunteer')
-            -> with('volunteer', $volunteer)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('volunteer', $volunteer);
         }
 
         $my_shows  = $volunteer -> shows -> pluck('name')->all();
         $my_events = $volunteer -> events -> pluck('name')->all();
         $volunteer -> sponsor;
-
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
         
         return view('volunteers.show_volunteer')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('volunteer', $volunteer)
         -> with('my_shows', $my_shows)
         -> with('my_events', $my_events);
@@ -237,13 +216,9 @@ class VolunteersController extends Controller
         $volunteer = Volunteer::find($id);
         
         if(empty($volunteer)){
-            $code = Config::get('constants.codes.NonExistingEventCode');
-            $msg = Config::get('constants.msgs.NonExistingEventMsg');
-
+            
             return view('volunteers.edit_volunteer')
-            -> with('volunteer', $volunteer)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('volunteer', $volunteer);
         }
 
         $my_shows  = $volunteer -> shows -> pluck('id')->all();
@@ -253,12 +228,7 @@ class VolunteersController extends Controller
         $events = Event::orderBy('name','DESC') -> pluck('name','id');
         $shows  = Show::orderBy('name','DESC') -> pluck('name','id');
         
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-
         return view('volunteers.edit_volunteer')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('volunteer', $volunteer)
         -> with('my_shows', $my_shows)
         -> with('my_events', $my_events)

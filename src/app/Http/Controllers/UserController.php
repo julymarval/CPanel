@@ -35,22 +35,14 @@ class UserController extends Controller
         $users = User::orderBy(Config::get('constants.fields.IdField'),'ASC')->paginate(5);
         
         if(empty($users)){
-            $code = Config::get('constants.codes.NonExistingUserCode'); 
-            $msg = Config::get('constants.msgs.NonExistingUserMsg');
 
             return view('users.user')
-            -> with('user', $users)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('user', $users);
         }
-        
-        $code = Config::get('constants.codes.OkCode');
-        $msg = Config::get('constants.msgs.OkMsg');
 
-            return view('users.user')
-            -> with('code', $code)
-            -> with('msg', $msg)
-            -> with('users', $users);
+
+        return view('users.user')
+        -> with('users', $users);
     }
 
     /**
@@ -66,15 +58,10 @@ class UserController extends Controller
         
         if($user -> email != $email){
 
-            $code = Config::get('constants.codes.InvalidAdminCode'); 
-            $msg = Config::get('constants.msgs.InvalidAdminMsg');
-
             return redirect() -> route('dashboard') 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
         else{
             return view('auth.register');
@@ -93,21 +80,12 @@ class UserController extends Controller
         $user = User::find($id);
         
         if(empty($user)){
-            $code = Config::get('constants.codes.NonExistingUserCode'); 
-            $msg = Config::get('constants.msgs.NonExistingUserMsg');
 
             return view('users.show_user')
-            -> with('user', $user)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('user', $user);
         }
 
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-
         return view('users.show_user')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('user', $user);
     }
 
@@ -125,33 +103,20 @@ class UserController extends Controller
         $email = Config::get('constants.emails.Admin');
 
         if($admin -> email != $email){
-            $code = Config::get('constants.codes.InvalidAdminCode'); 
-            $msg = Config::get('constants.msgs.InvalidAdminMsg');
-
+        
             return redirect() -> route('dashboard') 
             -> with('user', $admin -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
         else{
             if(empty($user)){
-                $code = Config::get('constants.codes.NonExistingUserCode'); 
-                $msg = Config::get('constants.msgs.NonExistingUserMsg');
 
                 return view('users.edit_user')
-                -> with('user', $user)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('user', $user);
             }
 
-            $code = Config::get('constants.codes.OkCode'); 
-            $msg = Config::get('constants.msgs.OkMsg');
-
             return view('users.edit_user')
-            -> with('code', $code)
-            -> with('msg', $msg)
             -> with('user', $user);
         }
     }
@@ -168,15 +133,12 @@ class UserController extends Controller
         $user = User::find($id);
 
         if(!$request -> name && !$request -> email && !$request -> password){
-            $code = Config::get('constants.codes.MissingInputCode'); 
-            $msg = Config::get('constants.msgs.MissingInputMsg');
-
+            
+            flash('At least one field is required.') -> error();
             return redirect() -> route('dashboard') 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
         
         else{
@@ -198,26 +160,19 @@ class UserController extends Controller
             }
             catch(QueryException $e){
                 \Log::error('Error updating show: '.$e);
-                $code = Config::get('constants.codes.InternalErrorCode'); 
-                $msg = Config::get('constants.msgs.InternalErrorMsg');
 
+                flash('Ops! An error has ocurred. Please try again.y.') -> error();
                 return redirect() -> route('dashboard') 
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('events', $this -> events);
             }
         
-            $code = Config::get('constants.codes.OkCode'); 
-            $msg = Config::get('constants.msgs.OkMsg');
-
+            flash('The user has been created correctly.') -> success();
             return redirect() -> route('dashboard') 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
     }
 
@@ -236,28 +191,21 @@ class UserController extends Controller
         $email = Config::get('constants.emails.Admin');
 
         if($admin -> email != $email){
-            $code = Config::get('constants.codes.InvalidAdminCode'); 
-            $msg = Config::get('constants.msgs.InvalidAdminMsg');
-
+            
+            flash('Invalid user. Must be an admin to delete an user.') -> error();
             return redirect() -> route('dashboard') 
             -> with('user', $admin -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
         else{
             $user -> delete();
 
-            $code = Config::get('constants.codes.OkCode'); 
-            $msg = Config::get('constants.msgs.OkMsg');
-
+            flash('The user has been deleted correctly.') -> success();
             return redirect() -> route('dashboard') 
             -> with('user', $admin -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
     }
 }

@@ -46,21 +46,12 @@ class ShowsController extends Controller
         $shows = Show::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         
         if(empty($shows)){
-            $code = Config::get('constants.codes.NonExistingShowsCode'); 
-            $msg = Config::get('constants.msgs.NonExistingShowsMsg');
-            
-            return view('shows.show') 
-            -> with('shows', $shows)
-            -> with('code', $code)
-            -> with('msg', $msg);
-        }
 
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
+            return view('shows.show') 
+            -> with('shows', $shows);
+        }
         
         return view('shows.show')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('shows', $shows);
     }
 
@@ -72,13 +63,8 @@ class ShowsController extends Controller
     public function create()
     {
         $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name','id')->all();
-
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
                 
         return view('shows.create_show')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('volunteers', $volunteers);
     }
 
@@ -187,24 +173,16 @@ class ShowsController extends Controller
         $show = Show::find($id);
     
         if(empty($show)){
-            $code = Config::get('constants.codes.NonExistingShowsCode');
-            $msg = Config::get('constants.msgs.NonExistingShowsMsg');
             
             return view('shows.show_show') 
-            -> with('code', $code)
-            -> with('show', $show)
-            -> with('msg', $msg);
+            -> with('show', $show);
         }
 
         $my_volunteers = $show -> volunteers -> pluck('name')->all();
         $path = public_path() . '/images/shows/';
 
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-
+        
         return view('shows.show_show') 
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('show', $show)
         -> with('volunteers', $my_volunteers)
         -> with('path', $path);
@@ -221,25 +199,17 @@ class ShowsController extends Controller
         $show = Show::find($id);
         
         if(empty($show)){
-            $code = Config::get('constants.codes.NonExistingEventCode'); 
-            $msg = Config::get('constants.msgs.NonExistingEventMsg');
+           
 
             return view('shows.edit_show') 
-            -> with('show', $show)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('show', $show);
         }
 
         $my_volunteers = $show -> volunteers -> pluck('name','id')->all();
 
         $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name','id')->all();
-
-        $code = Config::get('constants.codes.OkCode');
-        $msg = Config::get('constants.msgs.OkMsg');
         
         return view('shows.edit_show') 
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('show', $show)
         -> with('my_volunteers', $my_volunteers)
         -> with('volunteers',$volunteers);

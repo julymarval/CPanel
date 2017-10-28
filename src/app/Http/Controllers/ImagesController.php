@@ -72,14 +72,9 @@ class ImagesController extends Controller
         $images = Image::select('id','name')->where('event_id', $id)->get();
         $event = Event::find($id);
 
-        $code = Config::get('constants.codes.OkCode');
-        $msg = Config::get('constants.msgs.OkMsg');
-
         return view('images.show_images')
         -> with('event', $event)
-        -> with('images', $images)
-        -> with ('code', $code)
-        -> with('msg', $msg);
+        -> with('images', $images);
     }
     
     /**
@@ -106,15 +101,10 @@ class ImagesController extends Controller
 
         $image = Image::find($id);
         $event = Event::find($image -> event_id);
-        \File::delete(public_path() . '/images/events/' . $event -> name . '/' . $image -> name);
+        \File::delete(public_path() . '/images/events/' . $image -> name);
         $image -> delete();
-        
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
 
-        return redirect()-> route('images.show',$event)
-        -> with('code', $code)
-        -> with('msg', $msg);
+        return redirect()-> route('images.show',$event);
 
 
     }

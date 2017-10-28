@@ -46,21 +46,12 @@ class SponsorsController extends Controller
         $sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC') -> paginate(5);
 
         if(empty($sponsors)){
-            $code = Config::get('constants.codes.NonExistingSponsorsCode'); 
-            $msg = Config::get('constants.msgs.NonExistingSponsorsMsg');
 
             return view('sponsors.sponsor') 
-            -> with('sponsors', $sponsors)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('sponsors', $sponsors);
         }
         
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-
         return view('sponsors.sponsor') 
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('sponsors', $sponsors);
     }
 
@@ -74,12 +65,7 @@ class SponsorsController extends Controller
         $events   = Event::orderBy('name','DESC') -> pluck('name', 'id') -> all();
         $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name', 'id') -> all();
 
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-
         return view('sponsors.create_sponsor') 
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with ('events', $events)
         -> with('volunteers', $volunteers);
     }
@@ -191,24 +177,15 @@ class SponsorsController extends Controller
         $sponsor = Sponsor::find($id);
         
         if(empty($sponsor)){
-            $code = Config::get('constants.codes.NonExistingSponsorsCode'); 
-            $msg = Config::get('constants.msgs.NonExistingSponsorsMsg');
-
+    
             return view('sponsors.show_sponsor') 
-            -> with('code', $code)
-            -> with('sponsor', $sponsor)
-            -> with('msg', $msg);
+            -> with('sponsor', $sponsor);
         }
 
         $my_events = $sponsor -> events -> pluck('name') -> all();
         $my_volunteer = Volunteer::find($sponsor -> volunteer_id);
         
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-
         return view('sponsors.show_sponsor') 
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('sponsor', $sponsor)
         -> with('my_events', $my_events)
         -> with('volunteer', $my_volunteer);
@@ -225,13 +202,9 @@ class SponsorsController extends Controller
         $sponsor = Sponsor::find($id);
         
         if(empty($sponsor)){
-            $code = Config::get('constants.codes.NonExistingSponsorsCode'); 
-            $msg = Config::get('constants.msgs.NonExistingSponsorsMsg');
 
             return view('sponsors.edit_sponsor') 
-            -> with('code', $code)
-            -> with('sponsor', $sponsor)
-            -> with('msg', $msg);
+            -> with('sponsor', $sponsor);
         }
 
         $my_volunteer =  Volunteer::find($sponsor -> volunteer_id);
@@ -240,12 +213,7 @@ class SponsorsController extends Controller
         $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name', 'id') -> all();
         $events     = Event::orderBy('name','DESC') -> pluck('name', 'id');
 
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-        
         return view('sponsors.edit_sponsor')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('sponsor', $sponsor)
         -> with('my_volunteers', $my_volunteer)
         -> with('my_events',$my_events)

@@ -77,7 +77,7 @@
                                         <textarea class="form-control" placeholder="description" name="description"></textarea>
                                     </div>
                                     <div class="form-group has-feedback">
-                                        <input type="file" id="fileupload" name="photos[]" data-url="/uploadsponsor" multiple />
+                                        <input type="file" id="fileupload" name="photos[]" data-url="/uploadsponsor" single />
                                     </div>
                                     <br>
                                     <div id="files_list"></div>

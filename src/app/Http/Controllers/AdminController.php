@@ -72,12 +72,8 @@ class AdminController extends Controller
         $sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
 
         if(empty($sales)){
-            $code = Config::get('constants.codes.NonExistingSalesCode');
-            $msg = Config::get('constants.msgs.NonExistingSalesMsg');
             
-            return view('sales.admin_sale') 
-            -> with('code', $code)
-            -> with('msg', $msg);
+            return view('sales.admin_sale');
         }
 
         foreach($sales as $sale){
@@ -92,13 +88,8 @@ class AdminController extends Controller
                 $sale -> delete();
             }
         }
-        
-        $code = Config::get('constants.codes.OkCode');
-        $msg = Config::get('constants.msgs.OkMsg');
 
-        return view('sales.admin_sale') 
-        -> with('code', $code)
-        -> with('msg', $msg)
+        return view('sales.admin_sale')
         -> with('sales', $sales);
     }
 
@@ -112,20 +103,11 @@ class AdminController extends Controller
         $shows = Show::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         
         if(empty($shows)){
-            $code = Config::get('constants.codes.NonExistingShowsCode'); 
-            $msg = Config::get('constants.msgs.NonExistingShowsMsg');
             
-            return view('shows.admin_show') 
-            -> with('code', $code)
-            -> with('msg', $msg);
+            return view('shows.admin_show');
         }
-
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
         
         return view('shows.admin_show')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('shows', $shows);
     }
 
@@ -139,20 +121,11 @@ class AdminController extends Controller
         $sponsors = Sponsor::orderBy(Config::get('constants.fields.IdField'),'DESC') -> paginate(5);
 
         if(empty($sponsors)){
-            $code = Config::get('constants.codes.NonExistingSponsorsCode'); 
-            $msg = Config::get('constants.msgs.NonExistingSponsorsMsg');
 
-            return view('sponsors.admin_sponsor') 
-            -> with('code', $code)
-            -> with('msg', $msg);
+            return view('sponsors.admin_sponsor');
         }
-        
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
 
         return view('sponsors.admin_sponsor') 
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('sponsors', $sponsors);
     }
 
@@ -166,20 +139,11 @@ class AdminController extends Controller
         $volunteers = Volunteer::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
         
         if(empty($volunteers)){
-            $code = Config::get('constants.codes.NonExistingVolunteerCode'); 
-            $msg = Config::get('constants.msgs.NonExistingVolunteerMsg');
 
-            return view('volunteers.admin_volunteer')
-            -> with('code', $code)
-            -> with('msg', $msg);
+            return view('volunteers.admin_volunteer');
         }
-        
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
 
         return view('volunteers.admin_volunteer')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('volunteers', $volunteers);
     }
  

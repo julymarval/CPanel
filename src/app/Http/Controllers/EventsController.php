@@ -53,8 +53,8 @@ class EventsController extends Controller
         $k = 0;
 
         $now = date('Y-m-d');
-        $futureevents = DB::table('events') -> whereDate('date', '>=', $now)->get();
-        $pastevents = DB::table('events') -> whereDate('date', '<', $now)->get();
+        $futureevents = DB::table('events') -> whereDate('date', '>=', $now)-> paginate(5);
+        $pastevents = DB::table('events') -> whereDate('date', '<', $now)-> paginate(5);
 
         /*foreach($events as $event){
             $event_date = new \DateTime($event -> date);
