@@ -45,14 +45,10 @@ class SalesController extends Controller
         $sales = Sale::orderBy(Config::get('constants.fields.IdField'),'DESC')->paginate(5);
 
         if(empty($sales)){
-            $code = Config::get('constants.codes.NonExistingSalesCode');
-            $msg = Config::get('constants.msgs.NonExistingSalesMsg');
-            
+                      
             return view('sales.sale')
             -> with('shows', $this -> sponsors) 
-            -> with('sales', $sales)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('sales', $sales);
         }
 
         foreach($sales as $sale){
@@ -68,13 +64,8 @@ class SalesController extends Controller
             }
         }
         
-        $code = Config::get('constants.codes.OkCode');
-        $msg = Config::get('constants.msgs.OkMsg');
-
         return view('sales.sale') 
         -> with('sponsors', $this -> sponsors) 
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('sales', $sales);
     }
 
@@ -104,9 +95,7 @@ class SalesController extends Controller
             return redirect() -> route('sales.create') 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
         
         $rules = [
@@ -123,9 +112,7 @@ class SalesController extends Controller
                 return redirect() -> route('sales.create') 
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('events', $this -> events);
             }
 
             $sale = new Sale($request->all());
@@ -165,9 +152,7 @@ class SalesController extends Controller
             return redirect() -> route('sales.index') 
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
     }
 
@@ -182,21 +167,13 @@ class SalesController extends Controller
         $sale = Sale::find($id);
         
         if(empty($sale)){
-            $code = Config::get('constants.codes.NonExistingSalesCode');
-            $msg = Config::get('constants.msgs.NonExistingSalesMsg');
-
+            
             return view('sales.show_sale') 
-            -> with('sale', $sale)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('sale', $sale);
         }
 
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-        
+           
         return view('sales.show_sale') 
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('sale', $sale);
     }
 
@@ -211,21 +188,13 @@ class SalesController extends Controller
         $sale = Sale::find($id);
 
         if(empty($sale)){
-            $code = Config::get('constants.codes.NonExistingEventCode'); 
-            $msg = Config::get('constants.msgs.NonExistingEventMsg');
-
+        
             return view('sales.edit_sale') 
-            -> with('sale', $sale)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('sale', $sale);
         }
 
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-
+        
         return view('sales.edit_sale')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('sale', $sale);
     }
 
@@ -247,9 +216,7 @@ class SalesController extends Controller
             return redirect() -> route('sales.edit',['id' => $id])
             -> with('user', $user -> name) 
             -> with('sales', $this -> sales)
-            -> with('events', $this -> events)
-            -> with('code', $code)
-            -> with('msg', $msg);
+            -> with('events', $this -> events);
         }
 
         else{
@@ -292,9 +259,7 @@ class SalesController extends Controller
                 return redirect() -> route('sales.index') 
                 -> with('user', $user -> name) 
                 -> with('sales', $this -> sales)
-                -> with('events', $this -> events)
-                -> with('code', $code)
-                -> with('msg', $msg);
+                -> with('events', $this -> events);
             }
         
             flash('The tiangui has been updated correctly.') -> success();
