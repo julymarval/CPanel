@@ -49,8 +49,12 @@
                             @endif
                         </ul>
                         <div class="row">
+                            <br>
+                            <a href={{route('admin.sales')}}>
+                                <span class="glyphicon glyphicon-triangle-left">Back</span>
+                            </a>
+                            <br>
                             <div class="col-md-12 col-sm-12 col-xs-12 gutter">
-    
                                 <div class="sales">
                                     <h2>{{$sale["name"]}}</h2>
     

@@ -53,8 +53,8 @@ class EventsController extends Controller
         $k = 0;
 
         $now = date('Y-m-d');
-        $futureevents = DB::table('events') -> whereDate('date', '>=', $now)-> paginate(5);
-        $pastevents = DB::table('events') -> whereDate('date', '<', $now)-> paginate(5);
+        $futureevents = DB::table('events') -> whereDate('date', '>=', $now)->get();
+        $pastevents = DB::table('events') -> whereDate('date', '<', $now)->get();
 
         /*foreach($events as $event){
             $event_date = new \DateTime($event -> date);
@@ -79,15 +79,10 @@ class EventsController extends Controller
 
         $images = Image::select('id','name','event_id')->get();
 
-        $code = Config::get('constants.codes.OkCode');
-        $msg = Config::get('constants.msgs.OkMsg');
-
         return view('events.event')
         -> with('sponsors', $this -> sponsors)
         -> with('images', $this -> image)
         -> with('imgs', $images)
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('pastevents', $pastevents)
         -> with('futureevents' , $futureevents)
         -> with('events', $events);
@@ -103,12 +98,7 @@ class EventsController extends Controller
         $sponsors   = Sponsor::orderBy('name','DESC') -> pluck('name', 'id') -> all();;
         $volunteers = Volunteer::orderBy('name','DESC') -> pluck('name', 'id') -> all();
 
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
-
         return view('events.create_event')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with ('sponsors', $sponsors)
         -> with('volunteers', $volunteers);
     }
@@ -158,7 +148,7 @@ class EventsController extends Controller
 
                 $images = Image::select('id','name')->where('event_id', $data -> id)->get();
                 foreach($images as $image){
-                    $path = storage_path() . '/photos/events/' . $image -> name;
+                    $path = public_path() . '/images/events/' . $image -> name;
                     \Storage::delete($path);
                     $image -> delete();
                 }
@@ -218,7 +208,7 @@ class EventsController extends Controller
 
             $images = Image::select('id','name')->where('event_id', $id)->get();
             foreach($images as $image){
-                $path = \storage_path() . '/photos/events/' . $image -> name;
+                $path = public_path() . '/images/events/' . $image -> name;
                 \Storage::delete($path);
                 $image -> delete();
             }
@@ -249,14 +239,9 @@ class EventsController extends Controller
         $event = Event::find($id);
 
         if(empty($event)){
-            
-            $code = Config::get('constants.codes.NonExistingEventCode'); 
-            $msg = Config::get('constants.msgs.NonExistingEventMsg');
-                
+                            
             return view('events.show_event')
-            -> with('code', $code)
-            > with('event', $event)
-            -> with('msg', $msg);
+            > with('event', $event);
         }
 
         $my_sponsors   = $event -> sponsors   -> pluck('name')->all();
@@ -284,13 +269,8 @@ class EventsController extends Controller
 
         if(empty($event)){
             
-            $code = Config::get('constants.codes.NonExistingEventCode');
-            $msg = Config::get('constants.msgs.NonExistingEventMsg');
-
             return view('events.edit_event') 
-            -> with('code', $code)
-            > with('event', $event)
-            -> with('msg', $msg);
+            > with('event', $event);
         }
 
         $my_volunteers = $event -> volunteers -> pluck('id', 'name')->all();        
@@ -385,9 +365,7 @@ class EventsController extends Controller
                         return redirect() -> route('events.edit',['id' => $id]) 
                         -> with('user', $user -> name) 
                         -> with('sales', $this -> sales)
-                        -> with('events', $this -> events)
-                        -> with('code', $code)
-                        -> with('msg', $msg);
+                        -> with('events', $this -> events);
                     }
     
                 }
@@ -406,9 +384,7 @@ class EventsController extends Controller
                         return redirect() -> route('events.edit',['id' => $id]) 
                         -> with('user', $user -> name) 
                         -> with('sales', $this -> sales)
-                        -> with('events', $this -> events)
-                        -> with('code', $code)
-                        -> with('msg', $msg);
+                        -> with('events', $this -> events);
                     }
     
                 }

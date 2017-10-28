@@ -64,11 +64,8 @@ class LoginController extends Controller
  
         }
         else {
- 
-            return redirect()->back()
-                ->with('message','Incorrect username or password')
-                ->with('status', 'danger')
-                ->withInput();
+            flash('Invalid username or password.') -> error();
+            return redirect()->back();
         }
  
     }
