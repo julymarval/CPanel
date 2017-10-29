@@ -234,10 +234,7 @@ class SponsorsController extends Controller
 
         if(!$request -> name && !$request -> status && !$request -> description && !$request -> event_id 
             && !$request -> image_name && !$request -> volunteer_id && !$request -> level && !$request -> link ){
-                
-                if(file_exists(public_path() . '/images/sponsors/' . $resquest -> image_name)){
-                    Storage::delete(public_path() . '/images/sponsors/' . $request -> image_name);
-                }   
+                   
                 flash('At least one field is required.') -> error();
                 return redirect() -> route('sponsors.edit',['id' => $id])
                 -> with('user', $user -> name) 
@@ -253,7 +250,7 @@ class SponsorsController extends Controller
                 if(!empty($request -> volunteer_id)){
                     $volunteer = Volunteer::find($request -> volunteer_id);
                     
-                    if(empty($volunteer)){
+                    if(empty($volunteer) && $request -> image_name){
                         if(file_exists(public_path() . '/images/sponsors/' . $request -> image_name)){
                             Storage::delete(public_path() . '/images/sponsors/' . $request -> image_name);
                         }
@@ -270,7 +267,7 @@ class SponsorsController extends Controller
                 if(!empty($request -> event_id)){
                     foreach($request -> event_id as $id){
                         $event = Event::find($id);
-                        if(empty($event)){
+                        if(empty($event) && $request -> image_name){
                             if(file_exists(public_path() . '/images/sponsors/' . $request -> image_name)){
                                 Storage::delete(public_path() . '/images/sponsors/' . $request -> image_name);
                             }
@@ -322,11 +319,11 @@ class SponsorsController extends Controller
             }
             catch(QueryException $e){
                 \Log::error('Error updating show: '.$e);
-
-                if(file_exists(public_path() . '/images/sponsors/' . $request -> image_name)){
-                    Storage::delete(public_path() . '/images/sponsors/' . $request -> image_name);
+                if($request -> image_name){
+                    if(file_exists(public_path() . '/images/sponsors/' . $request -> image_name)){
+                        Storage::delete(public_path() . '/images/sponsors/' . $request -> image_name);
+                    }
                 }
-                
                 flash('Ops! An error has ocurred. Please try again.') -> error();
                 return redirect() -> route('sponsors.index')
                 -> with('user', $user -> name) 

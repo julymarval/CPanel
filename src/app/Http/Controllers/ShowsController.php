@@ -229,9 +229,7 @@ class ShowsController extends Controller
 
         if(!$request -> name && !$request -> schedule && !$request -> description && !$request -> image_name
             && !$request -> volunteer_id){
-                if(file_exists(public_path() . '/images/shows/' . $request -> image_name)){
-                    Storage::delete(public_path() . '/images/shows/' . $request -> image_name);
-                }
+                
                 flash('At least one field is required.') -> error();
                 return redirect() -> route('shows.edit',['id' => $id]) 
                 -> with('user', $user -> name) 
@@ -247,7 +245,10 @@ class ShowsController extends Controller
                 if(!empty($request -> volunteer_id)){
                     foreach($request -> volunteer_id as $id){
                         $volunteer = Volunteer::find($id);
-                        if(empty($volunteer)){
+                        if(empty($volunteer) && $request -> image_name){
+                            if(file_exists(public_path() . '/images/shows/' . $request -> image)){
+                                Storage::delete(public_path() . '/images/shows/' . $request -> image);
+                            }
                             flash('This volunteer doesnt exists. Please update the event and add a valid volunteer.') -> error();
                             return redirect() -> route('dashboard') 
                             -> with('user', $user -> name) 
@@ -283,11 +284,11 @@ class ShowsController extends Controller
             }
             catch(QueryException $e){
                 \Log::error('Error updating show: '.$e);
-                
-                if(file_exists(public_path() . '/images/shows/' . $request -> image)){
-                    Storage::delete(public_path() . '/images/shows/' . $request -> image);
+                if($request -> image_name){
+                    if(file_exists(public_path() . '/images/shows/' . $request -> image)){
+                        Storage::delete(public_path() . '/images/shows/' . $request -> image);
+                    }
                 }
-
                 flash('Ops! An error has ocurred. Please try again.') -> error();
                 return redirect() -> route('shows.index') 
                 -> with('user', $user -> name) 

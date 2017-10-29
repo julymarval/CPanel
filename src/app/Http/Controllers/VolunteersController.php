@@ -251,9 +251,6 @@ class VolunteersController extends Controller
        if(!$request -> name && !$request -> status && !$request -> description && !$request -> image_name
             && !$request -> show_id && !$request -> event_id){
             
-            if(file_exists(public_path() . '/images/volunteers/' . $request -> image_name)){
-                Storage::delete(public_path() . '/images/volunteers/' . $request -> image_name);
-            }
             flash('At least one field is requiered.') -> error();
             return redirect() -> route('volunteers.edit', ['id' => $id])
             -> with('user', $user -> name) 
@@ -269,9 +266,9 @@ class VolunteersController extends Controller
                 if($request -> show_id){
                     foreach($request -> show_id as $id){
                         $show = Show::find($id);
-                        if(empty($show)){
-                            if(file_exists(public_path() . '/images/volunteers/' . $volunteer -> image)){
-                                Storage::delete(public_path() . '/images/volunteers/' . $volunteer -> image);
+                        if(empty($show) && $request -> image_name){
+                            if(file_exists(public_path() . '/images/volunteers/' . $request -> image_name)){
+                                Storage::delete(public_path() . '/images/volunteers/' . $request -> image_name);
                             }
 
                             flash('This show doesnt exists. Please update the volunteer and add a valid show.') -> error();
@@ -289,9 +286,9 @@ class VolunteersController extends Controller
                 if($request -> event_id){
                     foreach($request -> event_id as $id){
                         $event = Event::find($id);
-                        if(empty($event)){
-                            if(file_exists(public_path() . '/images/volunteers/' . $volunteer -> image)){
-                                Storage::delete(public_path() . '/images/volunteers/' . $volunteer -> image);
+                        if(empty($event) && $request -> image_name){
+                            if(file_exists(public_path() . '/images/volunteers/' . $request -> image_name)){
+                                Storage::delete(public_path() . '/images/volunteers/' . $request -> image_name);
                             }
                             
                             flash('This event doesnt exists. Please update the volunteer and add a valid event.') -> error();
@@ -333,11 +330,11 @@ class VolunteersController extends Controller
             }
             catch(QueryException $e){
                 \Log::error('Error updating show: '.$e);
-
-                if(file_exists(public_path() . '/images/volunteers/' . $request -> image_name)){
-                    Storage::delete(public_path() . '/images/volunteers/' . $request -> image_name);
+                if($request -> image_name){
+                    if(file_exists(public_path() . '/images/volunteers/' . $request -> image_name)){
+                        Storage::delete(public_path() . '/images/volunteers/' . $request -> image_name);
+                    }
                 }
-                
                 flash('Ops! An error has ocurred. Please try again.') -> error();
                 return redirect() -> route('volunteers.index')
                 -> with('user', $user -> name) 
