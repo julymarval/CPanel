@@ -76,7 +76,7 @@
                                     <div class="form-group">
                                         <textarea class="form-control" placeholder="description" name="description"></textarea>
                                     </div>
-                                    <div class="form-group has-feedback">
+                                    <div class="form-group has-feedback">Select one Image
                                         <input type="file" id="fileupload" name="photos[]" data-url="/uploadsponsor" single />
                                     </div>
                                     <br>

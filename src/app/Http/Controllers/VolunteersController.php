@@ -270,6 +270,10 @@ class VolunteersController extends Controller
                     foreach($request -> show_id as $id){
                         $show = Show::find($id);
                         if(empty($show)){
+                            if(file_exists(public_path() . '/images/volunteers/' . $volunteer -> image)){
+                                Storage::delete(public_path() . '/images/volunteers/' . $volunteer -> image);
+                            }
+
                             flash('This show doesnt exists. Please update the volunteer and add a valid show.') -> error();
                             return redirect() -> route('volunteers.index')
                             -> with('user', $user -> name) 
@@ -286,6 +290,10 @@ class VolunteersController extends Controller
                     foreach($request -> event_id as $id){
                         $event = Event::find($id);
                         if(empty($event)){
+                            if(file_exists(public_path() . '/images/volunteers/' . $volunteer -> image)){
+                                Storage::delete(public_path() . '/images/volunteers/' . $volunteer -> image);
+                            }
+                            
                             flash('This event doesnt exists. Please update the volunteer and add a valid event.') -> error();
                             return redirect() -> route('volunteers.index')
                             -> with('user', $user -> name) 

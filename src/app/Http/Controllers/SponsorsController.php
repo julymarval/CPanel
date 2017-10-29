@@ -254,10 +254,10 @@ class SponsorsController extends Controller
                     $volunteer = Volunteer::find($request -> volunteer_id);
                     
                     if(empty($volunteer)){
-                        if(file_exists(public_path() . '/images/sponsors/' . $sponsor -> image)){
-                            Storage::delete(public_path() . '/images/sponsors/' . $sponsor -> image);
+                        if(file_exists(public_path() . '/images/sponsors/' . $request -> image_name)){
+                            Storage::delete(public_path() . '/images/sponsors/' . $request -> image_name);
                         }
-                        
+
                         flash('This volunteer doesnt exists. Please update the sponsor and add a valid volunteer.') -> error();
                         return redirect() -> route('sponsors.index')
                         -> with('user', $user -> name) 
@@ -271,6 +271,10 @@ class SponsorsController extends Controller
                     foreach($request -> event_id as $id){
                         $event = Event::find($id);
                         if(empty($event)){
+                            if(file_exists(public_path() . '/images/sponsors/' . $request -> image_name)){
+                                Storage::delete(public_path() . '/images/sponsors/' . $request -> image_name);
+                            }
+                            
                             flash('This event doesnt exists. Please update the sponsor and add a valid event.') -> error();
                             return redirect() -> route('sponsors.index')
                             -> with('user', $user -> name) 

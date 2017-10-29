@@ -79,7 +79,7 @@
                                     <div class="form-group">Description
                                         <textarea class="form-control" placeholder={{$volunteer['description']}} name="description"></textarea>
                                     </div>
-                                    <div class="form-group has-feedback">Image
+                                    <div class="form-group has-feedback">Select one Image
                                         <input type="file" id="fileupload" name="photos[]" data-url="/uploadvolunteer" single />
                                     </div>
                                     <br>
