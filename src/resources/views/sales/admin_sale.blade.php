@@ -74,15 +74,19 @@
                                         <tr>
                                             <td style="width:140px; text-align: center">
                                                 <a class="btn btn-sm btn-default" href="{{route('sales.show', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></a>
-                        <a class="btn btn-sm btn-default" href="{{route('sales.edit', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></a>
-                        <a class="btn btn-sm btn-default" href="{{route('sales.destroy', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></a>
+                                                <a class="btn btn-sm btn-default" href="{{route('sales.edit', $sale -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></a>
+                                                <a class="btn btn-sm btn-default" href="{{route('sales.destroy', $sale -> id)}}" onclick="return confirm('Are you sure you want to delete the sale?')">
+                                                <i class="icon-trash glyphicon glyphicon-trash text-danger"></i></a>
                                             </td>
                                             <td> {{$sale["name"] }} </td>
                                         </tr>
                                     @endforeach          
                                 </tbody>     
-                                {{$sales}}
+                                
                             </table>  
+                             <div class="text-center">
+                                {{$sales}}
+                            </div>
                         </div>   
                         
                     </div>

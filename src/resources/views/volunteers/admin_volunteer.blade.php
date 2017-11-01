@@ -75,7 +75,8 @@
                         <td style="width:140px; text-align: center">
                             <a class="btn btn-sm btn-default" href="{{route('volunteers.show', $volunteer -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></a>
                             <a class="btn btn-sm btn-default" href="{{route('volunteers.edit', $volunteer -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></a>
-                            <a class="btn btn-sm btn-default" href="{{route('volunteers.destroy', $volunteer -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></a>
+                            <a class="btn btn-sm btn-default" href="{{route('volunteers.destroy', $volunteer -> id)}}" onclick="return confirm('Are you sure you want to delete the volunteers?')">
+                            <i class="icon-trash glyphicon glyphicon-trash text-danger"></i></a>
                         </td>
                         <td> {{$volunteer["name"] }} </td>
                         <td> {{$volunteer["status"] }} </td>
@@ -83,8 +84,10 @@
                 @endforeach
 
             </tbody>
-            {{$volunteers}}
         </table>
+        <div class="text-center">
+            {{$volunteers}}
+        </div>
 
     </div>
                                 </div>

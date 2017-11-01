@@ -70,14 +70,17 @@
                                 <td style="width:140px; text-align: center">
                                     <div class="btn btn-sm btn-default"><a href="{{route('users.show', $user -> id)}}"><i class="icon-trash glyphicon glyphicon-eye-open text-primary"></i></div>
                                     <div class="btn btn-sm btn-default"><a href="{{route('users.edit', $user -> id)}}"><i class="icon-trash glyphicon glyphicon-edit text-primary"></i></div>
-                                    <div class="btn btn-sm btn-default"><a href="{{route('users.destroy', $user -> id)}}"><i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
+                                    <div class="btn btn-sm btn-default"><a href="{{route('users.destroy', $user -> id)}}" onclick="return confirm('Are you sure you want to delete the user?')">
+                                    <i class="icon-trash glyphicon glyphicon-trash text-danger"></i></div>
                                 </td>
                                 <td> {{$user["name"] }} </td>
                             </tr>
                         @endforeach      
-                    </tbody> 
-                    {{$users}}   
+                    </tbody>   
                 </table>
+                <div class="text-center">
+                    {{$users}} 
+                </div>
             </div>
         </div>
     </div>
