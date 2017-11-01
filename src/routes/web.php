@@ -209,6 +209,9 @@ Route::post('/uploadevent', 'UploadController@Event');
 Route::post('/uploadvolunteer', 'UploadController@Volunteer');
 Route::post('/uploadsponsor', 'UploadController@Sponsor');
 Route::post('/uploadshow', 'UploadController@Show');
+Route::post('/uploadhomeimage',[
+    'uses' => 'UploadController@Home',
+    'as'   => 'homeimg']);
 
 
 

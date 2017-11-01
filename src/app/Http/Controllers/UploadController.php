@@ -81,5 +81,19 @@ class UploadController extends Controller
      
         return response()->json(array('files' => $photos), 200);
     }
+
+    public function Home(Request $request)
+    {
+            
+        if ($request->file('file')) {
+            $image = $request->file('file');
+            $name = 'home.jpg';
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $name);
+            
+            flash('Home Image Uploaded Successfully.') -> success();
+            return redirect() -> route('dashboard');
+        }
+    }
      
 }

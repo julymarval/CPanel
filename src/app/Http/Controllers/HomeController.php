@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
 use App\Show;
 use App\Sponsor;
 use Config;
@@ -35,13 +34,8 @@ class HomeController extends Controller
      */
     public function index()
     {             
-
-        $code = Config::get('constants.codes.OkCode'); 
-        $msg = Config::get('constants.msgs.OkMsg');
         
         return view('home')
-        -> with('code', $code)
-        -> with('msg', $msg)
         -> with('sponsors', $this -> sponsors)
         -> with('shows', $this -> shows);
     }

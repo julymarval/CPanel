@@ -103,6 +103,14 @@
                     </table>
                 </div>
             </div>
+        </div>
+        <br><br>
+        <h1>Change Home Image</h1>
+        <form id="check" data-toggle="validator" method="POST" enctype="multipart/form-data" action="{{route('homeimg')}}">
+            <input type="file" name="file" single />
+            <br>
+            <input style="width: 100px; padding: 2px; border: 1px" class="btn btn-lg btn-success btn-block" type="submit" value="Save">
+        </form>
         <script>
             $('div.alert').not('.alert-important').delay(10000).fadeOut(350);
         </script>

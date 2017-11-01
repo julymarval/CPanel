@@ -3,7 +3,7 @@
 
 
 
-<header style="background-image: url({{asset('/images/p2.JPG')}});
+<header style="background-image: url({{asset('/images/home.jpg')}});
         padding-top: 500px;
         padding-bottom: 50px;
         position: relative;
