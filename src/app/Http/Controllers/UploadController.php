@@ -84,15 +84,35 @@ class UploadController extends Controller
 
     public function Home(Request $request)
     {
+        $rules = [
+            'file' => 'required|max:10000', 
+        ];
+        $validator = \Validator::make($request->all(), $rules);
+        
+        try{
+            if ($validator->fails()) {
+                
+                flash('The image is to big. Try another one.') -> error();
+                return redirect()->back();
+            }
+
+            if ($request->file('file')) {
+                $image = $request->file('file');
+                $name = 'home.jpg';
+                $destinationPath = public_path('/images');
+                $image->move($destinationPath, $name);
+                
+                flash('Home Image Uploaded Successfully.') -> success();
+                return redirect()->back();
+            }
+        }catch (Exception $e) {
+            \Log::info('Error updating home image: '.$e);
+
+            $path = public_path() . '/images/home.jpg';
+            \Storage::delete($path);
             
-        if ($request->file('file')) {
-            $image = $request->file('file');
-            $name = 'home.jpg';
-            $destinationPath = public_path('/images');
-            $image->move($destinationPath, $name);
-            
-            flash('Home Image Uploaded Successfully.') -> success();
-            return redirect() -> route('dashboard');
+            flash('Ops! An error has ocurred. Please try again.') -> error();
+            return redirect() -> back();
         }
     }
      
