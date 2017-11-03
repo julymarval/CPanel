@@ -78,52 +78,48 @@
         </div>
 
         <!-- carousel -->
-        @if(count($futureevents) > 0)
-            @foreach($futureevents as $futureevent)
-                <div class="modal fade product_view" id="product_{{$futureevent->id }}">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <a href="#" data-dismiss="modal" class="class pull-right"><span
-                                            class="glyphicon glyphicon-remove"></span></a>
-                                <h3 class="modal-title">{{$futureevent->name }}</h3>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div id="myCarousel" class="carousel col-md-6 product_img" data-ride="carousel">
-                                        <!-- Indicators -->
-                                        <ol class="carousel-indicators">
-                                            @foreach($imgs as $g => $img)
-                                                @if ($g ==0)
-                                                    <li data-target="#carouselExampleIndicators"
-                                                        data-slide-to="{{ $loop->index }}"
-                                                        class="active"></li>
-                                                @else
-                                                    <li data-target="#carouselExampleIndicators"
-                                                        data-slide-to="{{ $loop->index }}"></li>
-                                                @endif
-                                            @endforeach
-                                        </ol>
+        @foreach ($events as $event)
+            <div class="modal fade product_view" id="product_{{$event["id"] }}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a href="#" data-dismiss="modal" class="class pull-right"><span
+                                        class="glyphicon glyphicon-remove"></span></a>
+                            <h3 class="modal-title">{{$event["name"] }}</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div id="myCarousel" class="carousel  col-md-6 product_img" data-ride="carousel">
+                                    <!-- Indicators -->
+                                    <ol class="carousel-indicators">
+                                        @foreach($imgs as $image)
+                                            <li data-target="#carouselExampleIndicators" 
+                                            data-slide-to="{{ $loop->index }}" 
+                                            class="{{ $loop->first ? 'active' : '' }}"></li>
+                                        @endforeach
+                                    </ol>
 
-                                        <!-- Wrapper for slides -->
-                                        <div class="carousel-inner" role="listbox">
-                                            @foreach($imgs as $g => $img1)
-                                                @if($img1 -> event_id == $futureevent -> id)
-                                                    @if ($g == 0)
-                                                        <div class="active item">
-                                                            <img class="d-block img-fluid" src="/images/events/{{$img1 -> name}}"
-                                                                alt="{{$futureevent->name }}" style="width:100%;">
-                                                        </div>
-                                                    @else
-                                                        <div class="item">
-                                                            <img class="d-block img-fluid" src="/images/events/{{$img1 -> name}}"
-                                                                alt="{{$futureevent->name }}" style="width:100%;">
-                                                        </div>
-                                                    @endif
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                    <!-- Wrapper for slides -->
+                                    <div class="carousel-inner" role="listbox">
+                                    <?php $j = 0; ?>
+                                        @foreach($imgs as $image)
+                                            @if($image -> event_id == $event -> id)
+                                            @if ($j == 0)
+                                                <div class="active item">
+                                                    <img class="d-block img-fluid" src="/images/events/{{$image -> name}}"
+                                                    alt="{{ $event->name }}" style="width:100%;">
+                                                </div>
+                                                <?php $j = 1; ?>
+                                                @else
+                                                <div class="item">
+                                                    <img class="d-block img-fluid" src="/images/events/{{$image -> name}}"
+                                                    alt="{{ $event->name }}" style="width:100%;">
+                                                </div>
+                                            @endif
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
                                             <span class="glyphicon glyphicon-chevron-left"></span>
                                             <span class="sr-only">Previous</span>
                                         </a>
@@ -132,98 +128,26 @@
                                             <span class="sr-only">Next</span>
                                         </a>
                                     </div>
+
                                     <div class="col-md-6 product_content">
                                         <p>
-                                            {{$futureevent->description}}
+                                            {{$event["description"] }}
                                         </p>
                                         <br>
-                                        <h3 class="cost"><span class="glyphicon glyphicon-calendar"></span> {{$futureevent->date }}</h3>
+                                        <h3 class="cost"><span class="glyphicon glyphicon-calendar"></span> {{$event["date"] }}</h3>
 
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            @endforeach
-        @endif
-
-        @if(count($pastevents) > 0)
-            @foreach($pastevents as $pastevent)
-                <div class="modal fade product_view" id="product_{{$pastevent->id }}">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <a href="#" data-dismiss="modal" class="class pull-right"><span
-                                            class="glyphicon glyphicon-remove"></span></a>
-                                <h3 class="modal-title">{{$pastevent->name }}</h3>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div id="myCarousel" class="carousel col-md-6 product_img" data-ride="carousel">
-                                        <!-- Indicators -->
-                                        <ol class="carousel-indicators">
-                                            @foreach($imgs as $t => $img)
-                                                @if ($t ==0)
-                                                    <li data-target="#carouselExampleIndicators"
-                                                        data-slide-to="{{ $loop->index }}"
-                                                        class="active"></li>
-                                                @else
-                                                    <li data-target="#carouselExampleIndicators"
-                                                        data-slide-to="{{ $loop->index }}"></li>
-                                                @endif
-
-                                            @endforeach
-                                        </ol>
-
-                                        <!-- Wrapper for slides -->
-                                        <div class="carousel-inner" role="listbox">
-                                            @foreach($imgs as $t => $img)
-                                                @if($img -> event_id == $pastevent -> id)
-                                                    @if ($t == 0)
-                                                        <div class="active item">
-                                                            <img class="d-block img-fluid" src="/images/events/{{$img -> name}}"
-                                                                alt="{{ $pastevent->name }}" style="width:100%;">
-                                                        </div>
-                                                    @else
-                                                        <div class="item">
-                                                            <img class="d-block img-fluid" src="/images/events/{{$img -> name}}"
-                                                                alt="{{ $pastevent->name }}" style="width:100%;">
-                                                        </div>
-                                                    @endif
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                                            <span class="glyphicon glyphicon-chevron-left"></span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                                            <span class="glyphicon glyphicon-chevron-right"></span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </div>
-                                    <div class="col-md-6 product_content">
-                                        <p>
-                                            {{$pastevent->description}}
-                                        </p>
-                                        <br>
-                                        <h3 class="cost"><span class="glyphicon glyphicon-calendar"></span> {{$pastevent->date }}</h3>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        @endif
+            </div>
+        @endforeach
             </div>
     <footer class="container-fluid text-center">
         @include('includes.publicfooter')

@@ -43,18 +43,6 @@
         },
         {
             "name": "doctrine/annotations",
-<<<<<<< HEAD
-            "version": "v1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/annotations.git",
-                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/54cacc9b81758b14e3ce750f205a393d52339e97",
-                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97",
-=======
             "version": "v1.5.0",
             "source": {
                 "type": "git",
@@ -65,16 +53,11 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/annotations/zipball/5beebb01b025c94e93686b7a0ed3edae81fe3e7f",
                 "reference": "5beebb01b025c94e93686b7a0ed3edae81fe3e7f",
->>>>>>> 315b3e358af9c46876e17495c6aa37ebde640455
                 "shasum": ""
             },
             "require": {
                 "doctrine/lexer": "1.*",
-<<<<<<< HEAD
-                "php": "^5.6 || ^7.0"
-=======
                 "php": "^7.1"
->>>>>>> 315b3e358af9c46876e17495c6aa37ebde640455
             },
             "require-dev": {
                 "doctrine/cache": "1.*",
@@ -83,11 +66,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "1.4.x-dev"
-=======
                     "dev-master": "1.5.x-dev"
->>>>>>> 315b3e358af9c46876e17495c6aa37ebde640455
                 }
             },
             "autoload": {
@@ -128,26 +107,6 @@
                 "docblock",
                 "parser"
             ],
-<<<<<<< HEAD
-            "time": "2017-02-24T16:22:25+00:00"
-        },
-        {
-            "name": "doctrine/cache",
-            "version": "v1.6.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/cache.git",
-                "reference": "eb152c5100571c7a45470ff2a35095ab3f3b900b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/eb152c5100571c7a45470ff2a35095ab3f3b900b",
-                "reference": "eb152c5100571c7a45470ff2a35095ab3f3b900b",
-                "shasum": ""
-            },
-            "require": {
-                "php": "~5.5|~7.0"
-=======
             "time": "2017-07-22T10:58:02+00:00"
         },
         {
@@ -166,17 +125,11 @@
             },
             "require": {
                 "php": "~7.1"
->>>>>>> 315b3e358af9c46876e17495c6aa37ebde640455
             },
             "conflict": {
                 "doctrine/common": ">2.2,<2.4"
             },
             "require-dev": {
-<<<<<<< HEAD
-                "phpunit/phpunit": "~4.8|~5.0",
-                "predis/predis": "~1.0",
-                "satooshi/php-coveralls": "~0.6"
-=======
                 "alcaeus/mongo-php-adapter": "^1.1",
                 "mongodb/mongodb": "^1.1",
                 "phpunit/phpunit": "^5.7",
@@ -184,16 +137,11 @@
             },
             "suggest": {
                 "alcaeus/mongo-php-adapter": "Required to use legacy MongoDB driver"
->>>>>>> 315b3e358af9c46876e17495c6aa37ebde640455
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "1.6.x-dev"
-=======
                     "dev-master": "1.7.x-dev"
->>>>>>> 315b3e358af9c46876e17495c6aa37ebde640455
                 }
             },
             "autoload": {
@@ -233,26 +181,6 @@
                 "cache",
                 "caching"
             ],
-<<<<<<< HEAD
-            "time": "2017-07-22T12:49:21+00:00"
-        },
-        {
-            "name": "doctrine/collections",
-            "version": "v1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/collections.git",
-                "reference": "1a4fb7e902202c33cce8c55989b945612943c2ba"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/1a4fb7e902202c33cce8c55989b945612943c2ba",
-                "reference": "1a4fb7e902202c33cce8c55989b945612943c2ba",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6 || ^7.0"
-=======
             "time": "2017-08-25T07:02:50+00:00"
         },
         {
@@ -271,7 +199,6 @@
             },
             "require": {
                 "php": "^7.1"
->>>>>>> 315b3e358af9c46876e17495c6aa37ebde640455
             },
             "require-dev": {
                 "doctrine/coding-standard": "~0.1@dev",
@@ -321,22 +248,6 @@
                 "collections",
                 "iterator"
             ],
-<<<<<<< HEAD
-            "time": "2017-01-03T10:49:41+00:00"
-        },
-        {
-            "name": "doctrine/common",
-            "version": "v2.7.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/common.git",
-                "reference": "4acb8f89626baafede6ee5475bc5844096eba8a9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/4acb8f89626baafede6ee5475bc5844096eba8a9",
-                "reference": "4acb8f89626baafede6ee5475bc5844096eba8a9",
-=======
             "time": "2017-07-22T10:37:32+00:00"
         },
         {
@@ -351,7 +262,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/common/zipball/f68c297ce6455e8fd794aa8ffaf9fa458f6ade66",
                 "reference": "f68c297ce6455e8fd794aa8ffaf9fa458f6ade66",
->>>>>>> 315b3e358af9c46876e17495c6aa37ebde640455
                 "shasum": ""
             },
             "require": {
@@ -360,26 +270,15 @@
                 "doctrine/collections": "1.*",
                 "doctrine/inflector": "1.*",
                 "doctrine/lexer": "1.*",
-<<<<<<< HEAD
-                "php": "~5.6|~7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.4.6"
-=======
                 "php": "~7.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.7"
->>>>>>> 315b3e358af9c46876e17495c6aa37ebde640455
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "2.7.x-dev"
-=======
                     "dev-master": "2.8.x-dev"
->>>>>>> 315b3e358af9c46876e17495c6aa37ebde640455
                 }
             },
             "autoload": {
@@ -422,30 +321,6 @@
                 "persistence",
                 "spl"
             ],
-<<<<<<< HEAD
-            "time": "2017-07-22T08:35:12+00:00"
-        },
-        {
-            "name": "doctrine/dbal",
-            "version": "v2.5.13",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/dbal.git",
-                "reference": "729340d8d1eec8f01bff708e12e449a3415af873"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/729340d8d1eec8f01bff708e12e449a3415af873",
-                "reference": "729340d8d1eec8f01bff708e12e449a3415af873",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/common": ">=2.4,<2.8-dev",
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*",
-=======
             "time": "2017-08-31T08:43:38+00:00"
         },
         {
@@ -470,7 +345,6 @@
             "require-dev": {
                 "phpunit/phpunit": "^5.4.6",
                 "phpunit/phpunit-mock-objects": "!=3.2.4,!=3.2.5",
->>>>>>> 315b3e358af9c46876e17495c6aa37ebde640455
                 "symfony/console": "2.*||^3.0"
             },
             "suggest": {
@@ -482,11 +356,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "2.5.x-dev"
-=======
                     "dev-master": "2.6.x-dev"
->>>>>>> 315b3e358af9c46876e17495c6aa37ebde640455
                 }
             },
             "autoload": {
@@ -524,11 +394,7 @@
                 "persistence",
                 "queryobject"
             ],
-<<<<<<< HEAD
-            "time": "2017-07-22T20:44:48+00:00"
-=======
             "time": "2017-08-28T11:02:56+00:00"
->>>>>>> 315b3e358af9c46876e17495c6aa37ebde640455
         },
         {
             "name": "doctrine/inflector",
